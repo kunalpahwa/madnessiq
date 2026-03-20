@@ -22,7 +22,8 @@ const GAMES = {
     {
       s1:1, t1:"Duke", t1Short:"DUKE", r1:"32-2", s2:16, t2:"Siena", t2Short:"SIENA", r2:"23-11",
       pick:"Duke", confidence:99, upset:false, riskLevel:"LOCK",
-      headline:"Boozer puts on a show. Duke by 30+.",
+      headline:"FINAL: Duke 71-65. Survived a massive scare — trailed at half.",
+      result: { score1:71, score2:65, winner:"Duke", correct:true, postGame:"Duke went 2-15 from 3 and trailed at halftime. Boozer brothers carried the comeback. Raises serious concerns about perimeter offense without Foster." },
       edge: { offense: 92, defense: 95, experience: 85, health: 72 },
       edgeOpp: { offense: 28, defense: 35, experience: 45, health: 90 },
       keyStats: [
@@ -41,7 +42,8 @@ const GAMES = {
     {
       s1:8, t1:"Ohio State", t1Short:"OSU", r1:"21-12", s2:9, t2:"TCU", t2Short:"TCU", r2:"22-11",
       pick:"Ohio State", confidence:62, upset:false, riskLevel:"LEAN",
-      headline:"Thornton & Mobley outscore TCU's backcourt.",
+      headline:"FINAL: TCU 66-64. Mild upset — TCU defense controlled late.",
+      result: { score1:64, score2:66, winner:"TCU", correct:false, postGame:"TCU pulled the 9-over-8 upset. Ohio State could not create enough shots late. Duke now faces TCU in R32 instead of Ohio State." },
       edge: { offense: 68, defense: 60, experience: 65, health: 80 },
       edgeOpp: { offense: 52, defense: 65, experience: 60, health: 78 },
       keyStats: [
@@ -109,7 +111,8 @@ const GAMES = {
     {
       s1:3, t1:"Michigan St.", t1Short:"MSU", r1:"25-7", s2:14, t2:"N. Dakota St.", t2Short:"NDSU", r2:"27-7",
       pick:"Michigan St.", confidence:94, upset:false, riskLevel:"SAFE",
-      headline:"Izzo's rebounding machine strips NDSU's edge.",
+      headline:"FINAL: MSU 92-67. Dominant. Cooper 5-for-5, MSU shot 60%.",
+      result: { score1:92, score2:67, winner:"Michigan St.", correct:true, postGame:"MSU dominated exactly as projected. Controlled the glass and ran in transition. Faces Louisville in R32." },
       edge: { offense: 78, defense: 80, experience: 85, health: 90 },
       edgeOpp: { offense: 48, defense: 55, experience: 60, health: 88 },
       keyStats: [
@@ -174,24 +177,28 @@ const GAMES = {
       whyPick:"USU is actually ranked higher in KenPom. Their ball-screen offense historically gives Willard's teams trouble. Villanova losing Hodge (ACL) weakens their interior.", whyNot:"Villanova has more tournament pedigree. If they shoot well from 3, they can overcome the matchup issues.", historicalNote:"9-seeds win 48.5% of 8/9 matchups."
     },
     { s1:5, t1:"Wisconsin", t1Short:"WISC", r1:"24-10", s2:12, t2:"High Point", t2Short:"HPU", r2:"30-4", pick:"Wisconsin", confidence:63, upset:false, riskLevel:"LEAN",
-      headline:"Badgers' ball control starves HP's engine.", edge:{offense:62,defense:55,experience:75,health:88}, edgeOpp:{offense:68,defense:50,experience:48,health:90},
+      headline:"FINAL: High Point 83-82! First upset of the tourney.",
+      result: { score1:82, score2:83, winner:"High Point", correct:false, postGame:"Chase Johnston hit 4 threes and passed Steph Curry on the all-time NCAA 3-pointer list. HP was 0-57 vs Power Four before this. Faces Arkansas in R32." }, edge:{offense:62,defense:55,experience:75,health:88}, edgeOpp:{offense:68,defense:50,experience:48,health:90},
       keyStats:[{label:"HP Streak",value:"14 wins in a row",hot:true},{label:"HP SOS",value:"0 KenPom top-150 Ws",hot:true},{label:"Wisc TO%",value:"Elite ball control",hot:false}],
       injuries:[], whyPick:"High Point relies on turnovers to fuel their offense. Wisconsin doesn't turn it over. That stylistic mismatch favors the Badgers. Boyd and Blackwell are experienced guards who won't be rattled.", whyNot:"HP is 30-4 and red hot. If they hit threes early and build confidence, Wisconsin's mediocre defense (62nd) may not hold up.", historicalNote:"12-seeds upset 5-seeds 35.7% of the time."
     },
     { s1:4, t1:"Arkansas", t1Short:"ARK", r1:"26-8", s2:13, t2:"Hawaii", t2Short:"HAW", r2:"24-8", pick:"Arkansas", confidence:78, upset:false, riskLevel:"SAFE",
-      headline:"Acuff Jr. is a one-man March run waiting to happen.", edge:{offense:82,defense:68,experience:60,health:75}, edgeOpp:{offense:48,defense:55,experience:55,health:90},
+      headline:"FINAL: Arkansas 97-78. Acuff 24 pts, all 5 starters in double figs.",
+      result: { score1:97, score2:78, winner:"Arkansas", correct:true, postGame:"Blowout. Acuff Jr. had 24 pts and 7 assists. All five starters in double figures despite only 4 threes. Arkansas faces High Point in R32." }, edge:{offense:82,defense:68,experience:60,health:75}, edgeOpp:{offense:48,defense:55,experience:55,health:90},
       keyStats:[{label:"Acuff Jr.",value:"SEC POTY (frosh!)",hot:true},{label:"ARK Off.",value:"KenPom #6",hot:true},{label:"Hawaii SOS",value:"0 ranked opponents",hot:false}],
       injuries:[{player:"K. Knox",team:"Arkansas",status:"OUT",impact:"MED",detail:"Season-ending — limits depth, but core rotation intact."}],
       whyPick:"Darius Acuff Jr. became the first freshman outright SEC POTY since Anthony Davis (2012). Arkansas has a top-6 offense. Hawaii hasn't faced a single ranked team.", whyNot:"Hawaii can slow tempo with Isaac Johnson inside. Arkansas's depth took a hit losing Knox. Playing in Portland helps Hawaii geographically.", historicalNote:"13-seeds win ~20% of the time."
     },
     { s1:6, t1:"BYU", t1Short:"BYU", r1:"23-11", s2:11, t2:"NC St/Texas", t2Short:"NCST", r2:"~20-13", pick:"BYU", confidence:64, upset:false, riskLevel:"LEAN",
-      headline:"Dybantsa is the best player in the tournament. Period.", edge:{offense:80,defense:55,experience:55,health:60}, edgeOpp:{offense:55,defense:58,experience:62,health:78},
+      headline:"FINAL: Texas 79-71. Dybantsa not enough without Saunders.",
+      result: { score1:71, score2:79, winner:"Texas", correct:false, postGame:"Texas (First Four winner) upset BYU. Dybantsa scored but supporting cast failed. Texas faces Gonzaga in R32." }, edge:{offense:80,defense:55,experience:55,health:60}, edgeOpp:{offense:55,defense:58,experience:62,health:78},
       keyStats:[{label:"Dybantsa",value:"25+ PPG, likely #1 pick",hot:true},{label:"BYU since loss",value:"Under .500 w/o Saunders",hot:true},{label:"Wright III",value:"18.2 PPG 2nd option",hot:false}],
       injuries:[{player:"E. Saunders",team:"BYU",status:"OUT",impact:"HIGH",detail:"Shoulder surgery — season over. BYU 4-6 since."}],
       whyPick:"AJ Dybantsa is a generational scorer — 43 vs Utah, seven games of 28+. He's matchup-proof. Robert Wright III gives BYU a legitimate second option.", whyNot:"BYU went under .500 after losing Saunders. They're a one-man team and the supporting cast hasn't stepped up consistently.", historicalNote:"11-seeds upset 6-seeds 37.3% of the time."
     },
     { s1:3, t1:"Gonzaga", t1Short:"ZAGA", r1:"28-6", s2:14, t2:"Kennesaw St.", t2Short:"KSU", r2:"21-13", pick:"Gonzaga", confidence:96, upset:false, riskLevel:"SAFE",
-      headline:"Ike dominates inside. 91-spot KenPom gap.", edge:{offense:82,defense:70,experience:88,health:70}, edgeOpp:{offense:30,defense:32,experience:40,health:85},
+      headline:"FINAL: Gonzaga 73-64. Ike efficient. Kennesaw hung tough.",
+      result: { score1:73, score2:64, winner:"Gonzaga", correct:true, postGame:"Gonzaga controlled it but Kennesaw made them work. Ike efficient inside as projected. Gonzaga faces Texas in R32." }, edge:{offense:82,defense:70,experience:88,health:70}, edgeOpp:{offense:30,defense:32,experience:40,health:85},
       keyStats:[{label:"Ike",value:"19.7 PPG, 61% inside arc",hot:true},{label:"KenPom gap",value:"91 spots (largest R64)",hot:true},{label:"Huff",value:"Possible return S16?",hot:false}],
       injuries:[{player:"B. Huff",team:"Gonzaga",status:"OUT",impact:"MED",detail:"Knee — walking without crutches. Could return Sweet 16."}],
       whyPick:"Graham Ike is a dominant interior scorer. Kennesaw has a 91-spot KenPom gap — the largest in the first round. Kennesaw won't have an answer for Ike.", whyNot:"Gonzaga's ceiling is limited without Huff. If he returns for the second weekend, they become a Final Four sleeper.", historicalNote:"14-seeds win ~7% of the time."
@@ -220,12 +227,14 @@ const GAMES = {
       whyPick:"Clemson lost their 6-11 starting big Carter Welling to a torn ACL in the ACC Tournament. That fundamentally changes their ceiling. Iowa is 11 spots ahead in KenPom.", whyNot:"Clemson's defense is still intact and they have ACC tournament grit. If they can survive inside without Welling, their perimeter play keeps them competitive.", historicalNote:"9-seeds win 48.5% of 8/9 games."
     },
     { s1:5, t1:"Vanderbilt", t1Short:"VANDY", r1:"26-8", s2:12, t2:"McNeese", t2Short:"MCN", r2:"28-5", pick:"Vanderbilt", confidence:70, upset:false, riskLevel:"LEAN",
-      headline:"Tanner + Miles are the best backcourt in this region.", edge:{offense:80,defense:58,experience:60,health:90}, edgeOpp:{offense:55,defense:52,experience:55,health:88},
+      headline:"FINAL: Vandy 78-68. Tanner 26 pts, took over after scary start.",
+      result: { score1:78, score2:68, winner:"Vanderbilt", correct:true, postGame:"Tanner delivered: 26 pts, 7 reb, 5 ast. McNeese led 19-8 early but Tanner took over. Faces Nebraska in R32." }, edge:{offense:80,defense:58,experience:60,health:90}, edgeOpp:{offense:55,defense:52,experience:55,health:88},
       keyStats:[{label:"Tanner",value:"19.2/5.3/2.4 + 37% 3PT",hot:true},{label:"Vandy form",value:"Just beat #1 Florida",hot:true},{label:"McNeese",value:"Beat Clemson as 12 in '25",hot:false}],
       injuries:[], whyPick:"Tyler Tanner had the best breakout sophomore season in college basketball. Vanderbilt just dismantled Florida in the SEC Tournament. Their guard play is too dynamic for McNeese.", whyNot:"McNeese upset Clemson as a 12-seed last year — they have tournament DNA. If Vandy looks past them, the Cowboys will make them pay.", historicalNote:"12-seeds upset 5-seeds 35.7% of the time."
     },
     { s1:4, t1:"Nebraska", t1Short:"NEB", r1:"26-6", s2:13, t2:"Troy", t2Short:"TROY", r2:"22-11", pick:"Nebraska", confidence:78, upset:false, riskLevel:"SAFE",
-      headline:"The drought ends. Nebraska's D grinds Troy to dust.", edge:{offense:58,defense:88,experience:62,health:90}, edgeOpp:{offense:45,defense:48,experience:50,health:85},
+      headline:"FINAL: Nebraska 76-47. FIRST EVER tourney win. Bud Lights unlocked.",
+      result: { score1:76, score2:47, winner:"Nebraska", correct:true, postGame:"Historic. Nebraska's first NCAA Tournament win ever. Sandfort hit 23 pts with 14 team threes. Bud Light fridges across Omaha unlocked. Faces Vanderbilt in R32." }, edge:{offense:58,defense:88,experience:62,health:90}, edgeOpp:{offense:45,defense:48,experience:50,health:85},
       keyStats:[{label:"NEB History",value:"0 NCAA W's EVER",hot:true},{label:"NEB Defense",value:"KenPom #7",hot:true},{label:"NEB slide",value:"6-6 after 20-0 start",hot:false}],
       injuries:[], whyPick:"Nebraska's defense (7th in KenPom) will turn this into an ugly, low-scoring affair — and that's exactly where they thrive. The 70-spot KenPom gap and elite D should be enough.", whyNot:"Nebraska is 6-6 down the stretch and has never won a tournament game. The psychological weight of history is real. Troy beat SDSU on the road and took USC to 3OT.", historicalNote:"Programs with 0 tourney wins face extra pressure. Nebraska's best seeding since 1991."
     },
@@ -236,7 +245,8 @@ const GAMES = {
       whyPick:"UNC's brand and remaining talent still matter in March. VCU's offense can be limited. This is barely a lean — I'm only picking UNC because of program pedigree.", whyNot:"UNC without Wilson is a fundamentally different team. They got crushed by Duke and lost by 1 to Clemson without him. VCU's defense is elite and they're the A-10 champs riding a hot streak. This is a genuine coin flip.", historicalNote: "11-seeds upset 6-seeds 37.3%. This is the single best upset opportunity driven by a star injury."
     },
     { s1:3, t1:"Illinois", t1Short:"ILL", r1:"24-8", s2:14, t2:"Penn", t2Short:"PENN", r2:"18-11", pick:"Illinois", confidence:90, upset:false, riskLevel:"SAFE",
-      headline:"No. 1 offense in KenPom history meets Ivy League underdog.", edge:{offense:96,defense:65,experience:70,health:90}, edgeOpp:{offense:42,defense:38,experience:50,health:88},
+      headline:"FINAL: Illinois 105-70. Mirkovic 29/17. Led by 40 at one point.",
+      result: { score1:105, score2:70, winner:"Illinois", correct:true, postGame:"Obliteration. Mirkovic went off with 29 pts, 17 rebounds. Five in double figures. Led by 40. The No. 1 offense is for real. Faces VCU in R32." }, edge:{offense:96,defense:65,experience:70,health:90}, edgeOpp:{offense:42,defense:38,experience:50,health:88},
       keyStats:[{label:"ILL Offense",value:"#1 in KenPom HISTORY",hot:true},{label:"Wagler",value:"Frosh phenom, lottery pick",hot:true},{label:"Penn: Power",value:"44 pts in Ivy title game",hot:false}],
       injuries:[], whyPick:"Illinois has a historically great offense. Keaton Wagler, the Ivisic brothers, Mirkovic, Stojakovic — too many weapons. Four of their 8 losses came in OT, suggesting bad luck, not a flaw.", whyNot:"TJ Power (Duke/Virginia transfer) scored 44 in the Ivy title game. He'll go after Illinois and could make it uncomfortable early. But Illinois has 5 players better than him.", historicalNote:"14-seeds win ~7% of the time. Ivy League teams have a scrappy tournament history."
     },
@@ -246,20 +256,23 @@ const GAMES = {
       injuries:[], whyPick:"Texas A&M ranks 8th nationally in roster experience — eight juniors and seniors in rotation. Experienced teams historically outperform in March. Their unique Bucky Ball motion offense is unlike anything SMC has prepped for.", whyNot:"Saint Mary's is well-coached under Randy Bennett and plays with WCC toughness from facing Gonzaga. The Gaels' system is proven.", historicalNote:"10-seeds upset 7-seeds 39.1% of the time. Experience correlates strongly with March performance."
     },
     { s1:2, t1:"Houston", t1Short:"HOU", r1:"28-6", s2:15, t2:"Idaho", t2Short:"IDHO", r2:"21-14", pick:"Houston", confidence:99, upset:false, riskLevel:"LOCK",
-      headline:"Sampson's machine rolls. E8 at Toyota Center awaits.", edge:{offense:78,defense:92,experience:90,health:88}, edgeOpp:{offense:22,defense:28,experience:30,health:82},
+      headline:"FINAL: Houston 78-47. Blowout. Toyota Center on the horizon.",
+      result: { score1:78, score2:47, winner:"Houston", correct:true, postGame:"Blowout as expected. Houston defense suffocated Idaho. Rolling toward Toyota Center Regional Final. Faces Texas A and M in R32." }, edge:{offense:78,defense:92,experience:90,health:88}, edgeOpp:{offense:22,defense:28,experience:30,health:82},
       keyStats:[{label:"HOU E8 site",value:"Toyota Center (HOME)",hot:true},{label:"Returning",value:"3 title-game starters",hot:true},{label:"Freshmen",value:"Flemings + Cenac (R1 picks)",hot:false}],
       injuries:[], whyPick:"Houston returns three starters from last year's national title game, added two projected first-rounders, and the Regional Final is AT THEIR HOME ARENA. The structural advantage is the most underrated factor in the bracket.", whyNot:"Houston's depth is thinner than typical Sampson teams. If Tugler or Cenac get in foul trouble, they're vulnerable inside. Won't matter vs Idaho.", historicalNote:"2-seeds are 141-17 vs 15-seeds all-time."
     },
   ],
   MIDWEST: [
     { s1:1, t1:"Michigan", t1Short:"MICH", r1:"31-3", s2:16, t2:"UMBC/Howard", t2Short:"16", r2:"~24-8", pick:"Michigan", confidence:99, upset:false, riskLevel:"LOCK",
-      headline:"KenPom #2. No. 1 defense. Mara's 7-7 wingspan.", edge:{offense:85,defense:98,experience:78,health:78}, edgeOpp:{offense:20,defense:22,experience:30,health:85},
+      headline:"FINAL: Michigan 101-80. Shot 67%. Howard hit 10 first-half 3s.",
+      result: { score1:101, score2:80, winner:"Michigan", correct:true, postGame:"Michigan dominated despite Howard hitting 10 first-half threes. Four Wolverines scored 14+, shot 67.3%. The No. 1 defense clamped down after halftime. Faces Saint Louis in R32." }, edge:{offense:85,defense:98,experience:78,health:78}, edgeOpp:{offense:20,defense:22,experience:30,health:85},
       keyStats:[{label:"MICH Def.",value:"#1 in entire country",hot:true},{label:"Mara",value:"7'7\" wingspan, shot-blocker",hot:true},{label:"Lendeborg",value:"B10 POTY — 14.7/7.2/3.2",hot:false}],
       injuries:[{player:"L.J. Cason",team:"Michigan",status:"OUT",impact:"MED",detail:"Torn ACL — led B10 in 3PT%. Loss hurts but 8-deep rotation survives."}],
       whyPick:"Michigan's defense is the best in the country — and it's not close. Aday Mara's 7-7 wingspan, Morez Johnson's switchability, and Lendeborg's versatility create a defensive wall. Dusty May built this like an NBA team.", whyNot:"Michigan's turnover rate (179th) is their Achilles heel. Cason's loss hurts perimeter shooting. But neither matters against a 16-seed.", historicalNote:"1-seeds are 142-2 all-time."
     },
     { s1:8, t1:"Georgia", t1Short:"UGA", r1:"22-10", s2:9, t2:"Saint Louis", t2Short:"SLU", r2:"28-5", pick:"Saint Louis", confidence:58, upset:false, riskLevel:"LEAN",
-      headline:"Cream Abdul-Jabbar + 40.1% from 3 = problems for UGA.", edge:{offense:58,defense:60,experience:62,health:82}, edgeOpp:{offense:68,defense:58,experience:70,health:88},
+      headline:"FINAL: SLU 102-77. DOMINANT. 21-0 and 18-0 runs. 5 in double figs.",
+      result: { score1:77, score2:102, winner:"Saint Louis", correct:true, postGame:"Saint Louis looked like a Final Four team. 102 points, 21-0 run and 18-0 run. Dion Brown 18 pts, Avila 12/5/5. 66 paint points vs 28 for Georgia. Faces Michigan in R32." }, edge:{offense:58,defense:60,experience:62,health:82}, edgeOpp:{offense:68,defense:58,experience:70,health:88},
       keyStats:[{label:"SLU 3PT%",value:"40.1% as a team (!)",hot:true},{label:"Avila",value:"6-10, 'Cream Abdul-Jabbar'",hot:true},{label:"SLU peak",value:"#18 AP in February",hot:false}],
       injuries:[], whyPick:"Saint Louis shoots 40.1% from three as a team — that's elite. Robbie Avila is a 6-10 matchup nightmare. Georgia has been inconsistent and susceptible to teams that shoot well from deep.", whyNot:"Georgia has SEC-level athletes and more raw talent. If they defend the perimeter well, SLU's other dimensions aren't enough.", historicalNote:"9-seeds win 48.5% of 8/9 games historically."
     },
@@ -304,12 +317,49 @@ const GAMES = {
 const LATER_ROUNDS = {
   EAST: {
     R32: [
-      { s1:1, t1:"Duke", t1Short:"DUKE", s2:8, t2:"Ohio State", t2Short:"OSU", pick:"Duke", confidence:88, riskLevel:"SAFE",
-        headline:"Boozer feasts on OSU's frontcourt. Ngongba likely returns.", whyPick:"Cameron Boozer is unguardable one-on-one. Ohio State doesn't have the interior presence to match Duke's size. With Ngongba likely back, Duke adds rim protection.", whyNot:"Thornton and Mobley can score, but Duke's #2 defense will make them work for everything." },
+      { s1:1, t1:"Duke", t1Short:"DUKE", s2:9, t2:"TCU", t2Short:"TCU", pick:"Duke", confidence:78, riskLevel:"LEAN",
+        headline:"Duke survived Siena. Now faces TCU who just upset Ohio State. Duke -10.5.",
+        edge: { offense: 80, defense: 92, experience: 82, health: 70 },
+        edgeOpp: { offense: 58, defense: 68, experience: 62, health: 85 },
+        keyStats: [
+          { label: "Duke R64", value: "2-15 from 3 (!)", hot: true },
+          { label: "TCU R64", value: "Beat OSU 66-64", hot: false },
+          { label: "Spread", value: "Duke -10.5", hot: false },
+        ],
+        injuries: [
+          { player: "C. Foster", team: "Duke", status: "OUT", impact: "HIGH", detail: "Broken foot — still out. Perimeter creation remains limited." },
+          { player: "P. Ngongba", team: "Duke", status: "PROBABLE", impact: "MED", detail: "Foot soreness — expected to return for R32, adding rim protection." },
+        ],
+        whyPick:"Duke's second-half comeback vs Siena showed championship DNA — Boozer brothers combined for 21 in the comeback. TCU won a tight 66-64 over Ohio State but doesn't have the firepower to exploit Duke's perimeter weakness like a higher seed would. Duke's defense tightens up in Round 2.",
+        whyNot:"Duke went 2-15 from 3 against Siena. If that shooting continues, TCU's defense — which just locked down Ohio State late — could make this uncomfortable. Duke's title odds took a real hit Thursday." },
       { s1:5, t1:"St. John's", t1Short:"SJU", s2:4, t2:"Kansas", t2Short:"KU", pick:"St. John's", confidence:55, upset:true, riskLevel:"UPSET",
-        headline:"🚨 Pitino vs. Self. Ejiofor's size overwhelms shaky KU chemistry.", whyPick:"St. John's is underseeded (top-15 KenPom). Ejiofor's interior dominance + Pitino's March pedigree vs. Kansas's chemistry issues and Peterson's inconsistency.", whyNot:"Peterson is a generational talent. If he's locked in, Kansas can beat anyone. Bill Self in March is never easy." },
-      { s1:11, t1:"S. Florida", t1Short:"USF", s2:3, t2:"Michigan St.", t2Short:"MSU", pick:"Michigan St.", confidence:72, riskLevel:"LEAN",
-        headline:"Izzo's rebounding and physicality grind down USF.", whyPick:"Michigan State's size advantage with Kohler and Cooper controls the glass. USF's pace-and-space style can't overcome the Spartans' physicality over 40 minutes.", whyNot:"If USF just beat Louisville, they'll have confidence. Their tempo and 3-point shooting could cause early problems." },
+        headline:"🚨 Pitino vs. Self. Ejiofor's size overwhelms shaky KU chemistry.",
+        edge: { offense: 75, defense: 72, experience: 78, health: 90 },
+        edgeOpp: { offense: 78, defense: 70, experience: 68, health: 75 },
+        keyStats: [
+          { label: "SJU KenPom", value: "Top 15 (underseeded)", hot: true },
+          { label: "Peterson", value: "Projected #1 pick", hot: true },
+          { label: "Ejiofor", value: "B. East POTY — interior beast", hot: false },
+        ],
+        injuries: [
+          { player: "D. Peterson", team: "Kansas", status: "ACTIVE", impact: "LOW", detail: "Healthy but chemistry and engagement concerns persist all season." },
+        ],
+        whyPick:"St. John's is underseeded (top-15 KenPom). Ejiofor's interior dominance + Pitino's March pedigree vs. Kansas's chemistry issues and Peterson's inconsistency.",
+        whyNot:"Peterson is a generational talent. If he's locked in, Kansas can beat anyone. Bill Self in March is never easy." },
+      { s1:6, t1:"Louisville", t1Short:"LOU", s2:3, t2:"Michigan St.", t2Short:"MSU", pick:"Michigan St.", confidence:72, riskLevel:"LEAN",
+        headline:"MSU -4.5. Louisville survived USF's comeback. Can McKneely repeat his 7-three night?",
+        edge: { offense: 65, defense: 62, experience: 60, health: 78 },
+        edgeOpp: { offense: 78, defense: 82, experience: 85, health: 90 },
+        keyStats: [
+          { label: "MSU R64", value: "92-67, shot 60%", hot: true },
+          { label: "LOU TOs", value: "22 turnovers vs USF", hot: true },
+          { label: "McKneely", value: "7 threes (23 pts) R64", hot: false },
+        ],
+        injuries: [
+          { player: "M. Brown Jr.", team: "Louisville", status: "DTD", impact: "HIGH", detail: "Back — played limited mins R64. Still not 100%." },
+        ],
+        whyPick:"Michigan State was dominant — 92-67 over NDSU, shot 60%, controlled the glass. Louisville needed McKneely's heroic 7-three night to survive South Florida's 23-point comeback. The Spartans' physicality and rebounding will overwhelm a Louisville team that turned it over 22 times Thursday.",
+        whyNot:"Louisville showed resilience surviving that USF rally. McKneely (23 pts) can get hot from anywhere. If Louisville protects the ball better than Thursday (22 TOs), this gets competitive." },
       { s1:10, t1:"UCF", t1Short:"UCF", s2:2, t2:"UConn", t2Short:"UCONN", pick:"UConn", confidence:74, riskLevel:"LEAN",
         headline:"Hurley's scheme exploits UCF's perimeter gaps.", whyPick:"UConn's championship DNA shows up in these moments. Demary's playmaking controls pace. UCF's size is real but UConn's half-court execution is a tier above.", whyNot:"John Bol creates real matchup problems on the glass. If UConn goes cold from 3 (they do sometimes), UCF hangs around." },
     ],
@@ -328,10 +378,34 @@ const LATER_ROUNDS = {
     R32: [
       { s1:1, t1:"Arizona", t1Short:"ARIZ", s2:9, t2:"Utah State", t2Short:"USU", pick:"Arizona", confidence:84, riskLevel:"SAFE",
         headline:"Arizona's switching D neutralizes USU's ball-screen game.", whyPick:"Peat and Awaka can switch onto guards. Krivas protects the rim. Burries and Bradley attack on the other end. The talent gap is significant.", whyNot:"USU is well-coached and their offense is efficient. Could keep it within 10." },
-      { s1:4, t1:"Arkansas", t1Short:"ARK", s2:5, t2:"Wisconsin", t2Short:"WISC", pick:"Arkansas", confidence:62, riskLevel:"LEAN",
-        headline:"Acuff Jr. is the best player on the floor by a mile.", whyPick:"Wisconsin's discipline slows the game, but Acuff can win a half-court battle individually. His explosiveness is something Boyd and Blackwell can't match.", whyNot:"Wisconsin's ball control and discipline could frustrate Arkansas into turnovers. If Acuff goes cold, Wisc's system takes over." },
-      { s1:3, t1:"Gonzaga", t1Short:"ZAGA", s2:6, t2:"BYU", t2Short:"BYU", pick:"Gonzaga", confidence:60, riskLevel:"LEAN",
-        headline:"WCC rivalry. Ike's interior game + depth beats Dybantsa alone.", whyPick:"Dybantsa is the best player on the floor, but Gonzaga's depth and Ike's efficiency provide the more complete team. BYU needs Dybantsa to score 30+ to win.", whyNot:"AJ Dybantsa CAN score 30+. He's done it repeatedly. If Wright III also shows up, BYU has enough." },
+      { s1:4, t1:"Arkansas", t1Short:"ARK", s2:12, t2:"High Point", t2Short:"HPU", pick:"Arkansas", confidence:72, riskLevel:"LEAN",
+        headline:"ARK -11.5. Acuff (24 pts R64) vs Johnston (passed Steph Curry in career 3s).",
+        edge: { offense: 85, defense: 65, experience: 62, health: 78 },
+        edgeOpp: { offense: 72, defense: 48, experience: 50, health: 90 },
+        keyStats: [
+          { label: "Acuff R64", value: "24 pts, 7 ast", hot: true },
+          { label: "Johnston", value: "415 career 3s (> Curry)", hot: true },
+          { label: "HP vs P4", value: "First-ever win Thurs", hot: false },
+        ],
+        injuries: [
+          { player: "K. Knox", team: "Arkansas", status: "OUT", impact: "MED", detail: "Season-ending — limits depth, but core rotation intact after dominant R64." },
+        ],
+        whyPick:"Arkansas was dominant — 97-78 over Hawaii, all 5 starters in double figures. High Point's stunning upset of Wisconsin was inspiring but they've never faced this level of athleticism. Acuff Jr. is a different tier of player than anyone HP has seen. Arkansas's interior scoring overwhelms HP's undersized frontcourt.",
+        whyNot:"High Point just beat a Power Four team for the first time in program history. Chase Johnston (415 career 3s, more than Steph Curry at Davidson) can get scorching hot. If HP shoots 45%+ from 3, Arkansas's mediocre perimeter defense could be exposed." },
+      { s1:3, t1:"Gonzaga", t1Short:"ZAGA", s2:11, t2:"Texas", t2Short:"TEX", pick:"Gonzaga", confidence:68, riskLevel:"LEAN",
+        headline:"Gonzaga faces Texas, who upset BYU 79-71. Ike's interior vs Texas length.",
+        edge: { offense: 78, defense: 75, experience: 85, health: 72 },
+        edgeOpp: { offense: 62, defense: 65, experience: 60, health: 82 },
+        keyStats: [
+          { label: "Ike R64", value: "Efficient, Zags won 73-64", hot: false },
+          { label: "Texas R64", value: "Beat BYU 79-71 (upset)", hot: true },
+          { label: "Huff", value: "Still out — could return S16", hot: true },
+        ],
+        injuries: [
+          { player: "B. Huff", team: "Gonzaga", status: "OUT", impact: "MED", detail: "Knee — walking without crutches. Could return Sweet 16 if Gonzaga advances." },
+        ],
+        whyPick:"Gonzaga beat Kennesaw 73-64 and Ike was efficient inside. Texas upset BYU but the Longhorns don't have the interior scoring to match Ike and Grant-Foster. Gonzaga's experience in March is a real advantage here.",
+        whyNot:"Texas has the length and athleticism to bother Ike. They just beat a team with the best player in the tournament (Dybantsa). If Texas's defense travels from the BYU game, Gonzaga could struggle to create open looks on the perimeter." },
       { s1:7, t1:"Miami (FL)", t1Short:"MIA", s2:2, t2:"Purdue", t2Short:"PUR", pick:"Purdue", confidence:64, riskLevel:"LEAN",
         headline:"Purdue sweats. Miami's guards test their weak perimeter D.", whyPick:"Smith's playmaking + historic offensive efficiency generates enough quality looks. Kaufman-Renn overwhelms Miami's frontcourt. But Miami makes this uncomfortable.", whyNot:"Miami's perimeter scorers are exactly the type that have punished Purdue all season. This could go either way." },
     ],
@@ -349,55 +423,264 @@ const LATER_ROUNDS = {
   SOUTH: {
     R32: [
       { s1:1, t1:"Florida", t1Short:"UF", s2:9, t2:"Iowa", t2Short:"IOWA", pick:"Florida", confidence:82, riskLevel:"SAFE",
-        headline:"Florida's frontcourt dominates the glass. Defending champs roll.", whyPick:"Haugh, Condon, Chinyelu — the best rebounding frontcourt in the field — overwhelm Iowa on the boards. Todd Golden's system creates easy transition looks.", whyNot:"Iowa has tournament experience. If they shoot well from 3, they can keep it within striking distance." },
+        headline:"Florida's frontcourt dominates the glass. Defending champs roll.",
+        edge: { offense: 85, defense: 82, experience: 95, health: 92 },
+        edgeOpp: { offense: 65, defense: 58, experience: 65, health: 85 },
+        keyStats: [
+          { label: "UF Frontcourt", value: "3 title-game starters", hot: true },
+          { label: "Iowa R64", value: "TBD (Friday game)", hot: false },
+          { label: "Rebounding", value: "UF dominates glass", hot: false },
+        ],
+        injuries: [],
+        whyPick:"Haugh, Condon, Chinyelu — the best rebounding frontcourt in the field — overwhelm Iowa on the boards. Todd Golden's system creates easy transition looks.", whyNot:"Iowa has tournament experience. If they shoot well from 3, they can keep it within striking distance." },
       { s1:5, t1:"Vanderbilt", t1Short:"VANDY", s2:4, t2:"Nebraska", t2Short:"NEB", pick:"Vanderbilt", confidence:58, upset:true, riskLevel:"UPSET",
-        headline:"🚨 Tanner/Miles outscore Nebraska's rock-fight defense.", whyPick:"Nebraska went 6-6 down the stretch. The pressure of the program's first-ever tournament win followed by facing red-hot Vanderbilt (just beat Florida) is brutal.", whyNot:"Nebraska's defense (7th KenPom) makes everything difficult. If they grind Vandy into the 50s, anything can happen." },
-      { s1:6, t1:"North Carolina", t1Short:"UNC", s2:3, t2:"Illinois", t2Short:"ILL", pick:"Illinois", confidence:76, riskLevel:"LEAN",
-        headline:"Illinois's #1 offense is too much for Wilson-less UNC.", whyPick:"Without Caleb Wilson, UNC doesn't have the firepower to trade baskets with the most efficient offense in KenPom history. Wagler + the Ivisic brothers = too many weapons.", whyNot:"UNC is still North Carolina. March pedigree matters. But they'd need a legendary defensive performance." },
+        edge: { offense: 82, defense: 58, experience: 62, health: 88 },
+        edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
+        keyStats: [
+          { label: "Tanner R64", value: "26 pts, 7 reb, 5 ast", hot: true },
+          { label: "NEB R64", value: "76-47, first-ever W", hot: true },
+          { label: "Style clash", value: "Offense vs Defense", hot: false },
+        ],
+        injuries: [],
+        headline:"🚨 Tanner/Miles outscore Nebraska's rock-fight defense.",
+        edge: { offense: 82, defense: 58, experience: 62, health: 88 },
+        edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
+        keyStats: [
+          { label: "Tanner R64", value: "26 pts, 7 reb, 5 ast", hot: true },
+          { label: "NEB R64", value: "76-47, first-ever W", hot: true },
+          { label: "Style clash", value: "Elite O vs Elite D", hot: false },
+        ],
+        injuries: [],
+        whyPick:"Nebraska went 6-6 down the stretch. The pressure of the program's first-ever tournament win followed by facing red-hot Vanderbilt (just beat Florida) is brutal.", whyNot:"Nebraska's defense (7th KenPom) makes everything difficult. If they grind Vandy into the 50s, anything can happen." },
+      { s1:6, t1:"North Carolina", t1Short:"VCU", s2:3, t2:"Illinois", t2Short:"ILL", pick:"Illinois", confidence:82, riskLevel:"SAFE",
+        headline:"UPDATED: Illinois faces VCU (who upset UNC in OT). Confidence UP from 76% to 82%.",
+        edge: { offense: 95, defense: 68, experience: 72, health: 90 },
+        edgeOpp: { offense: 58, defense: 72, experience: 68, health: 82 },
+        keyStats: [
+          { label: "ILL R64", value: "105-70, Mirkovic 29/17", hot: true },
+          { label: "VCU R64", value: "Erased 19-pt deficit OT", hot: true },
+          { label: "Matchup shift", value: "Was UNC, now VCU", hot: false },
+        ],
+        injuries: [],
+        edge: { offense: 82, defense: 58, experience: 62, health: 88 },
+        edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
+        keyStats: [
+          { label: "Tanner R64", value: "26 pts, 7 reb, 5 ast", hot: true },
+          { label: "NEB R64", value: "76-47, first-ever W", hot: true },
+          { label: "Style clash", value: "Offense vs Defense", hot: false },
+        ],
+        injuries: [],
+        whyPick:"VCU pulled off a historic 19-point comeback to beat UNC in OT. That's incredible heart — but Illinois is a completely different matchup. The No. 1 offense in KenPom history just put up 105 on Penn. Mirkovic (29/17) and the Ivisic brothers give Illinois too many weapons. VCU's Cinderella energy meets an offensive buzzsaw.",
+        whyNot:"VCU just pulled off the biggest R64 comeback ever. Momentum and belief are real in March. Their defensive pressure could force Illinois into turnovers. But the talent gap is wide." },
       { s1:10, t1:"Texas A&M", t1Short:"TAMU", s2:2, t2:"Houston", t2Short:"HOU", pick:"Houston", confidence:76, riskLevel:"LEAN",
-        headline:"Sampson's defense frustrates A&M's motion. Toyota Center looms.", whyPick:"Houston's defensive identity overwhelms A&M's motion offense. The Cougars are locked in for a potential home Regional Final at Toyota Center.", whyNot:"A&M's experience (8 juniors/seniors) helps them compete. Robbie Avila from SLU gave UGA problems — A&M's bigs are even better." },
+        edge: { offense: 82, defense: 58, experience: 62, health: 88 },
+        edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
+        keyStats: [
+          { label: "Tanner R64", value: "26 pts, 7 reb, 5 ast", hot: true },
+          { label: "NEB R64", value: "76-47, first-ever W", hot: true },
+          { label: "Style clash", value: "Offense vs Defense", hot: false },
+        ],
+        injuries: [],
+        headline:"Sampson's defense frustrates A&M. Toyota Center looms.",
+        edge: { offense: 78, defense: 92, experience: 90, health: 88 },
+        edgeOpp: { offense: 60, defense: 62, experience: 88, health: 85 },
+        keyStats: [
+          { label: "HOU R64", value: "78-47 blowout", hot: false },
+          { label: "A&M R64", value: "63-50, upset SMC", hot: true },
+          { label: "Toyota Ctr", value: "E8 at Houston home", hot: true },
+        ],
+        injuries: [],
+        whyPick:"Houston's defensive identity overwhelms A&M's motion offense. The Cougars are locked in for a potential home Regional Final at Toyota Center.", whyNot:"A&M's experience (8 juniors/seniors) helps them compete. Robbie Avila from SLU gave UGA problems — A&M's bigs are even better." },
     ],
     S16: [
       { s1:1, t1:"Florida", t1Short:"UF", s2:5, t2:"Vanderbilt", t2Short:"VANDY", pick:"Florida", confidence:64, riskLevel:"LEAN",
+        edge: { offense: 82, defense: 58, experience: 62, health: 88 },
+        edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
+        keyStats: [
+          { label: "Tanner R64", value: "26 pts, 7 reb, 5 ast", hot: true },
+          { label: "NEB R64", value: "76-47, first-ever W", hot: true },
+          { label: "Style clash", value: "Offense vs Defense", hot: false },
+        ],
+        injuries: [],
         headline:"Rematch. Florida adjusts from SEC Tournament loss. Frontcourt wins.", whyPick:"Golden's team learns from losses. Florida's frontcourt advantage is even more decisive in March where rebounds matter more. Vandy's 3PT shooting likely regresses.", whyNot:"Vandy already proved they can beat Florida. Tanner and Miles have the shot-creation to score against any defense." },
       { s1:3, t1:"Illinois", t1Short:"ILL", s2:2, t2:"Houston", t2Short:"HOU", pick:"Houston", confidence:58, riskLevel:"TOSS-UP",
+        edge: { offense: 82, defense: 58, experience: 62, health: 88 },
+        edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
+        keyStats: [
+          { label: "Tanner R64", value: "26 pts, 7 reb, 5 ast", hot: true },
+          { label: "NEB R64", value: "76-47, first-ever W", hot: true },
+          { label: "Style clash", value: "Offense vs Defense", hot: false },
+        ],
+        injuries: [],
         headline:"Irresistible force vs. immovable object. Houston's home crowd = 3-5 pts.", whyPick:"Houston's defense is built to contain motion offenses. The game is at TOYOTA CENTER — Houston's home arena. That crowd advantage could be worth 3-5 points.", whyNot:"Illinois has a historically great offense. Wagler could go on a 15-point run that breaks any defense. This is a genuine toss-up without the venue factor." },
     ],
     E8: [
       { s1:1, t1:"Florida", t1Short:"UF", s2:2, t2:"Houston", t2Short:"HOU", pick:"Houston", confidence:56, upset:true, riskLevel:"UPSET",
+        edge: { offense: 82, defense: 58, experience: 62, health: 88 },
+        edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
+        keyStats: [
+          { label: "Tanner R64", value: "26 pts, 7 reb, 5 ast", hot: true },
+          { label: "NEB R64", value: "76-47, first-ever W", hot: true },
+          { label: "Style clash", value: "Offense vs Defense", hot: false },
+        ],
+        injuries: [],
         headline:"🚨 Title rematch AT TOYOTA CENTER. Home court + elite D = Houston.", whyPick:"The South Regional Final is at Houston's home arena. That structural advantage + Houston's superior defense + Florida's 3PT regression risk = Cougars advance. Kelvin Sampson's program is built for this moment.", whyNot:"Florida won the title last year. They have the experience edge and a better frontcourt. If they shoot well from 3, the crowd doesn't matter." },
     ],
   },
   MIDWEST: {
     R32: [
       { s1:1, t1:"Michigan", t1Short:"MICH", s2:9, t2:"Saint Louis", t2Short:"SLU", pick:"Michigan", confidence:78, riskLevel:"SAFE",
-        headline:"Michigan's #1 defense has the length to contest SLU's 3s.", whyPick:"SLU shoots 40.1% from 3, but Michigan's defense contests shots without leaving the rim unprotected. Mara's wingspan wins the Avila matchup.", whyNot:"If SLU hits 12+ threes, they can hang. Avila vs. Mara is a genuinely fun matchup." },
+        edge: { offense: 82, defense: 58, experience: 62, health: 88 },
+        edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
+        keyStats: [
+          { label: "Tanner R64", value: "26 pts, 7 reb, 5 ast", hot: true },
+          { label: "NEB R64", value: "76-47, first-ever W", hot: true },
+          { label: "Style clash", value: "Offense vs Defense", hot: false },
+        ],
+        injuries: [],
+        headline:"Michigan's #1 defense vs SLU who just scored 102 on Georgia.",
+        edge: { offense: 85, defense: 98, experience: 78, health: 78 },
+        edgeOpp: { offense: 80, defense: 55, experience: 72, health: 90 },
+        keyStats: [
+          { label: "MICH R64", value: "101-80, shot 67%", hot: true },
+          { label: "SLU R64", value: "102-77(!), 21-0 run", hot: true },
+          { label: "Avila vs Mara", value: "Marquee big battle", hot: false },
+        ],
+        injuries: [
+          { player: "L.J. Cason", team: "Michigan", status: "OUT", impact: "MED", detail: "Torn ACL — perimeter shooting loss, but 8-deep rotation compensates." },
+        ],
+        whyPick:"SLU shoots 40.1% from 3, but Michigan's defense contests shots without leaving the rim unprotected. Mara's wingspan wins the Avila matchup.", whyNot:"If SLU hits 12+ threes, they can hang. Avila vs. Mara is a genuinely fun matchup." },
       { s1:12, t1:"Akron", t1Short:"AKR", s2:4, t2:"Alabama", t2Short:"BAMA", pick:"Akron", confidence:54, upset:true, riskLevel:"UPSET",
-        headline:"🚨 CINDERELLA CONTINUES. Bama's 68th-ranked D + Holloway drama = Akron.", whyPick:"Alabama's defense (68th KenPom) is a massive weakness Akron's three elite shooters will exploit. The Zips match Alabama's tempo and shoot them off the court. Holloway legal situation adds chaos.", whyNot:"Alabama's raw talent and Philon's 21.7 PPG is hard to overcome. If Holloway plays and Bama is locked in, the talent gap matters." },
+        edge: { offense: 82, defense: 58, experience: 62, health: 88 },
+        edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
+        keyStats: [
+          { label: "Tanner R64", value: "26 pts, 7 reb, 5 ast", hot: true },
+          { label: "NEB R64", value: "76-47, first-ever W", hot: true },
+          { label: "Style clash", value: "Offense vs Defense", hot: false },
+        ],
+        injuries: [],
+        headline:"CINDERELLA CONTINUES. Bama 68th-ranked D + Holloway drama = Akron.",
+        edge: { offense: 78, defense: 55, experience: 85, health: 95 },
+        edgeOpp: { offense: 80, defense: 45, experience: 55, health: 62 },
+        keyStats: [
+          { label: "AKR PPG", value: "88.7 (7th nationally)", hot: true },
+          { label: "BAMA Def", value: "KenPom #68 (yikes)", hot: true },
+          { label: "Holloway", value: "Arrested — status ??", hot: true },
+        ],
+        injuries: [
+          { player: "A. Holloway", team: "Alabama", status: "UNCERTAIN", impact: "HIGH", detail: "Arrested Monday — marijuana charge. 16.8 PPG. Status unclear." },
+        ],
+        whyPick:"Alabama's defense (68th KenPom) is a massive weakness Akron's three elite shooters will exploit. The Zips match Alabama's tempo and shoot them off the court. Holloway legal situation adds chaos.", whyNot:"Alabama's raw talent and Philon's 21.7 PPG is hard to overcome. If Holloway plays and Bama is locked in, the talent gap matters." },
       { s1:6, t1:"Tennessee", t1Short:"TENN", s2:3, t2:"Virginia", t2Short:"UVA", pick:"Virginia", confidence:58, riskLevel:"LEAN",
-        headline:"Virginia's system (3s + offensive boards) outlasts Tennessee's grind.", whyPick:"Virginia has multiple paths to scoring. Tennessee relies too heavily on Gillespie creating individually. UVA's balanced attack wins a close one.", whyNot:"Barnes' defense can contain anyone. If Gillespie goes off (25+), Tennessee wins." },
+        edge: { offense: 82, defense: 58, experience: 62, health: 88 },
+        edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
+        keyStats: [
+          { label: "Tanner R64", value: "26 pts, 7 reb, 5 ast", hot: true },
+          { label: "NEB R64", value: "76-47, first-ever W", hot: true },
+          { label: "Style clash", value: "Offense vs Defense", hot: false },
+        ],
+        injuries: [],
+        headline:"Virginia's system (3s + offensive boards) outlasts Tennessee's grind.",
+        edge: { offense: 72, defense: 85, experience: 80, health: 90 },
+        edgeOpp: { offense: 62, defense: 82, experience: 72, health: 72 },
+        keyStats: [
+          { label: "UVA 3PA", value: "46.8% of all FGA", hot: true },
+          { label: "UVA O-Reb", value: "#6 nationally", hot: false },
+          { label: "TENN Def", value: "Elite under Barnes", hot: false },
+        ],
+        injuries: [
+          { player: "N. Ament", team: "Tennessee", status: "GTD", impact: "HIGH", detail: "Knee — managing injury. Effectiveness is the question." },
+        ],
+        whyPick:"Virginia has multiple paths to scoring. Tennessee relies too heavily on Gillespie creating individually. UVA's balanced attack wins a close one.", whyNot:"Barnes' defense can contain anyone. If Gillespie goes off (25+), Tennessee wins." },
       { s1:7, t1:"Kentucky", t1Short:"UK", s2:2, t2:"Iowa State", t2Short:"ISU", pick:"Iowa State", confidence:80, riskLevel:"SAFE",
-        headline:"ISU's turnover-forcing defense eats Kentucky alive.", whyPick:"Iowa State's defense forces turnovers at an elite rate — exactly what Kentucky's inconsistent guards can't handle. Jefferson dominates inside.", whyNot:"Kentucky has SEC-level athletes. If Oweh plays the game of his life, UK has a shot." },
+        edge: { offense: 82, defense: 58, experience: 62, health: 88 },
+        edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
+        keyStats: [
+          { label: "Tanner R64", value: "26 pts, 7 reb, 5 ast", hot: true },
+          { label: "NEB R64", value: "76-47, first-ever W", hot: true },
+          { label: "Style clash", value: "Offense vs Defense", hot: false },
+        ],
+        injuries: [],
+        headline:"ISU's turnover-forcing defense eats Kentucky alive.",
+        edge: { offense: 80, defense: 92, experience: 82, health: 90 },
+        edgeOpp: { offense: 62, defense: 58, experience: 72, health: 50 },
+        keyStats: [
+          { label: "ISU Def", value: "KenPom #4, TO rate #3", hot: true },
+          { label: "Jefferson", value: "Wooden candidate", hot: true },
+          { label: "UK record", value: "21-13 (inconsistent)", hot: false },
+        ],
+        injuries: [
+          { player: "J. Quaintance", team: "Kentucky", status: "OUT", impact: "MED", detail: "Knee — only 4 games played all season." },
+        ],
+        whyPick:"Iowa State's defense forces turnovers at an elite rate — exactly what Kentucky's inconsistent guards can't handle. Jefferson dominates inside.", whyNot:"Kentucky has SEC-level athletes. If Oweh plays the game of his life, UK has a shot." },
     ],
     S16: [
       { s1:1, t1:"Michigan", t1Short:"MICH", s2:12, t2:"Akron", t2Short:"AKR", pick:"Michigan", confidence:74, riskLevel:"LEAN",
+        edge: { offense: 82, defense: 58, experience: 62, health: 88 },
+        edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
+        keyStats: [
+          { label: "Tanner R64", value: "26 pts, 7 reb, 5 ast", hot: true },
+          { label: "NEB R64", value: "76-47, first-ever W", hot: true },
+          { label: "Style clash", value: "Offense vs Defense", hot: false },
+        ],
+        injuries: [],
         headline:"Cinderella meets the #1 defense. Michigan's length ends the run.", whyPick:"Michigan can contest 3s WITHOUT sacrificing rim protection — that's what makes their defense different from Alabama's. Akron's shooting meets real resistance for the first time.", whyNot:"Akron's senior guards have been here before. If they hit early 3s and build a lead, Michigan's turnovers could keep the door open." },
       { s1:3, t1:"Virginia", t1Short:"UVA", s2:2, t2:"Iowa State", t2Short:"ISU", pick:"Iowa State", confidence:62, riskLevel:"LEAN",
+        edge: { offense: 82, defense: 58, experience: 62, health: 88 },
+        edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
+        keyStats: [
+          { label: "Tanner R64", value: "26 pts, 7 reb, 5 ast", hot: true },
+          { label: "NEB R64", value: "76-47, first-ever W", hot: true },
+          { label: "Style clash", value: "Offense vs Defense", hot: false },
+        ],
+        injuries: [],
         headline:"Jefferson's dominance + Momcilovic's shooting break Virginia's system.", whyPick:"Iowa State has more top-end talent. Jefferson is the best player on the floor. Their turnover-forcing defense disrupts Virginia's offensive flow.", whyNot:"Virginia's De Ridder is a matchup problem. Two elite defenses means a low-scoring battle where anything can happen." },
     ],
     E8: [
       { s1:1, t1:"Michigan", t1Short:"MICH", s2:2, t2:"Iowa State", t2Short:"ISU", pick:"Michigan", confidence:54, riskLevel:"TOSS-UP",
+        edge: { offense: 82, defense: 58, experience: 62, health: 88 },
+        edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
+        keyStats: [
+          { label: "Tanner R64", value: "26 pts, 7 reb, 5 ast", hot: true },
+          { label: "NEB R64", value: "76-47, first-ever W", hot: true },
+          { label: "Style clash", value: "Offense vs Defense", hot: false },
+        ],
+        injuries: [],
         headline:"Game of the tournament. #1 D vs. #4 D. Michigan's frontcourt is the tiebreaker.", whyPick:"Michigan's size advantage with Mara, Johnson, and Lendeborg is decisive. Iowa State doesn't have a big to match that frontcourt. Michigan's turnovers could open the door, but rebounding provides margin for error.", whyNot:"Iowa State's turnover-forcing defense is Michigan's kryptonite (179th in TO rate). If the Cyclones create 18+ turnovers, they win." },
     ],
   },
   FINAL_FOUR: [
     { s1:1, t1:"Duke", t1Short:"DUKE", region1:"EAST", s2:2, t2:"Houston", t2Short:"HOU", region2:"SOUTH", pick:"Duke", confidence:58, riskLevel:"TOSS-UP",
+        edge: { offense: 82, defense: 58, experience: 62, health: 88 },
+        edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
+        keyStats: [
+          { label: "Tanner R64", value: "26 pts, 7 reb, 5 ast", hot: true },
+          { label: "NEB R64", value: "76-47, first-ever W", hot: true },
+          { label: "Style clash", value: "Offense vs Defense", hot: false },
+        ],
+        injuries: [],
       headline:"Boozer vs. Sampson's elite D. Duke's passing out of doubles decides it.", whyPick:"Boozer's passing when doubled creates impossible decisions for Houston's defense. Duke's #2 defense can match Houston's intensity. If Foster returns, Duke's ceiling goes even higher.", whyNot:"Houston's defensive scheme has frustrated bigger, more athletic opponents all season. Flemings + Cenac can score." },
     { s1:1, t1:"Arizona", t1Short:"ARIZ", region1:"WEST", s2:1, t2:"Michigan", t2Short:"MICH", region2:"MIDWEST", pick:"Michigan", confidence:56, riskLevel:"TOSS-UP",
+        edge: { offense: 82, defense: 58, experience: 62, health: 88 },
+        edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
+        keyStats: [
+          { label: "Tanner R64", value: "26 pts, 7 reb, 5 ast", hot: true },
+          { label: "NEB R64", value: "76-47, first-ever W", hot: true },
+          { label: "Style clash", value: "Offense vs Defense", hot: false },
+        ],
+        injuries: [],
       headline:"Arizona's lack of 3PT shooting vs. Michigan's pack-the-paint D.", whyPick:"Arizona doesn't shoot enough 3s to punish Michigan's defense, which is designed to take away interior shots. Michigan's length and switchability are Arizona's kryptonite.", whyNot:"Arizona has elite individual talent (Burries, Bradley, Peat). If they force the pace and attack in transition, Michigan's turnover issues emerge." },
   ],
   CHAMPIONSHIP: [
     { s1:1, t1:"Duke", t1Short:"DUKE", region1:"EAST", s2:1, t2:"Michigan", t2Short:"MICH", region2:"MIDWEST", pick:"Duke", confidence:55, riskLevel:"TOSS-UP",
+        edge: { offense: 82, defense: 58, experience: 62, health: 88 },
+        edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
+        keyStats: [
+          { label: "Tanner R64", value: "26 pts, 7 reb, 5 ast", hot: true },
+          { label: "NEB R64", value: "76-47, first-ever W", hot: true },
+          { label: "Style clash", value: "Offense vs Defense", hot: false },
+        ],
+        injuries: [],
       headline:"🏆 The dream final. Boozer's generational talent wins a championship.", whyPick:"Championship games favor the team with the best individual player. Boozer is that player. His passing makes double-teams counterproductive. If Foster returns for the title game, Duke's perimeter creation swings this significantly.", whyNot:"Michigan's #1 defense is extraordinary. Their turnover-forcing ability could exploit Duke's guard play. Lendeborg and Mara create their own matchup problems." },
   ],
 };
@@ -656,6 +939,35 @@ export default function MadnessIQ() {
       {tab === "bracket" && (
         <div style={{ padding:"10px 12px 80px" }}>
 
+          {/* Thursday scorecard banner */}
+          <div style={{ background:"linear-gradient(135deg,#101420,#141018)", border:"1px solid #2a2540", borderRadius:8, padding:"10px 12px", marginBottom:10 }}>
+            <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:6 }}>
+              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:2, color:"#ff6b3d" }}>THURSDAY R64 SCORECARD</div>
+              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:9, color:"#8a8d9a" }}>Updated Mar 19</div>
+            </div>
+            <div style={{ display:"flex", gap:6 }}>
+              <div style={{ flex:1, background:"#0a1a10", borderRadius:6, padding:"6px 8px", textAlign:"center", border:"1px solid #1a3a22" }}>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:18, fontWeight:700, color:"#3ded7a" }}>11</div>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#3ded7a", letterSpacing:1 }}>CORRECT</div>
+              </div>
+              <div style={{ flex:1, background:"#1a0e10", borderRadius:6, padding:"6px 8px", textAlign:"center", border:"1px solid #3a1a1e" }}>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:18, fontWeight:700, color:"#ed5a5a" }}>5</div>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#ed5a5a", letterSpacing:1 }}>MISSED</div>
+              </div>
+              <div style={{ flex:1, background:"#0e1420", borderRadius:6, padding:"6px 8px", textAlign:"center", border:"1px solid #1a2a40" }}>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:18, fontWeight:700, color:"#4a9aed" }}>69%</div>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#4a9aed", letterSpacing:1 }}>ACCURACY</div>
+              </div>
+              <div style={{ flex:1, background:"#1a1410", borderRadius:6, padding:"6px 8px", textAlign:"center", border:"1px solid #3a2a1a" }}>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:18, fontWeight:700, color:"#edaa3d" }}>1</div>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#edaa3d", letterSpacing:1 }}>UPSET HIT</div>
+              </div>
+            </div>
+            <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:"#6a6d78", marginTop:6, lineHeight:1.5 }}>
+              Called A&M upset. Duke nearly fell to Siena. VCU erased 19-pt deficit to beat UNC in historic comeback. High Point stunned Wisconsin. Friday games still to come.
+            </div>
+          </div>
+
           {/* Region tabs — includes FINAL 4 */}
           <div style={{ display:"flex", gap:2, marginBottom:6 }}>
             {[...Object.keys(GAMES), "FINAL4"].map(r => (
@@ -703,7 +1015,7 @@ export default function MadnessIQ() {
                 const isExp = expanded === i;
                 const isLater = round !== "R64";
                 return (
-                  <div key={`${round}-${i}`} onClick={() => { setExpanded(isExp ? null : i); setDetailSection(isLater ? "why" : "matchup"); }} style={{
+                  <div key={`${round}-${i}`} onClick={() => { setExpanded(isExp ? null : i); setDetailSection(g.result ? "postgame" : g.edge ? "matchup" : "why"); }} style={{
                     background: isExp ? "linear-gradient(135deg,#12141e,#161424)" : "#0e1016",
                     border:`1px solid ${isExp ? "#3a3a5a" : g.upset ? "#3a1a20" : "#282c38"}`,
                     borderLeft: g.upset ? "3px solid #ed3d5a" : g.riskLevel === "TOSS-UP" ? "3px solid #ed8a3d" : `3px solid ${regionColors[region]}40`,
@@ -716,50 +1028,78 @@ export default function MadnessIQ() {
                         <div style={{ flex:1, minWidth:0 }}>
                           <div style={{ display:"flex", alignItems:"center", gap:4, marginBottom:2, flexWrap:"wrap" }}>
                             <span style={{ fontFamily:"'DM Mono',monospace", fontSize:10, color:"#8a8d9a" }}>{g.s1}</span>
-                            <span style={{ fontSize:12, fontWeight: g.pick===g.t1?700:400, color: g.pick===g.t1?"#4aed7a":"#b8bac2" }}>{g.t1}</span>
-                            <span style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:"#8a8d9a" }}>vs</span>
+                            <span style={{ fontSize:12, fontWeight: g.pick===g.t1?700:400, color: g.result ? (g.result.winner===g.t1 ? "#e2ddd5" : "#5a5d68") : g.pick===g.t1?"#4aed7a":"#b8bac2" }}>{g.t1}</span>
+                            {g.result && <span style={{ fontFamily:"'DM Mono',monospace", fontSize:11, fontWeight:700, color: g.result.winner===g.t1 ? "#e2ddd5" : "#5a5d68" }}>{g.result.score1}</span>}
+                            <span style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:"#8a8d9a" }}>{g.result ? "—" : "vs"}</span>
+                            {g.result && <span style={{ fontFamily:"'DM Mono',monospace", fontSize:11, fontWeight:700, color: g.result.winner===g.t2 ? "#e2ddd5" : "#5a5d68" }}>{g.result.score2}</span>}
                             <span style={{ fontFamily:"'DM Mono',monospace", fontSize:10, color:"#8a8d9a" }}>{g.s2}</span>
-                            <span style={{ fontSize:12, fontWeight: g.pick===g.t2?700:400, color: g.pick===g.t2?"#4aed7a":"#b8bac2" }}>{g.t2}</span>
+                            <span style={{ fontSize:12, fontWeight: g.pick===g.t2?700:400, color: g.result ? (g.result.winner===g.t2 ? "#e2ddd5" : "#5a5d68") : g.pick===g.t2?"#4aed7a":"#b8bac2" }}>{g.t2}</span>
                           </div>
                           <div style={{ fontSize:10, color: g.upset?"#ed8a8a":"#a0a3ae", lineHeight:1.3, overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>
                             {g.headline}
                           </div>
                         </div>
-                        <RiskBadge level={g.riskLevel} />
+                        {g.result ? (
+                          <span style={{ fontFamily:"'DM Mono',monospace", fontSize:8, fontWeight:700, padding:"3px 6px", borderRadius:4,
+                            color: g.result.correct ? "#3ded7a" : "#ed5a5a",
+                            background: g.result.correct ? "#0e1e14" : "#1e0e10",
+                            border: `1px solid ${g.result.correct ? "#1a3a22" : "#3a1a1e"}`,
+                          }}>
+                            {g.result.correct ? "\u2713 CALLED" : "\u2717 MISS"}
+                          </span>
+                        ) : (
+                          <RiskBadge level={g.riskLevel} />
+                        )}
                       </div>
                     </div>
 
                     {isExp && (
                       <div style={{ borderTop:"1px solid #2a2d3a", padding:"10px", animation:"slideUp 0.2s ease" }} onClick={e => e.stopPropagation()}>
-                        {!isLater && (
-                          <div style={{ display:"flex", gap:2, marginBottom:10 }}>
-                            {[{id:"matchup",label:"MATCHUP"},{id:"injuries",label:`INJURIES${g.injuries?.length?` (${g.injuries.length})`:""}`},{id:"why",label:"ANALYSIS"}].map(s => (
-                              <button key={s.id} onClick={() => setDetailSection(s.id)} style={{
-                                flex:1, background: detailSection === s.id ? "#1a1d28" : "transparent",
-                                border:`1px solid ${detailSection === s.id ? "#3a4560" : "#222530"}`,
-                                color: detailSection === s.id ? "#e2ddd5" : "#8090a0",
-                                padding:"4px 2px", borderRadius:4, cursor:"pointer",
-                                fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:1,
-                              }}>
-                                {s.label}
-                              </button>
-                            ))}
+                        <div style={{ display:"flex", gap:2, marginBottom:10 }}>
+                          {[
+                            ...(g.result ? [{id:"postgame",label:g.result.correct ? "\u2713 RESULT" : "\u2717 RESULT"}] : []),
+                            ...(g.edge ? [{id:"matchup",label:"MATCHUP"}] : []),
+                            ...(g.injuries?.length ? [{id:"injuries",label:`INJURIES (${g.injuries.length})`}] : []),
+                            {id:"why",label: g.result ? "PRE-GAME" : "ANALYSIS"},
+                          ].map(s => (
+                            <button key={s.id} onClick={() => setDetailSection(s.id)} style={{
+                              flex:1, background: detailSection === s.id ? "#1a1d28" : "transparent",
+                              border:`1px solid ${detailSection === s.id ? "#3a4560" : "#222530"}`,
+                              color: detailSection === s.id ? "#e2ddd5" : "#8090a0",
+                              padding:"4px 2px", borderRadius:4, cursor:"pointer",
+                              fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:1,
+                            }}>
+                              {s.label}
+                            </button>
+                          ))}
+                        </div>
+                        {detailSection === "postgame" && g.result && (
+                          <div>
+                            <div style={{ background: g.result.correct ? "#0a1a10" : "#1a0e10", border: `1px solid ${g.result.correct ? "#1a3a22" : "#3a1a1e"}`, borderRadius:6, padding:"8px 10px", marginBottom:8 }}>
+                              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color: g.result.correct ? "#3ded7a" : "#ed5a5a", letterSpacing:1, marginBottom:3 }}>
+                                {g.result.correct ? "PREDICTION: CORRECT" : "PREDICTION: MISSED"}
+                              </div>
+                              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:14, fontWeight:700, color:"#e2ddd5", marginBottom:6 }}>
+                                {g.result.winner} {Math.max(g.result.score1,g.result.score2)} — {Math.min(g.result.score1,g.result.score2)}
+                              </div>
+                              <div style={{ fontSize:11, lineHeight:1.6, color:"#d0ccc4" }}>{g.result.postGame}</div>
+                            </div>
                           </div>
                         )}
-                        {!isLater && detailSection === "matchup" && g.edge && (
+                        {detailSection === "matchup" && g.edge && (
                           <div>
                             <div style={{ display:"flex", justifyContent:"space-between", fontFamily:"'DM Mono',monospace", fontSize:9, color:"#8a8d98", marginBottom:6 }}>
-                              <span style={{ color: g.pick===g.t1?"#4aed7a":"#c0c3cc", fontWeight:700 }}>{g.t1Short}</span>
-                              <span style={{ color: g.pick===g.t2?"#4aed7a":"#c0c3cc", fontWeight:700 }}>{g.t2Short}</span>
+                              <span style={{ color: g.pick===g.t1?"#4aed7a":"#c0c3cc", fontWeight:700 }}>{g.t1Short || g.t1}</span>
+                              <span style={{ color: g.pick===g.t2?"#4aed7a":"#c0c3cc", fontWeight:700 }}>{g.t2Short || g.t2}</span>
                             </div>
-                            <EdgeBar label="OFFENSE" val1={g.edge.offense} val2={g.edgeOpp.offense} color1={regionColors[region]} color2="#5a5d68" />
-                            <EdgeBar label="DEFENSE" val1={g.edge.defense} val2={g.edgeOpp.defense} color1={regionColors[region]} color2="#5a5d68" />
-                            <EdgeBar label="EXPERIENCE" val1={g.edge.experience} val2={g.edgeOpp.experience} color1={regionColors[region]} color2="#5a5d68" />
-                            <EdgeBar label="HEALTH" val1={g.edge.health} val2={g.edgeOpp.health} color1={regionColors[region]} color2="#5a5d68" />
+                            <EdgeBar label="OFFENSE" val1={g.edge.offense} val2={g.edgeOpp.offense} color1={regionColors[region] || "#ff6b3d"} color2="#5a5d68" />
+                            <EdgeBar label="DEFENSE" val1={g.edge.defense} val2={g.edgeOpp.defense} color1={regionColors[region] || "#ff6b3d"} color2="#5a5d68" />
+                            <EdgeBar label="EXPERIENCE" val1={g.edge.experience} val2={g.edgeOpp.experience} color1={regionColors[region] || "#ff6b3d"} color2="#5a5d68" />
+                            <EdgeBar label="HEALTH" val1={g.edge.health} val2={g.edgeOpp.health} color1={regionColors[region] || "#ff6b3d"} color2="#5a5d68" />
                             {g.keyStats && <div style={{ display:"flex", gap:4, marginTop:8 }}>{g.keyStats.map((s,j) => <StatPill key={j} stat={s} />)}</div>}
                           </div>
                         )}
-                        {!isLater && detailSection === "injuries" && (
+                        {detailSection === "injuries" && (
                           <div>
                             {(!g.injuries || g.injuries.length === 0) ? (
                               <div style={{ fontFamily:"'DM Mono',monospace", fontSize:10, color:"#3ded7a", padding:8, textAlign:"center" }}>{"\u2713"} No significant injuries</div>
@@ -773,10 +1113,18 @@ export default function MadnessIQ() {
                             ))}
                           </div>
                         )}
-                        {(detailSection === "why" || isLater) && (
+                        {detailSection === "why" && (
                           <div>
                             <div style={{ marginBottom:8 }}>
                               <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:"#3ded7a", letterSpacing:1, marginBottom:3 }}>WHY {g.pick.toUpperCase()} WINS</div>
+        edge: { offense: 82, defense: 58, experience: 62, health: 88 },
+        edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
+        keyStats: [
+          { label: "Tanner R64", value: "26 pts, 7 reb, 5 ast", hot: true },
+          { label: "NEB R64", value: "76-47, first-ever W", hot: true },
+          { label: "Style clash", value: "Offense vs Defense", hot: false },
+        ],
+        injuries: [],
                               <div style={{ fontSize:11, lineHeight:1.6, color:"#d0ccc4" }}>{g.whyPick}</div>
                             </div>
                             <div style={{ marginBottom: g.historicalNote ? 8 : 0 }}>
@@ -847,6 +1195,14 @@ export default function MadnessIQ() {
                     <div style={{ borderTop:"1px solid #2a2d3a", padding:"10px" }} onClick={e => e.stopPropagation()}>
                       <div style={{ marginBottom:8 }}>
                         <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:"#3ded7a", letterSpacing:1, marginBottom:3 }}>WHY {g.pick.toUpperCase()} WINS</div>
+        edge: { offense: 82, defense: 58, experience: 62, health: 88 },
+        edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
+        keyStats: [
+          { label: "Tanner R64", value: "26 pts, 7 reb, 5 ast", hot: true },
+          { label: "NEB R64", value: "76-47, first-ever W", hot: true },
+          { label: "Style clash", value: "Offense vs Defense", hot: false },
+        ],
+        injuries: [],
                         <div style={{ fontSize:11, lineHeight:1.6, color:"#d0ccc4" }}>{g.whyPick}</div>
                       </div>
                       <div>
@@ -883,6 +1239,14 @@ export default function MadnessIQ() {
                     <div style={{ borderTop:"1px solid #2a2d3a", padding:"10px" }} onClick={e => e.stopPropagation()}>
                       <div style={{ marginBottom:8 }}>
                         <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:"#3ded7a", letterSpacing:1, marginBottom:3 }}>WHY {g.pick.toUpperCase()} WINS IT ALL</div>
+        edge: { offense: 82, defense: 58, experience: 62, health: 88 },
+        edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
+        keyStats: [
+          { label: "Tanner R64", value: "26 pts, 7 reb, 5 ast", hot: true },
+          { label: "NEB R64", value: "76-47, first-ever W", hot: true },
+          { label: "Style clash", value: "Offense vs Defense", hot: false },
+        ],
+        injuries: [],
                         <div style={{ fontSize:11, lineHeight:1.6, color:"#d0ccc4" }}>{g.whyPick}</div>
                       </div>
                       <div>
