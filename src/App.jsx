@@ -1117,14 +1117,6 @@ export default function MadnessIQ() {
                           <div>
                             <div style={{ marginBottom:8 }}>
                               <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:"#3ded7a", letterSpacing:1, marginBottom:3 }}>WHY {g.pick.toUpperCase()} WINS</div>
-        edge: { offense: 82, defense: 58, experience: 62, health: 88 },
-        edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
-        keyStats: [
-          { label: "Tanner R64", value: "26 pts, 7 reb, 5 ast", hot: true },
-          { label: "NEB R64", value: "76-47, first-ever W", hot: true },
-          { label: "Style clash", value: "Offense vs Defense", hot: false },
-        ],
-        injuries: [],
                               <div style={{ fontSize:11, lineHeight:1.6, color:"#d0ccc4" }}>{g.whyPick}</div>
                             </div>
                             <div style={{ marginBottom: g.historicalNote ? 8 : 0 }}>
@@ -1195,14 +1187,6 @@ export default function MadnessIQ() {
                     <div style={{ borderTop:"1px solid #2a2d3a", padding:"10px" }} onClick={e => e.stopPropagation()}>
                       <div style={{ marginBottom:8 }}>
                         <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:"#3ded7a", letterSpacing:1, marginBottom:3 }}>WHY {g.pick.toUpperCase()} WINS</div>
-        edge: { offense: 82, defense: 58, experience: 62, health: 88 },
-        edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
-        keyStats: [
-          { label: "Tanner R64", value: "26 pts, 7 reb, 5 ast", hot: true },
-          { label: "NEB R64", value: "76-47, first-ever W", hot: true },
-          { label: "Style clash", value: "Offense vs Defense", hot: false },
-        ],
-        injuries: [],
                         <div style={{ fontSize:11, lineHeight:1.6, color:"#d0ccc4" }}>{g.whyPick}</div>
                       </div>
                       <div>
@@ -1239,14 +1223,6 @@ export default function MadnessIQ() {
                     <div style={{ borderTop:"1px solid #2a2d3a", padding:"10px" }} onClick={e => e.stopPropagation()}>
                       <div style={{ marginBottom:8 }}>
                         <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:"#3ded7a", letterSpacing:1, marginBottom:3 }}>WHY {g.pick.toUpperCase()} WINS IT ALL</div>
-        edge: { offense: 82, defense: 58, experience: 62, health: 88 },
-        edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
-        keyStats: [
-          { label: "Tanner R64", value: "26 pts, 7 reb, 5 ast", hot: true },
-          { label: "NEB R64", value: "76-47, first-ever W", hot: true },
-          { label: "Style clash", value: "Offense vs Defense", hot: false },
-        ],
-        injuries: [],
                         <div style={{ fontSize:11, lineHeight:1.6, color:"#d0ccc4" }}>{g.whyPick}</div>
                       </div>
                       <div>
