@@ -336,7 +336,7 @@ const LATER_ROUNDS = {
         ],
         whyPick:"Duke's second-half comeback vs Siena showed championship DNA — Boozer brothers combined for 21 in the comeback. TCU won a tight 66-64 over Ohio State but doesn't have the firepower to exploit Duke's perimeter weakness like a higher seed would. Duke's defense tightens up in Round 2.",
         whyNot:"Duke went 2-15 from 3 against Siena. If that shooting continues, TCU's defense — which just locked down Ohio State late — could make this uncomfortable. Duke's title odds took a real hit Thursday." },
-      { s1:5, t1:"St. John's", t1Short:"SJU", s2:4, t2:"Kansas", t2Short:"KU", date:"Sat Mar 21", pick:"St. John's", confidence:55, upset:true, riskLevel:"UPSET",
+      { s1:5, t1:"St. John's", t1Short:"SJU", s2:4, t2:"Kansas", t2Short:"KU", date:"Sun Mar 22", pick:"St. John's", confidence:55, upset:true, riskLevel:"UPSET",
         headline:"🚨 Pitino vs. Self. Ejiofor's size overwhelms shaky KU chemistry.",
         edge: { offense: 75, defense: 72, experience: 78, health: 90 },
         edgeOpp: { offense: 78, defense: 70, experience: 68, health: 75 },
@@ -364,7 +364,7 @@ const LATER_ROUNDS = {
         ],
         whyPick:"Michigan State was dominant — 92-67 over NDSU, shot 60%, controlled the glass. Louisville needed McKneely's heroic 7-three night to survive South Florida's 23-point comeback. The Spartans' physicality and rebounding will overwhelm a Louisville team that turned it over 22 times Thursday.",
         whyNot:"Louisville showed resilience surviving that USF rally. McKneely (23 pts) can get hot from anywhere. If Louisville protects the ball better than Thursday (22 TOs), this gets competitive." },
-      { s1:10, t1:"UCF", t1Short:"UCF", s2:2, t2:"UConn", t2Short:"UCONN", date:"Sat Mar 21", pick:"UConn", confidence:74, riskLevel:"LEAN",
+      { s1:10, t1:"UCF", t1Short:"UCF", s2:2, t2:"UConn", t2Short:"UCONN", date:"Sun Mar 22", pick:"UConn", confidence:74, riskLevel:"LEAN",
         headline:"Hurley's scheme exploits UCF's perimeter gaps.", whyPick:"UConn's championship DNA shows up in these moments. Demary's playmaking controls pace. UCF's size is real but UConn's half-court execution is a tier above.", whyNot:"John Bol creates real matchup problems on the glass. If UConn goes cold from 3 (they do sometimes), UCF hangs around." },
     ],
     S16: [
@@ -374,7 +374,7 @@ const LATER_ROUNDS = {
         edgeOpp: { offense: 75, defense: 72, experience: 78, health: 90 },
         keyStats: [{ label: "Boozer", value: "Generational passer/scorer", hot: true },{ label: "Ejiofor", value: "B.East POTY interior", hot: true },{ label: "Duke 3PT", value: "2-15 in R64 (!)", hot: false }],
         injuries: [{ player: "C. Foster", team: "Duke", status: "OUT", impact: "HIGH", detail: "Broken foot — still out. Perimeter creation limited." }] },
-      { s1:3, t1:"Michigan St.", t1Short:"MSU", s2:2, t2:"UConn", t2Short:"UCONN", pick:"Michigan St.", confidence:54, upset:true, riskLevel:"UPSET",
+      { date:"Thu Mar 26", s1:3, t1:"Michigan St.", t1Short:"MSU", s2:2, t2:"UConn", t2Short:"UCONN", pick:"Michigan St.", confidence:54, upset:true, riskLevel:"UPSET",
         headline:"🚨 Izzo's physicality disrupts UConn's inconsistent shooting.", whyPick:"UConn's shooting droughts (Solo Ball, Karaban disappearing) make them vulnerable against physical, rebounding-dominant teams. Izzo's March magic vs. a UConn team that isn't 2023-24 caliber.", whyNot:"When UConn is on, they can beat anyone. Hurley's adjustments are elite. This is a coin flip that could easily go either way.",
         edge: { offense: 72, defense: 80, experience: 88, health: 90 },
         edgeOpp: { offense: 70, defense: 82, experience: 90, health: 75 },
@@ -382,7 +382,7 @@ const LATER_ROUNDS = {
         injuries: [{ player: "J. Stewart", team: "UConn", status: "GTD", impact: "LOW", detail: "Lower body — uncertain since Feb." }] },
     ],
     E8: [
-      { s1:1, t1:"Duke", t1Short:"DUKE", s2:3, t2:"Michigan St.", t2Short:"MSU", pick:"Duke", confidence:64, riskLevel:"LEAN",
+      { date:"Sat Mar 28", s1:1, t1:"Duke", t1Short:"DUKE", s2:3, t2:"Michigan St.", t2Short:"MSU", pick:"Duke", confidence:64, riskLevel:"LEAN",
         headline:"No. 1 overall seed vs. Izzo. Boozer's dominance prevails in a dogfight.", whyPick:"Boozer is the best player on the floor. Duke's defense can match MSU's physicality. A 65-60 type game where Duke's talent advantage shows in crunch time.", whyNot:"Izzo has eliminated higher seeds before. Fears Jr. is a terrific playmaker. If Cooper and Kohler dominate the glass, MSU controls the game.",
         edge: { offense: 82, defense: 90, experience: 82, health: 68 },
         edgeOpp: { offense: 72, defense: 80, experience: 88, health: 90 },
@@ -392,7 +392,7 @@ const LATER_ROUNDS = {
   },
   WEST: {
     R32: [
-      { s1:1, t1:"Arizona", t1Short:"ARIZ", s2:9, t2:"Utah State", t2Short:"USU", date:"Sat Mar 21", pick:"Arizona", confidence:84, riskLevel:"SAFE",
+      { s1:1, t1:"Arizona", t1Short:"ARIZ", s2:9, t2:"Utah State", t2Short:"USU", date:"Sun Mar 22", pick:"Arizona", confidence:84, riskLevel:"SAFE",
         headline:"Arizona's switching D neutralizes USU's ball-screen game.", whyPick:"Peat and Awaka can switch onto guards. Krivas protects the rim. Burries and Bradley attack on the other end. The talent gap is significant.", whyNot:"USU is well-coached and their offense is efficient. Could keep it within 10." },
       { s1:4, t1:"Arkansas", t1Short:"ARK", s2:12, t2:"High Point", t2Short:"HPU", date:"Sat Mar 21", pick:"Arkansas", confidence:72, originalConfidence:62, riskLevel:"LEAN",
         headline:"ARK -11.5. Acuff (24 pts R64) vs Johnston (passed Steph Curry in career 3s).",
@@ -408,7 +408,7 @@ const LATER_ROUNDS = {
         ],
         whyPick:"Arkansas was dominant — 97-78 over Hawaii, all 5 starters in double figures. High Point's stunning upset of Wisconsin was inspiring but they've never faced this level of athleticism. Acuff Jr. is a different tier of player than anyone HP has seen. Arkansas's interior scoring overwhelms HP's undersized frontcourt.",
         whyNot:"High Point just beat a Power Four team for the first time in program history. Chase Johnston (415 career 3s, more than Steph Curry at Davidson) can get scorching hot. If HP shoots 45%+ from 3, Arkansas's mediocre perimeter defense could be exposed." },
-      { s1:3, t1:"Gonzaga", t1Short:"ZAGA", s2:11, t2:"Texas", t2Short:"TEX", date:"Sun Mar 22", pick:"Gonzaga", confidence:68, originalConfidence:60, riskLevel:"LEAN",
+      { s1:3, t1:"Gonzaga", t1Short:"ZAGA", s2:11, t2:"Texas", t2Short:"TEX", date:"Sat Mar 21", pick:"Gonzaga", confidence:68, originalConfidence:60, riskLevel:"LEAN",
         headline:"Gonzaga faces Texas, who upset BYU 79-71. Ike's interior vs Texas length.",
         edge: { offense: 78, defense: 75, experience: 85, health: 72 },
         edgeOpp: { offense: 62, defense: 65, experience: 60, health: 82 },
@@ -422,17 +422,17 @@ const LATER_ROUNDS = {
         ],
         whyPick:"Gonzaga beat Kennesaw 73-64 and Ike was efficient inside. Texas upset BYU but the Longhorns don't have the interior scoring to match Ike and Grant-Foster. Gonzaga's experience in March is a real advantage here.",
         whyNot:"Texas has the length and athleticism to bother Ike. They just beat a team with the best player in the tournament (Dybantsa). If Texas's defense travels from the BYU game, Gonzaga could struggle to create open looks on the perimeter." },
-      { date:"Fri Mar 20", s1:7, t1:"Miami (FL)", t1Short:"MIA", s2:2, t2:"Purdue", t2Short:"PUR", date:"Sun Mar 22", pick:"Purdue", confidence:64, riskLevel:"LEAN",
+      { s1:7, t1:"Miami (FL)", t1Short:"MIA", s2:2, t2:"Purdue", t2Short:"PUR", date:"Sun Mar 22", pick:"Purdue", confidence:64, riskLevel:"LEAN",
         headline:"Purdue sweats. Miami's guards test their weak perimeter D.", whyPick:"Smith's playmaking + historic offensive efficiency generates enough quality looks. Kaufman-Renn overwhelms Miami's frontcourt. But Miami makes this uncomfortable.", whyNot:"Miami's perimeter scorers are exactly the type that have punished Purdue all season. This could go either way." },
     ],
     S16: [
-      { s1:1, t1:"Arizona", t1Short:"ARIZ", s2:4, t2:"Arkansas", t2Short:"ARK", pick:"Arizona", confidence:72, riskLevel:"LEAN",
+      { date:"Fri Mar 27", s1:1, t1:"Arizona", t1Short:"ARIZ", s2:4, t2:"Arkansas", t2Short:"ARK", pick:"Arizona", confidence:72, riskLevel:"LEAN",
         headline:"Arizona's switch-everything D + depth grinds down thin Arkansas roster.", whyPick:"Arizona's defensive versatility limits Acuff's driving lanes. Arkansas's depth issues (Knox out) become pronounced against an 8-deep Arizona rotation.", whyNot:"Acuff is special. He can single-handedly keep Arkansas in any game for 35 minutes. The question is the last 5.",
         edge: { offense: 90, defense: 92, experience: 80, health: 95 },
         edgeOpp: { offense: 82, defense: 65, experience: 62, health: 75 },
         keyStats: [{ label: "AZ Depth", value: "8+ deep rotation", hot: true },{ label: "Acuff", value: "SEC POTY (frosh)", hot: true },{ label: "ARK depth", value: "Knox OUT, thin bench", hot: false }],
         injuries: [{ player: "K. Knox", team: "Arkansas", status: "OUT", impact: "MED", detail: "Season-ending." }] },
-      { s1:3, t1:"Gonzaga", t1Short:"ZAGA", s2:2, t2:"Purdue", t2Short:"PUR", pick:"Purdue", confidence:58, riskLevel:"TOSS-UP",
+      { date:"Fri Mar 27", s1:3, t1:"Gonzaga", t1Short:"ZAGA", s2:2, t2:"Purdue", t2Short:"PUR", pick:"Purdue", confidence:58, riskLevel:"TOSS-UP",
         headline:"Smith's playmaking + Loyer's shooting edge out Gonzaga's interior.", whyPick:"Purdue's system generates better looks. Gonzaga's depleted perimeter (injuries) can't contain Smith. If Huff returns, this flips.", whyNot:"If Braden Huff returns for the Sweet 16, Gonzaga's depth becomes overwhelming and their interior dominance could control the game.",
         edge: { offense: 78, defense: 70, experience: 88, health: 72 },
         edgeOpp: { offense: 92, defense: 55, experience: 90, health: 88 },
@@ -440,7 +440,7 @@ const LATER_ROUNDS = {
         injuries: [{ player: "B. Huff", team: "Gonzaga", status: "GTD", impact: "HIGH", detail: "Knee — possible return. Would be a game-changer." }] },
     ],
     E8: [
-      { s1:1, t1:"Arizona", t1Short:"ARIZ", s2:2, t2:"Purdue", t2Short:"PUR", pick:"Arizona", confidence:62, riskLevel:"LEAN",
+      { date:"Sun Mar 29", s1:1, t1:"Arizona", t1Short:"ARIZ", s2:2, t2:"Purdue", t2Short:"PUR", pick:"Arizona", confidence:62, riskLevel:"LEAN",
         headline:"Burries + Bradley exploit Purdue's perimeter weakness. Lloyd finally breaks through.", whyPick:"Purdue's perimeter defense — their Achilles heel all season — can't contain two elite guards. Arizona's depth exhausts Purdue late.", whyNot:"Purdue's historic offensive efficiency means they'll score. If Arizona goes cold from midrange (they don't shoot many 3s), Purdue's system wins.",
         edge: { offense: 90, defense: 92, experience: 80, health: 95 },
         edgeOpp: { offense: 92, defense: 55, experience: 90, health: 88 },
@@ -450,7 +450,7 @@ const LATER_ROUNDS = {
   },
   SOUTH: {
     R32: [
-      { date:"Fri Mar 20", s1:1, t1:"Florida", t1Short:"UF", s2:9, t2:"Iowa", t2Short:"IOWA", date:"Sun Mar 22", pick:"Florida", confidence:82, riskLevel:"SAFE",
+      { s1:1, t1:"Florida", t1Short:"UF", s2:9, t2:"Iowa", t2Short:"IOWA", date:"Sun Mar 22", pick:"Florida", confidence:82, riskLevel:"SAFE",
         headline:"Florida's frontcourt dominates the glass. Defending champs roll.",
         edge: { offense: 85, defense: 82, experience: 95, health: 92 },
         edgeOpp: { offense: 65, defense: 58, experience: 65, health: 85 },
@@ -461,7 +461,7 @@ const LATER_ROUNDS = {
         ],
         injuries: [],
         whyPick:"Haugh, Condon, Chinyelu — the best rebounding frontcourt in the field — overwhelm Iowa on the boards. Todd Golden's system creates easy transition looks.", whyNot:"Iowa has tournament experience. If they shoot well from 3, they can keep it within striking distance." },
-      { date:"Thu Mar 19", s1:5, t1:"Vanderbilt", t1Short:"VANDY", s2:4, t2:"Nebraska", t2Short:"NEB", pick:"Vanderbilt", confidence:58, upset:true, riskLevel:"UPSET",
+      { date:"Sat Mar 21", s1:5, t1:"Vanderbilt", t1Short:"VANDY", s2:4, t2:"Nebraska", t2Short:"NEB", pick:"Vanderbilt", confidence:58, upset:true, riskLevel:"UPSET",
         edge: { offense: 82, defense: 58, experience: 62, health: 88 },
         edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
         keyStats: [
@@ -480,7 +480,7 @@ const LATER_ROUNDS = {
         ],
         injuries: [],
         whyPick:"Nebraska went 6-6 down the stretch. The pressure of the program's first-ever tournament win followed by facing red-hot Vanderbilt (just beat Florida) is brutal.", whyNot:"Nebraska's defense (7th KenPom) makes everything difficult. If they grind Vandy into the 50s, anything can happen." },
-      { s1:11, t1:"VCU", t1Short:"VCU", s2:3, t2:"Illinois", t2Short:"ILL", date:"Sun Mar 22", pick:"Illinois", confidence:82, originalConfidence:76, riskLevel:"SAFE",
+      { s1:11, t1:"VCU", t1Short:"VCU", s2:3, t2:"Illinois", t2Short:"ILL", date:"Sat Mar 21", pick:"Illinois", confidence:82, originalConfidence:76, riskLevel:"SAFE",
         headline:"UPDATED: Illinois faces VCU (who upset UNC in OT). Confidence UP from 76% to 82%.",
         edge: { offense: 95, defense: 68, experience: 72, health: 90 },
         edgeOpp: { offense: 58, defense: 72, experience: 68, health: 82 },
@@ -500,15 +500,7 @@ const LATER_ROUNDS = {
         injuries: [],
         whyPick:"VCU pulled off a historic 19-point comeback to beat UNC in OT. That's incredible heart — but Illinois is a completely different matchup. The No. 1 offense in KenPom history just put up 105 on Penn. Mirkovic (29/17) and the Ivisic brothers give Illinois too many weapons. VCU's Cinderella energy meets an offensive buzzsaw.",
         whyNot:"VCU just pulled off the biggest R64 comeback ever. Momentum and belief are real in March. Their defensive pressure could force Illinois into turnovers. But the talent gap is wide." },
-      { s1:10, t1:"Texas A&M", t1Short:"TAMU", s2:2, t2:"Houston", t2Short:"HOU", pick:"Houston", confidence:76, riskLevel:"LEAN",
-        edge: { offense: 82, defense: 58, experience: 62, health: 88 },
-        edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
-        keyStats: [
-          { label: "Tanner R64", value: "26 pts, 7 reb, 5 ast", hot: true },
-          { label: "NEB R64", value: "76-47, first-ever W", hot: true },
-          { label: "Style clash", value: "Offense vs Defense", hot: false },
-        ],
-        injuries: [],
+      { date:"Sat Mar 21", s1:10, t1:"Texas A&M", t1Short:"TAMU", s2:2, t2:"Houston", t2Short:"HOU", pick:"Houston", confidence:76, riskLevel:"LEAN",
         headline:"Sampson's defense frustrates A&M. Toyota Center looms.",
         edge: { offense: 78, defense: 92, experience: 90, health: 88 },
         edgeOpp: { offense: 60, defense: 62, experience: 88, health: 85 },
@@ -521,7 +513,7 @@ const LATER_ROUNDS = {
         whyPick:"Houston's defensive identity overwhelms A&M's motion offense. The Cougars are locked in for a potential home Regional Final at Toyota Center.", whyNot:"A&M's experience (8 juniors/seniors) helps them compete. Robbie Avila from SLU gave UGA problems — A&M's bigs are even better." },
     ],
     S16: [
-      { date:"Fri Mar 20", s1:1, t1:"Florida", t1Short:"UF", s2:5, t2:"Vanderbilt", t2Short:"VANDY", pick:"Florida", confidence:64, riskLevel:"LEAN",
+      { date:"Fri Mar 27", s1:1, t1:"Florida", t1Short:"UF", s2:5, t2:"Vanderbilt", t2Short:"VANDY", pick:"Florida", confidence:64, riskLevel:"LEAN",
         edge: { offense: 82, defense: 58, experience: 62, health: 88 },
         edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
         keyStats: [
@@ -535,7 +527,7 @@ const LATER_ROUNDS = {
         edgeOpp: { offense: 80, defense: 58, experience: 62, health: 88 },
         keyStats: [{ label: "Rematch", value: "Vandy beat UF in SEC", hot: true },{ label: "UF Frontcourt", value: "3 title-game starters", hot: true },{ label: "Tanner", value: "19.2 PPG, 37% from 3", hot: false }],
         injuries: [] },
-      { s1:3, t1:"Illinois", t1Short:"ILL", s2:2, t2:"Houston", t2Short:"HOU", pick:"Houston", confidence:58, riskLevel:"TOSS-UP",
+      { date:"Fri Mar 27", s1:3, t1:"Illinois", t1Short:"ILL", s2:2, t2:"Houston", t2Short:"HOU", pick:"Houston", confidence:58, riskLevel:"TOSS-UP",
         edge: { offense: 82, defense: 58, experience: 62, health: 88 },
         edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
         keyStats: [
@@ -551,7 +543,7 @@ const LATER_ROUNDS = {
         injuries: [] },
     ],
     E8: [
-      { date:"Fri Mar 20", s1:1, t1:"Florida", t1Short:"UF", s2:2, t2:"Houston", t2Short:"HOU", pick:"Houston", confidence:56, upset:true, riskLevel:"UPSET",
+      { date:"Sun Mar 29", s1:1, t1:"Florida", t1Short:"UF", s2:2, t2:"Houston", t2Short:"HOU", pick:"Houston", confidence:56, upset:true, riskLevel:"UPSET",
         edge: { offense: 82, defense: 58, experience: 62, health: 88 },
         edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
         keyStats: [
@@ -569,7 +561,7 @@ const LATER_ROUNDS = {
   },
   MIDWEST: {
     R32: [
-      { date:"Thu Mar 19", s1:1, t1:"Michigan", t1Short:"MICH", s2:9, t2:"Saint Louis", t2Short:"SLU", pick:"Michigan", confidence:78, riskLevel:"SAFE",
+      { date:"Sat Mar 21", s1:1, t1:"Michigan", t1Short:"MICH", s2:9, t2:"Saint Louis", t2Short:"SLU", pick:"Michigan", confidence:78, riskLevel:"SAFE",
         edge: { offense: 82, defense: 58, experience: 62, health: 88 },
         edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
         keyStats: [
@@ -590,7 +582,7 @@ const LATER_ROUNDS = {
           { player: "L.J. Cason", team: "Michigan", status: "OUT", impact: "MED", detail: "Torn ACL — perimeter shooting loss, but 8-deep rotation compensates." },
         ],
         whyPick:"SLU shoots 40.1% from 3, but Michigan's defense contests shots without leaving the rim unprotected. Mara's wingspan wins the Avila matchup.", whyNot:"If SLU hits 12+ threes, they can hang. Avila vs. Mara is a genuinely fun matchup." },
-      { s1:12, t1:"Akron", t1Short:"AKR", s2:4, t2:"Alabama", t2Short:"BAMA", date:"Sat Mar 21", pick:"Akron", confidence:54, upset:true, riskLevel:"UPSET",
+      { s1:12, t1:"Akron", t1Short:"AKR", s2:4, t2:"Alabama", t2Short:"BAMA", date:"Sun Mar 22", pick:"Akron", confidence:54, upset:true, riskLevel:"UPSET",
         edge: { offense: 82, defense: 58, experience: 62, health: 88 },
         edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
         keyStats: [
@@ -611,7 +603,7 @@ const LATER_ROUNDS = {
           { player: "A. Holloway", team: "Alabama", status: "UNCERTAIN", impact: "HIGH", detail: "Arrested Monday — marijuana charge. 16.8 PPG. Status unclear." },
         ],
         whyPick:"Alabama's defense (68th KenPom) is a massive weakness Akron's three elite shooters will exploit. The Zips match Alabama's tempo and shoot them off the court. Holloway legal situation adds chaos.", whyNot:"Alabama's raw talent and Philon's 21.7 PPG is hard to overcome. If Holloway plays and Bama is locked in, the talent gap matters." },
-      { date:"Fri Mar 20", s1:6, t1:"Tennessee", t1Short:"TENN", s2:3, t2:"Virginia", t2Short:"UVA", pick:"Virginia", confidence:58, riskLevel:"LEAN",
+      { date:"Sun Mar 22", s1:6, t1:"Tennessee", t1Short:"TENN", s2:3, t2:"Virginia", t2Short:"UVA", pick:"Virginia", confidence:58, riskLevel:"LEAN",
         edge: { offense: 82, defense: 58, experience: 62, health: 88 },
         edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
         keyStats: [
@@ -632,7 +624,7 @@ const LATER_ROUNDS = {
           { player: "N. Ament", team: "Tennessee", status: "GTD", impact: "HIGH", detail: "Knee — managing injury. Effectiveness is the question." },
         ],
         whyPick:"Virginia has multiple paths to scoring. Tennessee relies too heavily on Gillespie creating individually. UVA's balanced attack wins a close one.", whyNot:"Barnes' defense can contain anyone. If Gillespie goes off (25+), Tennessee wins." },
-      { date:"Fri Mar 20", s1:7, t1:"Kentucky", t1Short:"UK", s2:2, t2:"Iowa State", t2Short:"ISU", pick:"Iowa State", confidence:80, riskLevel:"SAFE",
+      { date:"Sun Mar 22", s1:7, t1:"Kentucky", t1Short:"UK", s2:2, t2:"Iowa State", t2Short:"ISU", pick:"Iowa State", confidence:80, riskLevel:"SAFE",
         edge: { offense: 82, defense: 58, experience: 62, health: 88 },
         edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
         keyStats: [
@@ -655,7 +647,7 @@ const LATER_ROUNDS = {
         whyPick:"Iowa State's defense forces turnovers at an elite rate — exactly what Kentucky's inconsistent guards can't handle. Jefferson dominates inside.", whyNot:"Kentucky has SEC-level athletes. If Oweh plays the game of his life, UK has a shot." },
     ],
     S16: [
-      { date:"Thu Mar 19", s1:1, t1:"Michigan", t1Short:"MICH", s2:12, t2:"Akron", t2Short:"AKR", pick:"Michigan", confidence:74, riskLevel:"LEAN",
+      { date:"Thu Mar 26", s1:1, t1:"Michigan", t1Short:"MICH", s2:12, t2:"Akron", t2Short:"AKR", pick:"Michigan", confidence:74, riskLevel:"LEAN",
         edge: { offense: 82, defense: 58, experience: 62, health: 88 },
         edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
         keyStats: [
@@ -669,7 +661,7 @@ const LATER_ROUNDS = {
         edgeOpp: { offense: 78, defense: 55, experience: 85, health: 95 },
         keyStats: [{ label: "MICH Def", value: "#1 — contests 3s + rim", hot: true },{ label: "AKR 3PT", value: "3 guards at 37%+", hot: true },{ label: "AKR run", value: "Cinderella to S16", hot: false }],
         injuries: [{ player: "L.J. Cason", team: "Michigan", status: "OUT", impact: "MED", detail: "Torn ACL — perimeter shooting loss." }] },
-      { date:"Fri Mar 20", s1:3, t1:"Virginia", t1Short:"UVA", s2:2, t2:"Iowa State", t2Short:"ISU", pick:"Iowa State", confidence:62, riskLevel:"LEAN",
+      { date:"Thu Mar 26", s1:3, t1:"Virginia", t1Short:"UVA", s2:2, t2:"Iowa State", t2Short:"ISU", pick:"Iowa State", confidence:62, riskLevel:"LEAN",
         edge: { offense: 82, defense: 58, experience: 62, health: 88 },
         edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
         keyStats: [
@@ -685,7 +677,7 @@ const LATER_ROUNDS = {
         injuries: [] },
     ],
     E8: [
-      { date:"Thu Mar 19", s1:1, t1:"Michigan", t1Short:"MICH", s2:2, t2:"Iowa State", t2Short:"ISU", pick:"Michigan", confidence:54, riskLevel:"TOSS-UP",
+      { date:"Sat Mar 28", s1:1, t1:"Michigan", t1Short:"MICH", s2:2, t2:"Iowa State", t2Short:"ISU", pick:"Michigan", confidence:54, riskLevel:"TOSS-UP",
         edge: { offense: 82, defense: 58, experience: 62, health: 88 },
         edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
         keyStats: [
@@ -702,7 +694,7 @@ const LATER_ROUNDS = {
     ],
   },
   FINAL_FOUR: [
-    { s1:1, t1:"Duke", t1Short:"DUKE", region1:"EAST", s2:2, t2:"Houston", t2Short:"HOU", region2:"SOUTH", pick:"Duke", confidence:58, riskLevel:"TOSS-UP",
+    { date:"Sat Apr 4", s1:1, t1:"Duke", t1Short:"DUKE", region1:"EAST", s2:2, t2:"Houston", t2Short:"HOU", region2:"SOUTH", pick:"Duke", confidence:58, riskLevel:"TOSS-UP",
         edge: { offense: 82, defense: 58, experience: 62, health: 88 },
         edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
         keyStats: [
@@ -716,7 +708,7 @@ const LATER_ROUNDS = {
         edgeOpp: { offense: 78, defense: 92, experience: 90, health: 88 },
         keyStats: [{ label: "Boozer", value: "Passing out of doubles", hot: true },{ label: "HOU Def", value: "Elite under Sampson", hot: true },{ label: "Foster?", value: "Could return for F4", hot: true }],
         injuries: [{ player: "C. Foster", team: "Duke", status: "GTD", impact: "HIGH", detail: "Broken foot — outside chance of F4 return." }] },
-    { s1:1, t1:"Arizona", t1Short:"ARIZ", region1:"WEST", s2:1, t2:"Michigan", t2Short:"MICH", region2:"MIDWEST", pick:"Michigan", confidence:56, riskLevel:"TOSS-UP",
+    { date:"Sat Apr 4", s1:1, t1:"Arizona", t1Short:"ARIZ", region1:"WEST", s2:1, t2:"Michigan", t2Short:"MICH", region2:"MIDWEST", pick:"Michigan", confidence:56, riskLevel:"TOSS-UP",
         edge: { offense: 82, defense: 58, experience: 62, health: 88 },
         edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
         keyStats: [
@@ -732,7 +724,7 @@ const LATER_ROUNDS = {
         injuries: [{ player: "L.J. Cason", team: "Michigan", status: "OUT", impact: "MED", detail: "Torn ACL." }] },
   ],
   CHAMPIONSHIP: [
-    { s1:1, t1:"Duke", t1Short:"DUKE", region1:"EAST", s2:1, t2:"Michigan", t2Short:"MICH", region2:"MIDWEST", pick:"Duke", confidence:55, riskLevel:"TOSS-UP",
+    { date:"Mon Apr 6", s1:1, t1:"Duke", t1Short:"DUKE", region1:"EAST", s2:1, t2:"Michigan", t2Short:"MICH", region2:"MIDWEST", pick:"Duke", confidence:55, riskLevel:"TOSS-UP",
         edge: { offense: 82, defense: 58, experience: 62, health: 88 },
         edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
         keyStats: [
