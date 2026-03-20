@@ -953,6 +953,46 @@ export default function MadnessIQ() {
   const [round, setRound] = useState("R64");
   const [expanded, setExpanded] = useState(null);
   const [detailSection, setDetailSection] = useState("matchup");
+  const [liveScores, setLiveScores] = useState(null);
+  const [scoresLoading, setScoresLoading] = useState(false);
+  const [lastRefresh, setLastRefresh] = useState(null);
+
+  // Fetch scores on page load and via refresh button
+  const fetchScores = useCallback(async () => {
+    setScoresLoading(true);
+    try {
+      const isArtifact = typeof window !== "undefined" && (
+        window.location.hostname.includes("claude") || window.location.protocol === "about:"
+      );
+      let scores;
+      if (isArtifact) {
+        const resp = await fetch("https://api.anthropic.com/v1/messages", {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            model: "claude-sonnet-4-20250514", max_tokens: 2000,
+            system: 'Search for 2026 NCAA men\'s tournament scores today. Return ONLY a JSON array, no markdown: [{"team1":"Duke","score1":71,"team2":"Siena","score2":65,"status":"FINAL","region":"EAST"}] Include completed, live, and upcoming games.',
+            messages: [{ role: "user", content: "Latest 2026 NCAA tournament scores" }],
+            tools: [{ type: "web_search_20250305", name: "web_search" }],
+          }),
+        });
+        const data = await resp.json();
+        const text = data.content?.filter(b => b.type === "text")?.map(b => b.text)?.join("") || "[]";
+        try { scores = JSON.parse(text.replace(/```json|```/g, "").trim()); } catch { scores = null; }
+      } else {
+        const resp = await fetch("/api/scores");
+        const data = await resp.json();
+        scores = data.scores || null;
+      }
+      if (scores) setLiveScores(scores);
+      setLastRefresh(new Date());
+    } catch (err) {
+      console.error("Score fetch error:", err);
+    }
+    setScoresLoading(false);
+  }, []);
+
+  // Auto-fetch on first load
+  useEffect(() => { fetchScores(); }, [fetchScores]);
 
   const games = GAMES[region] || [];
   const TABS = [
@@ -1007,6 +1047,55 @@ export default function MadnessIQ() {
       {/* ══════════ BRACKET TAB ══════════ */}
       {tab === "bracket" && (
         <div style={{ padding:"10px 12px 80px" }}>
+
+          {/* Live scores refresh bar */}
+          <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:8, padding:"6px 10px", background:"#0c0e14", borderRadius:6, border:"1px solid #1a1d28" }}>
+            <div>
+              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color: scoresLoading ? "#edaa3d" : liveScores ? "#3ded7a" : "#8090a0", letterSpacing:1 }}>
+                {scoresLoading ? "SEARCHING WEB FOR SCORES..." : liveScores ? "LIVE SCORES LOADED" : "SCORES"}
+              </div>
+              {lastRefresh && (
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#6a7080", marginTop:1 }}>
+                  Last updated: {lastRefresh.toLocaleTimeString()}
+                </div>
+              )}
+            </div>
+            <button onClick={fetchScores} disabled={scoresLoading} style={{
+              background: scoresLoading ? "#1a1d28" : "linear-gradient(135deg,#ff6b3d,#ed4a2a)",
+              border:"none", borderRadius:6, padding:"5px 12px", color:"#fff", cursor: scoresLoading ? "wait" : "pointer",
+              fontFamily:"'DM Mono',monospace", fontSize:9, fontWeight:700, letterSpacing:1,
+              opacity: scoresLoading ? 0.6 : 1,
+            }}>
+              {scoresLoading ? "..." : "\u21BB REFRESH"}
+            </button>
+          </div>
+
+          {/* Live scores display */}
+          {liveScores && Array.isArray(liveScores) && liveScores.length > 0 && liveScores[0].status !== "NOT_STARTED" && (
+            <div style={{ marginBottom:10, background:"#0c0e14", border:"1px solid #1a2030", borderRadius:8, padding:"8px 10px" }}>
+              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:2, color:"#ff6b3d", marginBottom:6 }}>LATEST SCORES (VIA WEB SEARCH)</div>
+              <div style={{ display:"grid", gridTemplateColumns:"1fr 1fr", gap:4 }}>
+                {liveScores.filter(g => g.team1 && g.team2).slice(0, 8).map((g, i) => (
+                  <div key={i} style={{
+                    background:"#0e1016", borderRadius:5, padding:"5px 7px",
+                    borderLeft: g.status === "LIVE" ? "2px solid #ff3b3b" : g.status === "FINAL" ? "2px solid #3ded7a" : "2px solid #2a2d35",
+                  }}>
+                    <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color: g.status === "LIVE" ? "#ff3b3b" : g.status === "FINAL" ? "#3ded7a" : "#6a7080", marginBottom:2 }}>
+                      {g.status}
+                    </div>
+                    <div style={{ display:"flex", justifyContent:"space-between", fontSize:10 }}>
+                      <span style={{ color: (g.score1||0) >= (g.score2||0) ? "#e2ddd5" : "#6a6d75" }}>{g.team1}</span>
+                      <span style={{ fontFamily:"'DM Mono',monospace", fontWeight:700, color:"#e2ddd5" }}>{g.score1 ?? ""}</span>
+                    </div>
+                    <div style={{ display:"flex", justifyContent:"space-between", fontSize:10 }}>
+                      <span style={{ color: (g.score2||0) > (g.score1||0) ? "#e2ddd5" : "#6a6d75" }}>{g.team2}</span>
+                      <span style={{ fontFamily:"'DM Mono',monospace", fontWeight:700, color:"#e2ddd5" }}>{g.score2 ?? ""}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
 
           {/* Thursday scorecard banner */}
           <div style={{ background:"linear-gradient(135deg,#101420,#141018)", border:"1px solid #2a2540", borderRadius:8, padding:"10px 12px", marginBottom:10 }}>
