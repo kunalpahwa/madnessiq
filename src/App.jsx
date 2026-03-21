@@ -602,20 +602,6 @@ const LATER_ROUNDS = {
         ],
         whyPick:"Even without Jefferson, ISU defense is elite (#4 KenPom, #3 TO rate). Toure (25/11/6 R64) and Heise (22 pts) showed other weapons. Kentucky turned it over repeatedly vs Santa Clara — ISU press will eat them alive.",
         whyNot:"Oweh just had the game of his life — 35 pts, deep 3 to force OT. If Jefferson can\'t go, Kentucky should be the favorite. Oweh\'s confidence is sky-high." },
-        ],
-        injuries: [],
-        headline:"ISU's turnover-forcing defense eats Kentucky alive.",
-        edge: { offense: 80, defense: 92, experience: 82, health: 90 },
-        edgeOpp: { offense: 62, defense: 58, experience: 72, health: 50 },
-        keyStats: [
-          { label: "ISU Def", value: "KenPom #4, TO rate #3", hot: true },
-          { label: "Jefferson", value: "Wooden candidate", hot: true },
-          { label: "UK record", value: "21-13 (inconsistent)", hot: false },
-        ],
-        injuries: [
-          { player: "J. Quaintance", team: "Kentucky", status: "OUT", impact: "MED", detail: "Knee — only 4 games played all season." },
-        ],
-        whyPick:"Iowa State's defense forces turnovers at an elite rate — exactly what Kentucky's inconsistent guards can't handle. Jefferson dominates inside.", whyNot:"Kentucky has SEC-level athletes. If Oweh plays the game of his life, UK has a shot." },
     ],
     S16: [
       { id:"MS0", date:"Thu Mar 26", s1:1, t1:"Michigan", t1Short:"MICH", s2:5, t2:"Texas Tech", t2Short:"TTU", pick:"Michigan", confidence:70, originalConfidence:74, riskLevel:"LEAN",
