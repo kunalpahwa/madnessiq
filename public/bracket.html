@@ -73,12 +73,45 @@ const REGION_COLORS = {EAST:"#3d7aed",WEST:"#ed5a3d",SOUTH:"#3ded7a",MIDWEST:"#e
 const REGION_SITES = {EAST:"Washington, D.C.",WEST:"San Jose, CA",SOUTH:"Houston, TX",MIDWEST:"Chicago, IL"};
 const F4_MATCHUP = [["EAST","SOUTH"],["WEST","MIDWEST"]]; // which regions meet in F4
 
-// ── STORAGE ──────────────────────────────────────────────
+// ── STORAGE: localStorage + URL sharing ──────────────────
 function loadBrackets() {
   try { return JSON.parse(localStorage.getItem("miq_brackets") || "[]"); } catch { return []; }
 }
 function saveBrackets(brackets) {
   localStorage.setItem("miq_brackets", JSON.stringify(brackets));
+}
+
+// Encode a bracket into a compact URL-safe string
+function encodeBracket(bracket) {
+  try {
+    const data = { n: bracket.name, p: bracket.picks, l: bracket.locked, t: bracket.lockedAt || null };
+    return btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+  } catch { return null; }
+}
+
+// Decode a bracket from URL
+function decodeBracket(str) {
+  try {
+    const data = JSON.parse(decodeURIComponent(escape(atob(str))));
+    return { name: data.n, picks: data.p, locked: data.l || false, lockedAt: data.t || null, created: new Date().toISOString() };
+  } catch { return null; }
+}
+
+// Check URL for a shared bracket on load
+function loadFromURL() {
+  const hash = window.location.hash;
+  if (hash && hash.startsWith("#b=")) {
+    const encoded = hash.substring(3);
+    return decodeBracket(encoded);
+  }
+  return null;
+}
+
+// Generate shareable URL for a bracket
+function getShareURL(bracket) {
+  const encoded = encodeBracket(bracket);
+  if (!encoded) return null;
+  return window.location.origin + window.location.pathname + "#b=" + encoded;
 }
 
 // ── BRACKET LOGIC ────────────────────────────────────────
@@ -220,12 +253,39 @@ function Matchup({ teams, pickKey, picks, onPick, disabled, regionColor, matchNu
 
 // ── MAIN APP ─────────────────────────────────────────────
 function BracketApp() {
-  const [brackets, setBrackets] = useState(loadBrackets);
-  const [activeIdx, setActiveIdx] = useState(0);
+  const [brackets, setBrackets] = useState(() => {
+    const stored = loadBrackets();
+    // Check URL for a shared bracket
+    const fromURL = loadFromURL();
+    if (fromURL) {
+      // Check if this bracket name already exists
+      const existing = stored.findIndex(b => b.name === fromURL.name);
+      if (existing >= 0) {
+        // Update existing bracket with shared data
+        stored[existing] = fromURL;
+      } else {
+        stored.push(fromURL);
+      }
+      saveBrackets(stored);
+      // Clear the hash so refreshing doesn't re-import
+      window.history.replaceState(null, "", window.location.pathname);
+    }
+    return stored;
+  });
+  const [activeIdx, setActiveIdx] = useState(() => {
+    const fromURL = loadFromURL();
+    if (fromURL) {
+      const stored = loadBrackets();
+      const idx = stored.findIndex(b => b.name === fromURL.name);
+      return idx >= 0 ? idx : stored.length - 1;
+    }
+    return 0;
+  });
   const [showCreate, setShowCreate] = useState(brackets.length === 0);
   const [newName, setNewName] = useState("");
   const [region, setRegion] = useState("EAST");
   const [confirmLock, setConfirmLock] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   const active = brackets[activeIdx] || null;
   const picks = active?.picks || {};
@@ -380,6 +440,32 @@ function BracketApp() {
                   </span>
                 ))}
               </div>
+
+              {/* Save / Share link */}
+              {totalPicks > 0 && (
+                <div style={{ marginTop:8, display:"flex", gap:6 }}>
+                  <button onClick={() => {
+                    const url = getShareURL(active);
+                    if (url) {
+                      navigator.clipboard.writeText(url).then(() => {
+                        setCopied(true);
+                        setTimeout(() => setCopied(false), 2000);
+                      }).catch(() => {
+                        window.prompt("Copy this link to save your bracket:", url);
+                      });
+                    }
+                  }} style={{
+                    flex:1, background: copied ? "#0a1a10" : "#12141e",
+                    border: copied ? "1px solid #1a3a22" : "1px solid #2a2d38",
+                    borderRadius:5, padding:"6px 10px", cursor:"pointer",
+                    fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:1,
+                    color: copied ? "#3ded7a" : "#ff6b3d",
+                    transition:"all 0.2s ease",
+                  }}>
+                    {copied ? "✓ LINK COPIED!" : "📋 SAVE / SHARE LINK"}
+                  </button>
+                </div>
+              )}
             </div>
 
             {/* Region tabs */}
