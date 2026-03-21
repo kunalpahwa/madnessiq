@@ -666,7 +666,7 @@ const ROUND_LABELS = { R64:"ROUND OF 64", R32:"ROUND OF 32", S16:"SWEET 16", E8:
 const FEEDERS = {
   // R32 fed by R64
   ER0: ["E0","E1"], ER1: ["E2","E3"], ER2: ["E4","E5"], ER3: ["E6","E7"],
-  WR0: ["W0","W1"], WR1: ["W2","W3"], WR2: ["W4","W5"], WR3: ["W6","W7"],
+  WR0: ["W0","W1"], WR1: ["W3","W2"], WR2: ["W5","W4"], WR3: ["W6","W7"],
   SR0: ["S0","S1"], SR1: ["S2","S3"], SR2: ["S4","S5"], SR3: ["S6","S7"],
   MR0: ["M0","M1"], MR1: ["M2","M3"], MR2: ["M4","M5"], MR3: ["M6","M7"],
   // S16 fed by R32
