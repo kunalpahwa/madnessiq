@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>MadnessIQ — Fill Your Bracket</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #08090c; color: #e2ddd5; font-family: 'Libre Baskerville', Georgia, serif; min-height: 100vh; }
+  ::-webkit-scrollbar { width: 3px; }
+  ::-webkit-scrollbar-thumb { background: #2a2d35; border-radius: 2px; }
+  @keyframes slideUp { from { opacity:0; transform:translateY(8px) } to { opacity:1; transform:translateY(0) } }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState, useEffect, useCallback } = React;
+
+// ── 2026 NCAA TOURNAMENT BRACKET DATA ──────────────────
+const TEAMS = {
+  EAST: [
+    {s:1,t:"Duke"},{s:16,t:"Siena"},
+    {s:8,t:"Ohio State"},{s:9,t:"TCU"},
+    {s:5,t:"St. John's"},{s:12,t:"Northern Iowa"},
+    {s:4,t:"Kansas"},{s:13,t:"Cal Baptist"},
+    {s:6,t:"Louisville"},{s:11,t:"S. Florida"},
+    {s:3,t:"Michigan St."},{s:14,t:"N. Dakota St."},
+    {s:7,t:"UCLA"},{s:10,t:"UCF"},
+    {s:2,t:"UConn"},{s:15,t:"Furman"},
+  ],
+  WEST: [
+    {s:1,t:"Arizona"},{s:16,t:"Long Island"},
+    {s:8,t:"Villanova"},{s:9,t:"Utah State"},
+    {s:5,t:"Wisconsin"},{s:12,t:"High Point"},
+    {s:4,t:"Arkansas"},{s:13,t:"Hawaii"},
+    {s:6,t:"BYU"},{s:11,t:"Texas"},
+    {s:3,t:"Gonzaga"},{s:14,t:"Kennesaw St."},
+    {s:7,t:"Miami (FL)"},{s:10,t:"Missouri"},
+    {s:2,t:"Purdue"},{s:15,t:"Queens"},
+  ],
+  SOUTH: [
+    {s:1,t:"Florida"},{s:16,t:"Prairie View"},
+    {s:8,t:"Clemson"},{s:9,t:"Iowa"},
+    {s:5,t:"Vanderbilt"},{s:12,t:"McNeese"},
+    {s:4,t:"Nebraska"},{s:13,t:"Troy"},
+    {s:6,t:"North Carolina"},{s:11,t:"VCU"},
+    {s:3,t:"Illinois"},{s:14,t:"Penn"},
+    {s:7,t:"Saint Mary's"},{s:10,t:"Texas A&M"},
+    {s:2,t:"Houston"},{s:15,t:"Idaho"},
+  ],
+  MIDWEST: [
+    {s:1,t:"Michigan"},{s:16,t:"Howard"},
+    {s:8,t:"Georgia"},{s:9,t:"Saint Louis"},
+    {s:5,t:"Texas Tech"},{s:12,t:"Akron"},
+    {s:4,t:"Alabama"},{s:13,t:"Hofstra"},
+    {s:6,t:"Tennessee"},{s:11,t:"Miami (OH)"},
+    {s:3,t:"Virginia"},{s:14,t:"Wright State"},
+    {s:7,t:"Kentucky"},{s:10,t:"Santa Clara"},
+    {s:2,t:"Iowa State"},{s:15,t:"Tenn. State"},
+  ],
+};
+
+const REGIONS = ["EAST","WEST","SOUTH","MIDWEST"];
+const ROUNDS = ["R64","R32","S16","E8"];
+const ROUND_NAMES = {R64:"Round of 64",R32:"Round of 32",S16:"Sweet 16",E8:"Elite Eight",F4:"Final Four",CHAMP:"Championship"};
+const REGION_COLORS = {EAST:"#3d7aed",WEST:"#ed5a3d",SOUTH:"#3ded7a",MIDWEST:"#edcc3d"};
+const REGION_SITES = {EAST:"Washington, D.C.",WEST:"San Jose, CA",SOUTH:"Houston, TX",MIDWEST:"Chicago, IL"};
+const F4_MATCHUP = [["EAST","SOUTH"],["WEST","MIDWEST"]]; // which regions meet in F4
+
+// ── STORAGE ──────────────────────────────────────────────
+function loadBrackets() {
+  try { return JSON.parse(localStorage.getItem("miq_brackets") || "[]"); } catch { return []; }
+}
+function saveBrackets(brackets) {
+  localStorage.setItem("miq_brackets", JSON.stringify(brackets));
+}
+
+// ── BRACKET LOGIC ────────────────────────────────────────
+function getMatchupTeams(region, round, matchIdx, picks) {
+  if (round === "R64") {
+    const teams = TEAMS[region];
+    const i = matchIdx * 2;
+    return [teams[i], teams[i+1]];
+  }
+  const prevRound = ROUNDS[ROUNDS.indexOf(round) - 1];
+  const a = picks[`${region}-${prevRound}-${matchIdx*2}`];
+  const b = picks[`${region}-${prevRound}-${matchIdx*2+1}`];
+  const prevTeams = TEAMS[region];
+  const findSeed = (name) => {
+    const t = prevTeams.find(x => x.t === name);
+    return t ? t.s : "?";
+  };
+  return [
+    a ? {s:findSeed(a),t:a} : null,
+    b ? {s:findSeed(b),t:b} : null,
+  ];
+}
+
+function getF4Teams(semiIdx, picks) {
+  const [r1, r2] = F4_MATCHUP[semiIdx];
+  const a = picks[`${r1}-E8-0`];
+  const b = picks[`${r2}-E8-0`];
+  const findSeed = (name, region) => {
+    const t = TEAMS[region].find(x => x.t === name);
+    return t ? t.s : "?";
+  };
+  return [
+    a ? {s:findSeed(a,r1),t:a,region:r1} : null,
+    b ? {s:findSeed(b,r2),t:b,region:r2} : null,
+  ];
+}
+
+function getChampTeams(picks) {
+  const a = picks["F4-0"];
+  const b = picks["F4-1"];
+  const findInfo = (name) => {
+    for (const r of REGIONS) {
+      const t = TEAMS[r].find(x => x.t === name);
+      if (t) return {s:t.s,t:name,region:r};
+    }
+    return {s:"?",t:name};
+  };
+  return [
+    a ? findInfo(a) : null,
+    b ? findInfo(b) : null,
+  ];
+}
+
+// Clear downstream picks when an earlier pick changes
+function clearDownstream(picks, region, round, matchIdx) {
+  const newPicks = {...picks};
+  const rIdx = ROUNDS.indexOf(round);
+  // Clear this round's pick
+  // Then clear all later rounds in this region that depend on it
+  for (let r = rIdx + 1; r < ROUNDS.length; r++) {
+    const nextRound = ROUNDS[r];
+    const nextMatchIdx = Math.floor(matchIdx / 2);
+    const key = `${region}-${nextRound}-${nextMatchIdx}`;
+    if (newPicks[key]) {
+      delete newPicks[key];
+      clearDownstreamInner(newPicks, region, nextRound, nextMatchIdx);
+    }
+    matchIdx = nextMatchIdx;
+  }
+  // Also clear F4 if E8 changed
+  if (round === "E8" || rIdx < ROUNDS.indexOf("E8")) {
+    const f4Idx = F4_MATCHUP.findIndex(pair => pair.includes(region));
+    if (f4Idx >= 0) {
+      delete newPicks[`F4-${f4Idx}`];
+      delete newPicks["CHAMP"];
+      delete newPicks["champScore1"];
+      delete newPicks["champScore2"];
+    }
+  }
+  return newPicks;
+}
+
+function clearDownstreamInner(picks, region, round, matchIdx) {
+  const rIdx = ROUNDS.indexOf(round);
+  for (let r = rIdx + 1; r < ROUNDS.length; r++) {
+    const nextRound = ROUNDS[r];
+    matchIdx = Math.floor(matchIdx / 2);
+    delete picks[`${region}-${nextRound}-${matchIdx}`];
+  }
+}
+
+function countPicks(picks) {
+  return Object.keys(picks).filter(k => !k.startsWith("champScore") && picks[k]).length;
+}
+
+function isBracketComplete(picks) {
+  return countPicks(picks) === 63 && picks.champScore1 && picks.champScore2;
+}
+
+// ── COMPONENTS ───────────────────────────────────────────
+function TeamSlot({ team, isSelected, isPicked, onClick, disabled, regionColor }) {
+  if (!team) return (
+    <div style={{ height:36, background:"#0a0c12", border:"1px dashed #222530", borderRadius:6, display:"flex", alignItems:"center", padding:"0 10px",
+      fontFamily:"'DM Mono',monospace", fontSize:9, color:"#3a3d48" }}>
+      — waiting —
+    </div>
+  );
+  return (
+    <div onClick={disabled ? undefined : onClick} style={{
+      height:36, background: isPicked ? "#0a1a10" : isSelected ? "#12141e" : "#0e1016",
+      border: isPicked ? `1px solid ${regionColor}40` : isSelected ? "1px solid #3a4560" : "1px solid #1a1d28",
+      borderLeft: isPicked ? `3px solid ${regionColor}` : "3px solid transparent",
+      borderRadius:6, display:"flex", alignItems:"center", padding:"0 10px", gap:6,
+      cursor: disabled ? "default" : "pointer", transition:"all 0.15s ease",
+      opacity: disabled ? 0.5 : 1,
+    }}>
+      <span style={{ fontFamily:"'DM Mono',monospace", fontSize:9, color:"#6a7080", minWidth:16 }}>{team.s}</span>
+      <span style={{ fontSize:12, fontWeight: isPicked ? 700 : 400, color: isPicked ? "#4aed7a" : "#e2ddd5",
+        overflow:"hidden", textOverflow:"ellipsis", whiteSpace:"nowrap" }}>{team.t}</span>
+      {isPicked && <span style={{ marginLeft:"auto", fontSize:10, color:"#3ded7a" }}>✓</span>}
+    </div>
+  );
+}
+
+function Matchup({ teams, pickKey, picks, onPick, disabled, regionColor, matchNum }) {
+  const [t1, t2] = teams;
+  const currentPick = picks[pickKey];
+  return (
+    <div style={{ marginBottom:6, animation:`slideUp 0.2s ease ${matchNum*0.03}s both` }}>
+      <div style={{ display:"flex", flexDirection:"column", gap:2 }}>
+        <TeamSlot team={t1} isSelected={false} isPicked={currentPick === t1?.t}
+          onClick={() => t1 && onPick(pickKey, t1.t)} disabled={disabled || !t1} regionColor={regionColor} />
+        <TeamSlot team={t2} isSelected={false} isPicked={currentPick === t2?.t}
+          onClick={() => t2 && onPick(pickKey, t2.t)} disabled={disabled || !t2} regionColor={regionColor} />
+      </div>
+    </div>
+  );
+}
+
+// ── MAIN APP ─────────────────────────────────────────────
+function BracketApp() {
+  const [brackets, setBrackets] = useState(loadBrackets);
+  const [activeIdx, setActiveIdx] = useState(0);
+  const [showCreate, setShowCreate] = useState(brackets.length === 0);
+  const [newName, setNewName] = useState("");
+  const [region, setRegion] = useState("EAST");
+  const [confirmLock, setConfirmLock] = useState(false);
+
+  const active = brackets[activeIdx] || null;
+  const picks = active?.picks || {};
+  const locked = active?.locked || false;
+
+  useEffect(() => { saveBrackets(brackets); }, [brackets]);
+
+  const createBracket = () => {
+    if (!newName.trim()) return;
+    const newBracket = { name: newName.trim(), picks: {}, locked: false, created: new Date().toISOString() };
+    const updated = [...brackets, newBracket];
+    setBrackets(updated);
+    setActiveIdx(updated.length - 1);
+    setShowCreate(false);
+    setNewName("");
+  };
+
+  const makePick = useCallback((key, team) => {
+    if (locked) return;
+    setBrackets(prev => {
+      const updated = [...prev];
+      const bracket = {...updated[activeIdx]};
+      let newPicks = {...bracket.picks};
+
+      // If changing a pick, clear downstream
+      if (newPicks[key] && newPicks[key] !== team) {
+        const parts = key.split("-");
+        if (parts.length === 3) {
+          newPicks = clearDownstream(newPicks, parts[0], parts[1], parseInt(parts[2]));
+        } else if (key.startsWith("F4-")) {
+          delete newPicks["CHAMP"];
+          delete newPicks["champScore1"];
+          delete newPicks["champScore2"];
+        }
+      }
+      newPicks[key] = team;
+      bracket.picks = newPicks;
+      updated[activeIdx] = bracket;
+      return updated;
+    });
+  }, [activeIdx, locked]);
+
+  const lockBracket = () => {
+    setBrackets(prev => {
+      const updated = [...prev];
+      updated[activeIdx] = {...updated[activeIdx], locked: true, lockedAt: new Date().toISOString()};
+      return updated;
+    });
+    setConfirmLock(false);
+  };
+
+  const deleteBracket = () => {
+    if (!window.confirm(`Delete ${active.name}'s bracket? This can't be undone.`)) return;
+    const updated = brackets.filter((_, i) => i !== activeIdx);
+    setBrackets(updated);
+    setActiveIdx(Math.max(0, activeIdx - 1));
+    if (updated.length === 0) setShowCreate(true);
+  };
+
+  const totalPicks = active ? countPicks(picks) : 0;
+  const complete = active ? isBracketComplete(picks) : false;
+
+  // Count per region
+  const regionPicks = (r) => Object.keys(picks).filter(k => k.startsWith(r + "-") && picks[k]).length;
+
+  return (
+    <div style={{ maxWidth:520, margin:"0 auto", minHeight:"100vh" }}>
+      {/* HEADER */}
+      <div style={{ background:"linear-gradient(180deg,#0e1018,#08090c)", borderBottom:"1px solid #1a1d25", padding:"12px 16px 8px", position:"sticky", top:0, zIndex:100 }}>
+        <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
+          <div>
+            <h1 style={{ fontSize:17, fontWeight:700, margin:0 }}>
+              <span style={{ color:"#ff6b3d" }}>Madness</span><span>IQ</span>
+              <span style={{ fontFamily:"'DM Mono',monospace", fontSize:9, color:"#8090a0", marginLeft:6 }}>BRACKET</span>
+            </h1>
+          </div>
+          <a href="/" style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:"#ff6b3d", textDecoration:"none", padding:"4px 8px", border:"1px solid #ff6b3d40", borderRadius:4 }}>
+            ← MADNESSIQ
+          </a>
+        </div>
+
+        {/* Bracket tabs */}
+        {brackets.length > 0 && (
+          <div style={{ display:"flex", gap:4, marginTop:8, alignItems:"center", overflowX:"auto" }}>
+            {brackets.map((b, i) => (
+              <button key={i} onClick={() => { setActiveIdx(i); setShowCreate(false); }} style={{
+                background: activeIdx === i && !showCreate ? "#1a1d28" : "transparent",
+                border: activeIdx === i && !showCreate ? "1px solid #3a4560" : "1px solid #222530",
+                color: activeIdx === i && !showCreate ? "#e2ddd5" : "#6a7080",
+                padding:"4px 10px", borderRadius:4, cursor:"pointer", whiteSpace:"nowrap",
+                fontFamily:"'DM Mono',monospace", fontSize:9,
+              }}>
+                {b.name} {b.locked ? "🔒" : ""}
+              </button>
+            ))}
+            <button onClick={() => setShowCreate(true)} style={{
+              background:"transparent", border:"1px dashed #3a4560", color:"#ff6b3d",
+              padding:"4px 10px", borderRadius:4, cursor:"pointer",
+              fontFamily:"'DM Mono',monospace", fontSize:9,
+            }}>+ NEW</button>
+          </div>
+        )}
+      </div>
+
+      <div style={{ padding:"12px 16px 80px" }}>
+        {/* CREATE BRACKET */}
+        {showCreate && (
+          <div style={{ background:"linear-gradient(135deg,#101420,#141018)", border:"1px solid #2a2540", borderRadius:10, padding:"20px", marginBottom:12, animation:"slideUp 0.3s ease" }}>
+            <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:2, color:"#ff6b3d", marginBottom:12 }}>CREATE YOUR BRACKET</div>
+            <div style={{ fontSize:13, color:"#a0a3ae", marginBottom:16, lineHeight:1.6 }}>
+              Pick all 63 games — from the Round of 64 through the National Championship. Predict the final score to complete your bracket.
+            </div>
+            <input value={newName} onChange={e => setNewName(e.target.value)}
+              onKeyDown={e => e.key === "Enter" && createBracket()}
+              placeholder="Enter your name..."
+              style={{
+                width:"100%", background:"#0a0c14", border:"1px solid #2a2d38", borderRadius:6,
+                padding:"10px 12px", color:"#e2ddd5", fontSize:14,
+                fontFamily:"'Libre Baskerville',Georgia,serif", outline:"none", marginBottom:12,
+              }} />
+            <button onClick={createBracket} disabled={!newName.trim()} style={{
+              width:"100%", background: newName.trim() ? "linear-gradient(135deg,#ff6b3d,#ed4a2a)" : "#1a1d28",
+              border:"none", borderRadius:6, padding:"10px", color:"#fff", cursor: newName.trim() ? "pointer" : "default",
+              fontFamily:"'DM Mono',monospace", fontSize:11, fontWeight:700, letterSpacing:1,
+            }}>
+              START PICKING →
+            </button>
+          </div>
+        )}
+
+        {/* ACTIVE BRACKET */}
+        {active && !showCreate && (
+          <>
+            {/* Progress bar */}
+            <div style={{ background:"#0c0e14", borderRadius:8, padding:"10px 12px", marginBottom:10, border:"1px solid #1a1d28" }}>
+              <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:6 }}>
+                <span style={{ fontFamily:"'DM Mono',monospace", fontSize:9, color:"#e2ddd5" }}>
+                  {active.name}'s Bracket {locked && "🔒 LOCKED"}
+                </span>
+                <span style={{ fontFamily:"'DM Mono',monospace", fontSize:9, color: complete ? "#3ded7a" : "#ff6b3d" }}>
+                  {totalPicks}/63 picks {picks.champScore1 && picks.champScore2 ? "+ score" : ""}
+                </span>
+              </div>
+              <div style={{ height:4, background:"#1a1d28", borderRadius:2, overflow:"hidden" }}>
+                <div style={{ height:"100%", background: complete ? "#3ded7a" : "linear-gradient(90deg,#ff6b3d,#ed4a2a)",
+                  width:`${(totalPicks/63)*100}%`, borderRadius:2, transition:"width 0.3s ease" }} />
+              </div>
+              <div style={{ display:"flex", justifyContent:"space-between", marginTop:6 }}>
+                {REGIONS.map(r => (
+                  <span key={r} style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color: REGION_COLORS[r] }}>
+                    {r}: {regionPicks(r)}/15
+                  </span>
+                ))}
+              </div>
+            </div>
+
+            {/* Region tabs */}
+            <div style={{ display:"flex", gap:2, marginBottom:8 }}>
+              {[...REGIONS, "FINAL4"].map(r => (
+                <button key={r} onClick={() => setRegion(r)} style={{
+                  flex:1, background: region === r ? "#1a1d28" : "transparent",
+                  borderBottom: region === r ? `2px solid ${r === "FINAL4" ? "#ff6b3d" : REGION_COLORS[r]}` : "2px solid transparent",
+                  border:"none", borderTop:"none", borderLeft:"none", borderRight:"none",
+                  color: region === r ? "#e2ddd5" : "#6a7080",
+                  padding:"6px 2px 4px", cursor:"pointer",
+                  fontFamily:"'DM Mono',monospace", fontSize: r === "FINAL4" ? 8 : 9, letterSpacing:1,
+                }}>
+                  {r === "FINAL4" ? "FINAL 4" : r}
+                </button>
+              ))}
+            </div>
+
+            {/* REGION BRACKET */}
+            {REGIONS.includes(region) && (
+              <div>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:"#6a7080", marginBottom:8, textAlign:"center" }}>
+                  {REGION_SITES[region]} Regional
+                </div>
+                {ROUNDS.map((round, rIdx) => {
+                  const numMatchups = 8 / Math.pow(2, rIdx);
+                  return (
+                    <div key={round} style={{ marginBottom:14 }}>
+                      <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:2, color: REGION_COLORS[region], marginBottom:6 }}>
+                        {ROUND_NAMES[round]}
+                      </div>
+                      {Array.from({length: numMatchups}, (_, i) => {
+                        const key = `${region}-${round}-${i}`;
+                        const teams = getMatchupTeams(region, round, i, picks);
+                        return (
+                          <Matchup key={key} teams={teams} pickKey={key} picks={picks}
+                            onPick={makePick} disabled={locked} regionColor={REGION_COLORS[region]} matchNum={i} />
+                        );
+                      })}
+                    </div>
+                  );
+                })}
+                {/* Region champion callout */}
+                {picks[`${region}-E8-0`] && (
+                  <div style={{ background:"linear-gradient(135deg,#101420,#141018)", border:`1px solid ${REGION_COLORS[region]}40`,
+                    borderRadius:8, padding:"12px", textAlign:"center", animation:"slideUp 0.3s ease" }}>
+                    <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, letterSpacing:2, color: REGION_COLORS[region] }}>{region} CHAMPION</div>
+                    <div style={{ fontSize:18, fontWeight:700, marginTop:4 }}>{picks[`${region}-E8-0`]}</div>
+                    <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:"#6a7080", marginTop:2 }}>→ FINAL FOUR</div>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* FINAL FOUR */}
+            {region === "FINAL4" && (
+              <div>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:2, color:"#ff6b3d", marginBottom:8, textAlign:"center" }}>
+                  FINAL FOUR — INDIANAPOLIS — SAT APR 4
+                </div>
+                {[0,1].map(semiIdx => {
+                  const [r1, r2] = F4_MATCHUP[semiIdx];
+                  const teams = getF4Teams(semiIdx, picks);
+                  const key = `F4-${semiIdx}`;
+                  return (
+                    <div key={semiIdx} style={{ marginBottom:12 }}>
+                      <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:"#8090a0", marginBottom:4 }}>
+                        SEMIFINAL {semiIdx+1}: <span style={{ color: REGION_COLORS[r1] }}>{r1}</span> vs <span style={{ color: REGION_COLORS[r2] }}>{r2}</span>
+                      </div>
+                      <Matchup teams={teams} pickKey={key} picks={picks}
+                        onPick={makePick} disabled={locked} regionColor="#ff6b3d" matchNum={semiIdx} />
+                    </div>
+                  );
+                })}
+
+                {/* Championship */}
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:2, color:"#ff6b3d", marginTop:16, marginBottom:8, textAlign:"center" }}>
+                  NATIONAL CHAMPIONSHIP — MON APR 6
+                </div>
+                {(() => {
+                  const teams = getChampTeams(picks);
+                  return (
+                    <Matchup teams={teams} pickKey="CHAMP" picks={picks}
+                      onPick={makePick} disabled={locked} regionColor="#ff6b3d" matchNum={0} />
+                  );
+                })()}
+
+                {/* Score prediction */}
+                {picks["CHAMP"] && (
+                  <div style={{ background:"linear-gradient(135deg,#141620,#1a1428)", border:"1px solid #3a3558",
+                    borderRadius:10, padding:"16px", textAlign:"center", marginTop:12, animation:"slideUp 0.3s ease" }}>
+                    <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, letterSpacing:4, color:"#ff6b3d", marginBottom:8 }}>
+                      PREDICT THE FINAL SCORE
+                    </div>
+                    <div style={{ fontSize:20, fontWeight:700, marginBottom:12 }}>🏆 {picks["CHAMP"]}</div>
+                    <div style={{ display:"flex", gap:8, justifyContent:"center", alignItems:"center" }}>
+                      <div style={{ textAlign:"center" }}>
+                        <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:"#8090a0", marginBottom:4 }}>WINNER</div>
+                        <input value={picks.champScore1 || ""} onChange={e => makePick("champScore1", e.target.value)}
+                          placeholder="72" maxLength={3} disabled={locked}
+                          style={{ width:60, textAlign:"center", background:"#0a0c14", border:"1px solid #2a2d38",
+                            borderRadius:6, padding:"8px", color:"#3ded7a", fontSize:20, fontFamily:"'DM Mono',monospace",
+                            fontWeight:700, outline:"none" }} />
+                      </div>
+                      <span style={{ fontFamily:"'DM Mono',monospace", fontSize:14, color:"#4a4d58", marginTop:16 }}>—</span>
+                      <div style={{ textAlign:"center" }}>
+                        <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:"#8090a0", marginBottom:4 }}>RUNNER-UP</div>
+                        <input value={picks.champScore2 || ""} onChange={e => makePick("champScore2", e.target.value)}
+                          placeholder="65" maxLength={3} disabled={locked}
+                          style={{ width:60, textAlign:"center", background:"#0a0c14", border:"1px solid #2a2d38",
+                            borderRadius:6, padding:"8px", color:"#ed5a5a", fontSize:20, fontFamily:"'DM Mono',monospace",
+                            fontWeight:700, outline:"none" }} />
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {/* Lock / Complete */}
+                {!locked && complete && !confirmLock && (
+                  <button onClick={() => setConfirmLock(true)} style={{
+                    width:"100%", marginTop:16, background:"linear-gradient(135deg,#3ded7a,#2acd5a)",
+                    border:"none", borderRadius:8, padding:"14px", color:"#08090c", cursor:"pointer",
+                    fontFamily:"'DM Mono',monospace", fontSize:12, fontWeight:700, letterSpacing:1,
+                  }}>
+                    🔒 LOCK BRACKET
+                  </button>
+                )}
+                {!locked && confirmLock && (
+                  <div style={{ background:"#1a0e10", border:"1px solid #3a1a1e", borderRadius:8, padding:"14px", marginTop:16, textAlign:"center" }}>
+                    <div style={{ fontFamily:"'DM Mono',monospace", fontSize:10, color:"#ed5a5a", marginBottom:8 }}>
+                      Are you sure? Once locked, you can't change any picks.
+                    </div>
+                    <div style={{ display:"flex", gap:8 }}>
+                      <button onClick={() => setConfirmLock(false)} style={{
+                        flex:1, background:"#1a1d28", border:"1px solid #3a4560", borderRadius:6,
+                        padding:"10px", color:"#e2ddd5", cursor:"pointer",
+                        fontFamily:"'DM Mono',monospace", fontSize:10,
+                      }}>CANCEL</button>
+                      <button onClick={lockBracket} style={{
+                        flex:1, background:"linear-gradient(135deg,#ed3d3d,#cd2a2a)", border:"none", borderRadius:6,
+                        padding:"10px", color:"#fff", cursor:"pointer",
+                        fontFamily:"'DM Mono',monospace", fontSize:10, fontWeight:700,
+                      }}>YES, LOCK IT 🔒</button>
+                    </div>
+                  </div>
+                )}
+
+                {locked && (
+                  <div style={{ background:"#0a1a10", border:"1px solid #1a3a22", borderRadius:8, padding:"14px", marginTop:16, textAlign:"center" }}>
+                    <div style={{ fontFamily:"'DM Mono',monospace", fontSize:10, color:"#3ded7a" }}>
+                      🔒 BRACKET LOCKED — {new Date(active.lockedAt).toLocaleString()}
+                    </div>
+                  </div>
+                )}
+
+                {/* Delete button */}
+                {!locked && (
+                  <button onClick={deleteBracket} style={{
+                    width:"100%", marginTop:12, background:"transparent", border:"1px solid #2a1a1e",
+                    borderRadius:6, padding:"8px", color:"#6a4048", cursor:"pointer",
+                    fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:1,
+                  }}>
+                    DELETE THIS BRACKET
+                  </button>
+                )}
+              </div>
+            )}
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<BracketApp />);
+</script>
+</body>
+</html>

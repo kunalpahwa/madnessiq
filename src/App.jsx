@@ -1048,6 +1048,12 @@ export default function MadnessIQ() {
             </div>
           </div>
 
+          {/* Bracket picker link */}
+          <a href="/bracket.html" style={{ display:"block", background:"linear-gradient(135deg,#1a1420,#141018)", border:"1px solid #3a2a50", borderRadius:8, padding:"10px 14px", marginBottom:10, textDecoration:"none", textAlign:"center" }}>
+            <span style={{ fontFamily:"'DM Mono',monospace", fontSize:9, letterSpacing:1, color:"#ff6b3d" }}>🏀 FILL OUT YOUR BRACKET →</span>
+            <span style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:"#6a7080", display:"block", marginTop:2 }}>Pick all 63 games with your family</span>
+          </a>
+
           {/* Region tabs — includes FINAL 4 */}
           <div style={{ display:"flex", gap:2, marginBottom:6 }}>
             {[...Object.keys(GAMES), "FINAL4"].map(r => (
