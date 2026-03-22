@@ -69,8 +69,8 @@ function countPicks(p){return Object.keys(p).filter(k=>!k.startsWith("champScore
 function isBracketComplete(p){return countPicks(p)===63&&p.champScore1&&p.champScore2;}
 
 function TeamSlot({team,isPicked,onClick,disabled,regionColor}) {
-  if(!team) return (<div style={{height:36,background:"#0c0e16",border:"1px dashed #3a3f52",borderRadius:6,display:"flex",alignItems:"center",padding:"0 10px",fontFamily:"'DM Mono',monospace",fontSize:9,color:"#3a3d48"}}>{"— waiting —"}</div>);
-  return (<div onClick={disabled?undefined:onClick} style={{height:36,background:isPicked?"#0a1a10":"#0e1016",border:isPicked?`1px solid ${regionColor}40`:"1px solid #1a1d28",borderLeft:isPicked?`3px solid ${regionColor}`:"3px solid transparent",borderRadius:6,display:"flex",alignItems:"center",padding:"0 10px",gap:6,cursor:disabled?"default":"pointer",transition:"all 0.15s ease",opacity:disabled?0.5:1}}>
+  if(!team) return (<div style={{height:36,background:"#0e1018",border:"1px dashed #404560",borderRadius:6,display:"flex",alignItems:"center",padding:"0 10px",fontFamily:"'DM Mono',monospace",fontSize:9,color:"#3a3d48"}}>{"— waiting —"}</div>);
+  return (<div onClick={disabled?undefined:onClick} style={{height:36,background:isPicked?"#0c1e14":"#13151f",border:isPicked?`1px solid ${regionColor}60`:"1px solid #2e3345",borderLeft:isPicked?`3px solid ${regionColor}`:"3px solid transparent",borderRadius:6,display:"flex",alignItems:"center",padding:"0 10px",gap:6,cursor:disabled?"default":"pointer",transition:"all 0.15s ease",opacity:disabled?0.5:1}}>
     <span style={{fontFamily:"'DM Mono',monospace",fontSize:9,color:"#6a7080",minWidth:16}}>{team.s}</span>
     <span style={{fontSize:12,fontWeight:isPicked?700:400,color:isPicked?"#4aed7a":"#e2ddd5",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{team.t}</span>
     {isPicked && <span style={{marginLeft:"auto",fontSize:10,color:"#3ded7a"}}>{"\u2713"}</span>}
@@ -78,7 +78,7 @@ function TeamSlot({team,isPicked,onClick,disabled,regionColor}) {
 }
 function Matchup({teams,pickKey,picks,onPick,disabled,regionColor,matchNum}) {
   const [t1,t2]=teams; const cur=picks[pickKey];
-  return (<div style={{marginBottom:6,animation:`slideUp 0.2s ease ${matchNum*0.03}s both`}}><div style={{display:"flex",flexDirection:"column",gap:2}}>
+  return (<div style={{marginBottom:8,paddingBottom:2,borderBottom:"1px solid #1a1e2a",animation:`slideUp 0.2s ease ${matchNum*0.03}s both`}}><div style={{display:"flex",flexDirection:"column",gap:2}}>
     <TeamSlot team={t1} isPicked={cur===t1?.t} onClick={()=>t1&&onPick(pickKey,t1.t)} disabled={disabled||!t1} regionColor={regionColor}/>
     <TeamSlot team={t2} isPicked={cur===t2?.t} onClick={()=>t2&&onPick(pickKey,t2.t)} disabled={disabled||!t2} regionColor={regionColor}/>
   </div></div>);
@@ -224,7 +224,7 @@ function BracketApp() {
           </div>
         </div>
         <div style={{display:"flex",gap:4,marginTop:8,alignItems:"center",overflowX:"auto"}}>
-          {brackets.map((b,i)=>(<button key={b.id||i} onClick={()=>{setActiveIdx(i);setConfirmDelete(null);}} style={{background:activeIdx===i?"#1a1d28":"transparent",border:activeIdx===i?"1px solid #4a5570":"1px solid #2e3140",color:activeIdx===i?"#e2ddd5":"#6a7080",padding:"4px 10px",borderRadius:4,cursor:"pointer",whiteSpace:"nowrap",fontFamily:"'DM Mono',monospace",fontSize:9}}>{b.name} {b.locked?"\uD83D\uDD12":""}</button>))}
+          {brackets.map((b,i)=>(<button key={b.id||i} onClick={()=>{setActiveIdx(i);setConfirmDelete(null);}} style={{background:activeIdx===i?"#1c2030":"transparent",border:activeIdx===i?"1px solid #4a5570":"1px solid #2e3140",color:activeIdx===i?"#e2ddd5":"#6a7080",padding:"4px 10px",borderRadius:4,cursor:"pointer",whiteSpace:"nowrap",fontFamily:"'DM Mono',monospace",fontSize:9}}>{b.name} {b.locked?"\uD83D\uDD12":""}</button>))}
           <button onClick={()=>setShowCreate(true)} style={{background:"transparent",border:"1px dashed #4a5570",color:"#ff6b3d",padding:"4px 10px",borderRadius:4,cursor:"pointer",whiteSpace:"nowrap",fontFamily:"'DM Mono',monospace",fontSize:9}}>+ NEW</button>
         </div>
       </div>
@@ -253,11 +253,11 @@ function BracketApp() {
           {/* Delete button for unlocked brackets */}
           {!locked && confirmDelete !== activeIdx && (
             <div style={{display:"flex",justifyContent:"flex-end",marginBottom:6}}>
-              <button onClick={()=>setConfirmDelete(activeIdx)} style={{background:"transparent",border:"1px solid #2a1a1e",borderRadius:4,padding:"3px 8px",color:"#6a4048",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:7,letterSpacing:1}}>DELETE THIS BRACKET</button>
+              <button onClick={()=>setConfirmDelete(activeIdx)} style={{background:"transparent",border:"1px solid #3a2a2e",borderRadius:4,padding:"3px 8px",color:"#6a4048",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:7,letterSpacing:1}}>DELETE THIS BRACKET</button>
             </div>
           )}
           {confirmDelete === activeIdx && (
-            <div style={{background:"#1a0e10",border:"1px solid #4a2a2e",borderRadius:6,padding:"10px",marginBottom:8,textAlign:"center"}}>
+            <div style={{background:"#1e1014",border:"1px solid #5a3a3e",borderRadius:6,padding:"10px",marginBottom:8,textAlign:"center"}}>
               <div style={{fontFamily:"'DM Mono',monospace",fontSize:9,color:"#ed5a5a",marginBottom:6}}>Delete {active.name}'s bracket? This can't be undone.</div>
               <div style={{display:"flex",gap:6,justifyContent:"center"}}>
                 <button onClick={()=>setConfirmDelete(null)} style={{background:"#1a1d28",border:"1px solid #4a5570",borderRadius:4,padding:"6px 14px",color:"#e2ddd5",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:9}}>CANCEL</button>
@@ -270,18 +270,18 @@ function BracketApp() {
               <span style={{fontFamily:"'DM Mono',monospace",fontSize:9,color:"#e2ddd5"}}>{active.name}'s Bracket {locked&&"\uD83D\uDD12 LOCKED"}</span>
               <span style={{fontFamily:"'DM Mono',monospace",fontSize:9,color:complete?"#3ded7a":"#ff6b3d"}}>{totalPicks}/63 picks</span>
             </div>
-            <div style={{height:4,background:"#1a1d28",borderRadius:2,overflow:"hidden"}}><div style={{height:"100%",background:complete?"#3ded7a":"linear-gradient(90deg,#ff6b3d,#ed4a2a)",width:`${(totalPicks/63)*100}%`,borderRadius:2,transition:"width 0.3s ease"}}/></div>
+            <div style={{height:4,background:"#252838",borderRadius:2,overflow:"hidden"}}><div style={{height:"100%",background:complete?"#3ded7a":"linear-gradient(90deg,#ff6b3d,#ed4a2a)",width:`${(totalPicks/63)*100}%`,borderRadius:2,transition:"width 0.3s ease"}}/></div>
             <div style={{display:"flex",justifyContent:"space-between",marginTop:6}}>{REGIONS.map(r=>(<span key={r} style={{fontFamily:"'DM Mono',monospace",fontSize:7,color:REGION_COLORS[r]}}>{r}: {regionPicks(r)}/15</span>))}</div>
           </div>
-          <div style={{display:"flex",gap:2,marginBottom:8}}>{[...REGIONS,"FINAL4"].map(r=>(<button key={r} onClick={()=>setRegion(r)} style={{flex:1,background:region===r?"#1a1d28":"transparent",borderBottom:region===r?`2px solid ${r==="FINAL4"?"#ff6b3d":REGION_COLORS[r]}`:"2px solid transparent",border:"none",borderTop:"none",borderLeft:"none",borderRight:"none",color:region===r?"#e2ddd5":"#6a7080",padding:"6px 2px 4px",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:r==="FINAL4"?8:9,letterSpacing:1}}>{r==="FINAL4"?"FINAL 4":r}</button>))}</div>
+          <div style={{display:"flex",gap:2,marginBottom:8}}>{[...REGIONS,"FINAL4"].map(r=>(<button key={r} onClick={()=>setRegion(r)} style={{flex:1,background:region===r?"#1c2030":"transparent",borderBottom:region===r?`2px solid ${r==="FINAL4"?"#ff6b3d":REGION_COLORS[r]}`:"2px solid transparent",border:"none",borderTop:"none",borderLeft:"none",borderRight:"none",color:region===r?"#e2ddd5":"#6a7080",padding:"6px 2px 4px",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:r==="FINAL4"?8:9,letterSpacing:1}}>{r==="FINAL4"?"FINAL 4":r}</button>))}</div>
 
           {REGIONS.includes(region) && (<div>
             <div style={{fontFamily:"'DM Mono',monospace",fontSize:8,color:"#6a7080",marginBottom:8,textAlign:"center"}}>{REGION_SITES[region]} Regional</div>
-            {ROUNDS.map((round,rIdx)=>{const num=8/Math.pow(2,rIdx);return(<div key={round} style={{marginBottom:14}}>
+            {ROUNDS.map((round,rIdx)=>{const num=8/Math.pow(2,rIdx);return(<div key={round} style={{marginBottom:14,padding:"10px",background:"#0c0e16",borderRadius:8,border:"1px solid #2e3345"}}>
               <div style={{fontFamily:"'DM Mono',monospace",fontSize:8,letterSpacing:2,color:REGION_COLORS[region],marginBottom:6}}>{ROUND_NAMES[round]}</div>
               {Array.from({length:num},(_,i)=>{const key=`${region}-${round}-${i}`;const teams=getMatchupTeams(region,round,i,picks);return <Matchup key={key} teams={teams} pickKey={key} picks={picks} onPick={makePick} disabled={locked} regionColor={REGION_COLORS[region]} matchNum={i}/>;})}
             </div>);})}
-            {picks[`${region}-E8-0`]&&(<div style={{background:"linear-gradient(135deg,#101420,#141018)",border:`1px solid ${REGION_COLORS[region]}50`,borderRadius:8,padding:"12px",textAlign:"center",animation:"slideUp 0.3s ease"}}><div style={{fontFamily:"'DM Mono',monospace",fontSize:7,letterSpacing:2,color:REGION_COLORS[region]}}>{region} CHAMPION</div><div style={{fontSize:18,fontWeight:700,marginTop:4}}>{picks[`${region}-E8-0`]}</div><div style={{fontFamily:"'DM Mono',monospace",fontSize:8,color:"#6a7080",marginTop:2}}>{"\u2192"} FINAL FOUR</div></div>)}
+            {picks[`${region}-E8-0`]&&(<div style={{background:"linear-gradient(135deg,#101420,#141018)",border:`1px solid ${REGION_COLORS[region]}70`,borderRadius:8,padding:"12px",textAlign:"center",animation:"slideUp 0.3s ease"}}><div style={{fontFamily:"'DM Mono',monospace",fontSize:7,letterSpacing:2,color:REGION_COLORS[region]}}>{region} CHAMPION</div><div style={{fontSize:18,fontWeight:700,marginTop:4}}>{picks[`${region}-E8-0`]}</div><div style={{fontFamily:"'DM Mono',monospace",fontSize:8,color:"#6a7080",marginTop:2}}>{"\u2192"} FINAL FOUR</div></div>)}
           </div>)}
 
           {region==="FINAL4"&&(<div>
@@ -299,8 +299,8 @@ function BracketApp() {
               </div>
             </div>)}
             {!locked&&complete&&!confirmLock&&(<button onClick={()=>setConfirmLock(true)} style={{width:"100%",marginTop:16,background:"linear-gradient(135deg,#3ded7a,#2acd5a)",border:"none",borderRadius:8,padding:"14px",color:"#08090c",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:12,fontWeight:700,letterSpacing:1}}>{"\uD83D\uDD12"} LOCK BRACKET</button>)}
-            {!locked&&confirmLock&&(<div style={{background:"#1a0e10",border:"1px solid #4a2a2e",borderRadius:8,padding:"14px",marginTop:16,textAlign:"center"}}><div style={{fontFamily:"'DM Mono',monospace",fontSize:10,color:"#ed5a5a",marginBottom:8}}>Are you sure? Once locked, picks can't change.</div><div style={{display:"flex",gap:8}}><button onClick={()=>setConfirmLock(false)} style={{flex:1,background:"#1a1d28",border:"1px solid #4a5570",borderRadius:6,padding:"10px",color:"#e2ddd5",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:10}}>CANCEL</button><button onClick={lockBracket} style={{flex:1,background:"linear-gradient(135deg,#ed3d3d,#cd2a2a)",border:"none",borderRadius:6,padding:"10px",color:"#fff",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:10,fontWeight:700}}>YES, LOCK IT {"\uD83D\uDD12"}</button></div></div>)}
-            {locked&&(<div style={{background:"#0a1a10",border:"1px solid #2a4a32",borderRadius:8,padding:"14px",marginTop:16,textAlign:"center"}}><div style={{fontFamily:"'DM Mono',monospace",fontSize:10,color:"#3ded7a"}}>{"\uD83D\uDD12"} BRACKET LOCKED {active.lockedAt?"\u2014 "+new Date(active.lockedAt).toLocaleString():""}</div></div>)}
+            {!locked&&confirmLock&&(<div style={{background:"#1e1014",border:"1px solid #5a3a3e",borderRadius:8,padding:"14px",marginTop:16,textAlign:"center"}}><div style={{fontFamily:"'DM Mono',monospace",fontSize:10,color:"#ed5a5a",marginBottom:8}}>Are you sure? Once locked, picks can't change.</div><div style={{display:"flex",gap:8}}><button onClick={()=>setConfirmLock(false)} style={{flex:1,background:"#1a1d28",border:"1px solid #4a5570",borderRadius:6,padding:"10px",color:"#e2ddd5",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:10}}>CANCEL</button><button onClick={lockBracket} style={{flex:1,background:"linear-gradient(135deg,#ed3d3d,#cd2a2a)",border:"none",borderRadius:6,padding:"10px",color:"#fff",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:10,fontWeight:700}}>YES, LOCK IT {"\uD83D\uDD12"}</button></div></div>)}
+            {locked&&(<div style={{background:"#0e1e14",border:"1px solid #3a5a42",borderRadius:8,padding:"14px",marginTop:16,textAlign:"center"}}><div style={{fontFamily:"'DM Mono',monospace",fontSize:10,color:"#3ded7a"}}>{"\uD83D\uDD12"} BRACKET LOCKED {active.lockedAt?"\u2014 "+new Date(active.lockedAt).toLocaleString():""}</div></div>)}
           </div>)}
         </>)}
       </div>
