@@ -87,32 +87,32 @@ function Matchup({teams,pickKey,picks,onPick,disabled,regionColor,matchNum}) {
 function BracketApp() {
   const [screen,setScreen]=useState("join");
   const [roomCode,setRoomCode]=useState(()=>localStorage.getItem("miq_room")||"");
-  const [myName,setMyName]=useState(()=>localStorage.getItem("miq_name")||"");
   const [brackets,setBrackets]=useState([]);
   const [activeIdx,setActiveIdx]=useState(0);
   const [region,setRegion]=useState("EAST");
   const [confirmLock,setConfirmLock]=useState(false);
   const [saving,setSaving]=useState(false);
   const [loading,setLoading]=useState(false);
+  const [showCreate,setShowCreate]=useState(false);
+  const [newName,setNewName]=useState("");
+  const [confirmDelete,setConfirmDelete]=useState(null);
   const saveTimer=useRef(null);
   const active=brackets[activeIdx]||null;
   const picks=active?.picks||{};
   const locked=active?.locked||false;
-  const isMyBracket=active?.name===myName;
 
   const joinRoom = async () => {
-    const code=roomCode.trim().toUpperCase(), name=myName.trim();
-    if(!code||!name) return;
-    localStorage.setItem("miq_room",code); localStorage.setItem("miq_name",name);
-    setRoomCode(code); setMyName(name); setLoading(true);
+    const code=roomCode.trim().toUpperCase();
+    if(!code) return;
+    localStorage.setItem("miq_room",code);
+    setRoomCode(code); setLoading(true);
 
     // Migrate old localStorage brackets to Supabase
     try {
       const oldBrackets = JSON.parse(localStorage.getItem("miq_brackets") || "[]");
       if (oldBrackets.length > 0) {
         for (const ob of oldBrackets) {
-          if (!ob.name || !ob.picks) continue;
-          // Check if this name already exists in the room
+          if (!ob.name || !ob.picks || Object.keys(ob.picks).length === 0) continue;
           const {data: existing} = await sb.from("brackets").select("id").eq("room_code", code).eq("name", ob.name).single();
           if (!existing) {
             await sb.from("brackets").insert({
@@ -121,21 +121,39 @@ function BracketApp() {
             });
           }
         }
-        // Clear old localStorage after migration
         localStorage.removeItem("miq_brackets");
       }
     } catch(e) { console.log("Migration:", e); }
 
     const {data}=await sb.from("brackets").select("*").eq("room_code",code).order("created_at");
-    let all=(data||[]).map(r=>({id:r.id,name:r.name,picks:r.picks||{},locked:r.locked,lockedAt:r.locked_at,created:r.created_at}));
-    const myIdx=all.findIndex(r=>r.name===name);
-    if(myIdx>=0){setBrackets(all);setActiveIdx(myIdx);}
-    else{
-      const {data:nr}=await sb.from("brackets").insert({room_code:code,name,picks:{},locked:false}).select().single();
-      if(nr){all.push({id:nr.id,name:nr.name,picks:nr.picks||{},locked:nr.locked,lockedAt:nr.locked_at,created:nr.created_at});}
-      setBrackets(all);setActiveIdx(all.length-1);
-    }
+    const all=(data||[]).map(r=>({id:r.id,name:r.name,picks:r.picks||{},locked:r.locked,lockedAt:r.locked_at,created:r.created_at}));
+    setBrackets(all);
+    setActiveIdx(all.length > 0 ? 0 : 0);
     setLoading(false); setScreen("bracket");
+  };
+
+  const createBracket = async () => {
+    const name = newName.trim();
+    if (!name || !roomCode) return;
+    const exists = brackets.find(b => b.name === name);
+    if (exists) { alert("That name is already taken in this room."); return; }
+    const {data:nr} = await sb.from("brackets").insert({room_code:roomCode,name,picks:{},locked:false}).select().single();
+    if (nr) {
+      const newB = {id:nr.id,name:nr.name,picks:nr.picks||{},locked:nr.locked,lockedAt:nr.locked_at,created:nr.created_at};
+      setBrackets(prev => [...prev, newB]);
+      setActiveIdx(brackets.length);
+    }
+    setNewName(""); setShowCreate(false);
+  };
+
+  const deleteBracket = async (idx) => {
+    const b = brackets[idx];
+    if (!b || b.locked) return;
+    await sb.from("brackets").delete().eq("id", b.id);
+    setBrackets(prev => prev.filter((_,i) => i !== idx));
+    if (activeIdx >= idx && activeIdx > 0) setActiveIdx(activeIdx - 1);
+    else if (brackets.length <= 1) setActiveIdx(0);
+    setConfirmDelete(null);
   };
 
   useEffect(()=>{
@@ -158,13 +176,13 @@ function BracketApp() {
   },[]);
 
   const makePick=useCallback((key,team)=>{
-    if(locked||!isMyBracket) return;
+    if(locked) return;
     setBrackets(prev=>{
       const up=[...prev]; const br={...up[activeIdx]}; let np={...br.picks};
       if(np[key]&&np[key]!==team){const parts=key.split("-");if(parts.length===3)np=clearDownstream(np,parts[0],parts[1],parseInt(parts[2]));else if(key.startsWith("F4-")){delete np["CHAMP"];delete np["champScore1"];delete np["champScore2"];}}
       np[key]=team; br.picks=np; up[activeIdx]=br; savePicks(br); return up;
     });
-  },[activeIdx,locked,isMyBracket,savePicks]);
+  },[activeIdx,locked,savePicks]);
 
   const lockBracket=async()=>{
     if(!active?.id)return; const now=new Date().toISOString();
@@ -184,17 +202,12 @@ function BracketApp() {
         <div style={{fontFamily:"'DM Mono',monospace",fontSize:10,color:"#8090a0",letterSpacing:2}}>BRACKET CHALLENGE</div>
       </div>
       <div style={{background:"linear-gradient(135deg,#101420,#141018)",border:"1px solid #2a2540",borderRadius:12,padding:"24px"}}>
-        <div style={{fontFamily:"'DM Mono',monospace",fontSize:8,letterSpacing:2,color:"#ff6b3d",marginBottom:16}}>JOIN OR CREATE A ROOM</div>
-        <div style={{marginBottom:14}}>
-          <div style={{fontFamily:"'DM Mono',monospace",fontSize:8,color:"#8090a0",marginBottom:4}}>YOUR NAME</div>
-          <input value={myName} onChange={e=>setMyName(e.target.value)} placeholder="Enter your name..." style={{width:"100%",background:"#0a0c14",border:"1px solid #2a2d38",borderRadius:6,padding:"10px 12px",color:"#e2ddd5",fontSize:14,fontFamily:"'Libre Baskerville',Georgia,serif"}}/>
-        </div>
+        <div style={{fontFamily:"'DM Mono',monospace",fontSize:8,letterSpacing:2,color:"#ff6b3d",marginBottom:16}}>ENTER ROOM CODE</div>
+        <div style={{fontSize:12,color:"#a0a3ae",marginBottom:16,lineHeight:1.6}}>Everyone in your family enters the same code to see all brackets in one place.</div>
         <div style={{marginBottom:18}}>
-          <div style={{fontFamily:"'DM Mono',monospace",fontSize:8,color:"#8090a0",marginBottom:4}}>ROOM CODE</div>
-          <input value={roomCode} onChange={e=>setRoomCode(e.target.value.toUpperCase())} onKeyDown={e=>e.key==="Enter"&&joinRoom()} placeholder="e.g. PAHWA" maxLength={20} style={{width:"100%",background:"#0a0c14",border:"1px solid #2a2d38",borderRadius:6,padding:"10px 12px",color:"#ff6b3d",fontSize:18,fontFamily:"'DM Mono',monospace",fontWeight:700,letterSpacing:4,textTransform:"uppercase",textAlign:"center"}}/>
-          <div style={{fontFamily:"'DM Mono',monospace",fontSize:7,color:"#6a7080",marginTop:4,textAlign:"center"}}>Same code = same room. Share it with your family.</div>
+          <input value={roomCode} onChange={e=>setRoomCode(e.target.value.toUpperCase())} onKeyDown={e=>e.key==="Enter"&&joinRoom()} placeholder="e.g. PAHWA" maxLength={20} style={{width:"100%",background:"#0a0c14",border:"1px solid #2a2d38",borderRadius:6,padding:"12px",color:"#ff6b3d",fontSize:22,fontFamily:"'DM Mono',monospace",fontWeight:700,letterSpacing:4,textTransform:"uppercase",textAlign:"center"}}/>
         </div>
-        <button onClick={joinRoom} disabled={!myName.trim()||!roomCode.trim()||loading} style={{width:"100%",background:myName.trim()&&roomCode.trim()?"linear-gradient(135deg,#ff6b3d,#ed4a2a)":"#1a1d28",border:"none",borderRadius:8,padding:"12px",color:"#fff",cursor:myName.trim()&&roomCode.trim()?"pointer":"default",fontFamily:"'DM Mono',monospace",fontSize:12,fontWeight:700,letterSpacing:1}}>{loading?"JOINING...":"LET\u2019S GO \u2192"}</button>
+        <button onClick={joinRoom} disabled={!roomCode.trim()||loading} style={{width:"100%",background:roomCode.trim()?"linear-gradient(135deg,#ff6b3d,#ed4a2a)":"#1a1d28",border:"none",borderRadius:8,padding:"12px",color:"#fff",cursor:roomCode.trim()?"pointer":"default",fontFamily:"'DM Mono',monospace",fontSize:12,fontWeight:700,letterSpacing:1}}>{loading?"JOINING...":"ENTER ROOM \u2192"}</button>
       </div>
       <a href="/" style={{display:"block",textAlign:"center",marginTop:16,fontFamily:"'DM Mono',monospace",fontSize:8,color:"#ff6b3d",textDecoration:"none"}}>{"\u2190"} BACK TO MADNESSIQ</a>
     </div>
@@ -211,12 +224,47 @@ function BracketApp() {
           </div>
         </div>
         <div style={{display:"flex",gap:4,marginTop:8,alignItems:"center",overflowX:"auto"}}>
-          {brackets.map((b,i)=>(<button key={b.id||i} onClick={()=>setActiveIdx(i)} style={{background:activeIdx===i?"#1a1d28":"transparent",border:activeIdx===i?"1px solid #3a4560":"1px solid #222530",color:activeIdx===i?"#e2ddd5":"#6a7080",padding:"4px 10px",borderRadius:4,cursor:"pointer",whiteSpace:"nowrap",fontFamily:"'DM Mono',monospace",fontSize:9}}>{b.name} {b.locked?"\uD83D\uDD12":""} {b.name===myName?"\u2605":""}</button>))}
+          {brackets.map((b,i)=>(<button key={b.id||i} onClick={()=>{setActiveIdx(i);setConfirmDelete(null);}} style={{background:activeIdx===i?"#1a1d28":"transparent",border:activeIdx===i?"1px solid #3a4560":"1px solid #222530",color:activeIdx===i?"#e2ddd5":"#6a7080",padding:"4px 10px",borderRadius:4,cursor:"pointer",whiteSpace:"nowrap",fontFamily:"'DM Mono',monospace",fontSize:9}}>{b.name} {b.locked?"\uD83D\uDD12":""}</button>))}
+          <button onClick={()=>setShowCreate(true)} style={{background:"transparent",border:"1px dashed #3a4560",color:"#ff6b3d",padding:"4px 10px",borderRadius:4,cursor:"pointer",whiteSpace:"nowrap",fontFamily:"'DM Mono',monospace",fontSize:9}}>+ NEW</button>
         </div>
       </div>
       <div style={{padding:"12px 16px 80px"}}>
+        {/* Create bracket form */}
+        {showCreate && (
+          <div style={{background:"linear-gradient(135deg,#101420,#141018)",border:"1px solid #2a2540",borderRadius:8,padding:"16px",marginBottom:10,animation:"slideUp 0.2s ease"}}>
+            <div style={{fontFamily:"'DM Mono',monospace",fontSize:8,letterSpacing:2,color:"#ff6b3d",marginBottom:8}}>CREATE NEW BRACKET</div>
+            <div style={{display:"flex",gap:6}}>
+              <input value={newName} onChange={e=>setNewName(e.target.value)} onKeyDown={e=>e.key==="Enter"&&createBracket()} placeholder="Enter name..." style={{flex:1,background:"#0a0c14",border:"1px solid #2a2d38",borderRadius:6,padding:"8px 10px",color:"#e2ddd5",fontSize:13,fontFamily:"'Libre Baskerville',Georgia,serif"}}/>
+              <button onClick={createBracket} disabled={!newName.trim()} style={{background:newName.trim()?"linear-gradient(135deg,#ff6b3d,#ed4a2a)":"#1a1d28",border:"none",borderRadius:6,padding:"8px 14px",color:"#fff",cursor:newName.trim()?"pointer":"default",fontFamily:"'DM Mono',monospace",fontSize:9,fontWeight:700}}>CREATE</button>
+              <button onClick={()=>{setShowCreate(false);setNewName("");}} style={{background:"transparent",border:"1px solid #3a4560",borderRadius:6,padding:"8px 10px",color:"#6a7080",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:9}}>X</button>
+            </div>
+          </div>
+        )}
+
+        {/* No brackets yet */}
+        {brackets.length === 0 && !showCreate && (
+          <div style={{textAlign:"center",padding:"40px 20px"}}>
+            <div style={{fontSize:14,color:"#6a7080",marginBottom:12}}>No brackets in this room yet.</div>
+            <button onClick={()=>setShowCreate(true)} style={{background:"linear-gradient(135deg,#ff6b3d,#ed4a2a)",border:"none",borderRadius:8,padding:"12px 24px",color:"#fff",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:11,fontWeight:700,letterSpacing:1}}>CREATE FIRST BRACKET</button>
+          </div>
+        )}
+
         {active && (<>
-          {!isMyBracket && (<div style={{background:"#0e1420",border:"1px solid #1a2a40",borderRadius:6,padding:"8px 12px",marginBottom:8,fontFamily:"'DM Mono',monospace",fontSize:9,color:"#4a9aed",textAlign:"center"}}>Viewing {active.name}'s bracket (read-only) {"\u2014"} <span onClick={()=>{const mi=brackets.findIndex(b=>b.name===myName);if(mi>=0)setActiveIdx(mi);}} style={{color:"#ff6b3d",cursor:"pointer",textDecoration:"underline"}}>switch to yours</span></div>)}
+          {/* Delete button for unlocked brackets */}
+          {!locked && confirmDelete !== activeIdx && (
+            <div style={{display:"flex",justifyContent:"flex-end",marginBottom:6}}>
+              <button onClick={()=>setConfirmDelete(activeIdx)} style={{background:"transparent",border:"1px solid #2a1a1e",borderRadius:4,padding:"3px 8px",color:"#6a4048",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:7,letterSpacing:1}}>DELETE THIS BRACKET</button>
+            </div>
+          )}
+          {confirmDelete === activeIdx && (
+            <div style={{background:"#1a0e10",border:"1px solid #3a1a1e",borderRadius:6,padding:"10px",marginBottom:8,textAlign:"center"}}>
+              <div style={{fontFamily:"'DM Mono',monospace",fontSize:9,color:"#ed5a5a",marginBottom:6}}>Delete {active.name}'s bracket? This can't be undone.</div>
+              <div style={{display:"flex",gap:6,justifyContent:"center"}}>
+                <button onClick={()=>setConfirmDelete(null)} style={{background:"#1a1d28",border:"1px solid #3a4560",borderRadius:4,padding:"6px 14px",color:"#e2ddd5",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:9}}>CANCEL</button>
+                <button onClick={()=>deleteBracket(activeIdx)} style={{background:"linear-gradient(135deg,#ed3d3d,#cd2a2a)",border:"none",borderRadius:4,padding:"6px 14px",color:"#fff",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:9,fontWeight:700}}>DELETE</button>
+              </div>
+            </div>
+          )}
           <div style={{background:"#0c0e14",borderRadius:8,padding:"10px 12px",marginBottom:10,border:"1px solid #1a1d28"}}>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6}}>
               <span style={{fontFamily:"'DM Mono',monospace",fontSize:9,color:"#e2ddd5"}}>{active.name}'s Bracket {locked&&"\uD83D\uDD12 LOCKED"}</span>
@@ -231,26 +279,26 @@ function BracketApp() {
             <div style={{fontFamily:"'DM Mono',monospace",fontSize:8,color:"#6a7080",marginBottom:8,textAlign:"center"}}>{REGION_SITES[region]} Regional</div>
             {ROUNDS.map((round,rIdx)=>{const num=8/Math.pow(2,rIdx);return(<div key={round} style={{marginBottom:14}}>
               <div style={{fontFamily:"'DM Mono',monospace",fontSize:8,letterSpacing:2,color:REGION_COLORS[region],marginBottom:6}}>{ROUND_NAMES[round]}</div>
-              {Array.from({length:num},(_,i)=>{const key=`${region}-${round}-${i}`;const teams=getMatchupTeams(region,round,i,picks);return <Matchup key={key} teams={teams} pickKey={key} picks={picks} onPick={makePick} disabled={locked||!isMyBracket} regionColor={REGION_COLORS[region]} matchNum={i}/>;})}
+              {Array.from({length:num},(_,i)=>{const key=`${region}-${round}-${i}`;const teams=getMatchupTeams(region,round,i,picks);return <Matchup key={key} teams={teams} pickKey={key} picks={picks} onPick={makePick} disabled={locked} regionColor={REGION_COLORS[region]} matchNum={i}/>;})}
             </div>);})}
             {picks[`${region}-E8-0`]&&(<div style={{background:"linear-gradient(135deg,#101420,#141018)",border:`1px solid ${REGION_COLORS[region]}40`,borderRadius:8,padding:"12px",textAlign:"center",animation:"slideUp 0.3s ease"}}><div style={{fontFamily:"'DM Mono',monospace",fontSize:7,letterSpacing:2,color:REGION_COLORS[region]}}>{region} CHAMPION</div><div style={{fontSize:18,fontWeight:700,marginTop:4}}>{picks[`${region}-E8-0`]}</div><div style={{fontFamily:"'DM Mono',monospace",fontSize:8,color:"#6a7080",marginTop:2}}>{"\u2192"} FINAL FOUR</div></div>)}
           </div>)}
 
           {region==="FINAL4"&&(<div>
             <div style={{fontFamily:"'DM Mono',monospace",fontSize:8,letterSpacing:2,color:"#ff6b3d",marginBottom:8,textAlign:"center"}}>FINAL FOUR {"\u2014"} INDIANAPOLIS {"\u2014"} SAT APR 4</div>
-            {[0,1].map(si=>{const [r1,r2]=F4_MATCHUP[si];const teams=getF4Teams(si,picks);return(<div key={si} style={{marginBottom:12}}><div style={{fontFamily:"'DM Mono',monospace",fontSize:8,color:"#8090a0",marginBottom:4}}>SEMIFINAL {si+1}: <span style={{color:REGION_COLORS[r1]}}>{r1}</span> vs <span style={{color:REGION_COLORS[r2]}}>{r2}</span></div><Matchup teams={teams} pickKey={`F4-${si}`} picks={picks} onPick={makePick} disabled={locked||!isMyBracket} regionColor="#ff6b3d" matchNum={si}/></div>);})}
+            {[0,1].map(si=>{const [r1,r2]=F4_MATCHUP[si];const teams=getF4Teams(si,picks);return(<div key={si} style={{marginBottom:12}}><div style={{fontFamily:"'DM Mono',monospace",fontSize:8,color:"#8090a0",marginBottom:4}}>SEMIFINAL {si+1}: <span style={{color:REGION_COLORS[r1]}}>{r1}</span> vs <span style={{color:REGION_COLORS[r2]}}>{r2}</span></div><Matchup teams={teams} pickKey={`F4-${si}`} picks={picks} onPick={makePick} disabled={locked} regionColor="#ff6b3d" matchNum={si}/></div>);})}
             <div style={{fontFamily:"'DM Mono',monospace",fontSize:8,letterSpacing:2,color:"#ff6b3d",marginTop:16,marginBottom:8,textAlign:"center"}}>NATIONAL CHAMPIONSHIP {"\u2014"} MON APR 6</div>
-            {(()=>{const teams=getChampTeams(picks);return <Matchup teams={teams} pickKey="CHAMP" picks={picks} onPick={makePick} disabled={locked||!isMyBracket} regionColor="#ff6b3d" matchNum={0}/>;})()}
+            {(()=>{const teams=getChampTeams(picks);return <Matchup teams={teams} pickKey="CHAMP" picks={picks} onPick={makePick} disabled={locked} regionColor="#ff6b3d" matchNum={0}/>;})()}
             {picks["CHAMP"]&&(<div style={{background:"linear-gradient(135deg,#141620,#1a1428)",border:"1px solid #3a3558",borderRadius:10,padding:"16px",textAlign:"center",marginTop:12,animation:"slideUp 0.3s ease"}}>
               <div style={{fontFamily:"'DM Mono',monospace",fontSize:7,letterSpacing:4,color:"#ff6b3d",marginBottom:8}}>PREDICT THE FINAL SCORE</div>
               <div style={{fontSize:20,fontWeight:700,marginBottom:12}}>{"\uD83C\uDFC6"} {picks["CHAMP"]}</div>
               <div style={{display:"flex",gap:8,justifyContent:"center",alignItems:"center"}}>
-                <div style={{textAlign:"center"}}><div style={{fontFamily:"'DM Mono',monospace",fontSize:8,color:"#8090a0",marginBottom:4}}>WINNER</div><input value={picks.champScore1||""} onChange={e=>makePick("champScore1",e.target.value)} placeholder="72" maxLength={3} disabled={locked||!isMyBracket} style={{width:60,textAlign:"center",background:"#0a0c14",border:"1px solid #2a2d38",borderRadius:6,padding:"8px",color:"#3ded7a",fontSize:20,fontFamily:"'DM Mono',monospace",fontWeight:700}}/></div>
+                <div style={{textAlign:"center"}}><div style={{fontFamily:"'DM Mono',monospace",fontSize:8,color:"#8090a0",marginBottom:4}}>WINNER</div><input value={picks.champScore1||""} onChange={e=>makePick("champScore1",e.target.value)} placeholder="72" maxLength={3} disabled={locked} style={{width:60,textAlign:"center",background:"#0a0c14",border:"1px solid #2a2d38",borderRadius:6,padding:"8px",color:"#3ded7a",fontSize:20,fontFamily:"'DM Mono',monospace",fontWeight:700}}/></div>
                 <span style={{fontFamily:"'DM Mono',monospace",fontSize:14,color:"#4a4d58",marginTop:16}}>{"\u2014"}</span>
-                <div style={{textAlign:"center"}}><div style={{fontFamily:"'DM Mono',monospace",fontSize:8,color:"#8090a0",marginBottom:4}}>RUNNER-UP</div><input value={picks.champScore2||""} onChange={e=>makePick("champScore2",e.target.value)} placeholder="65" maxLength={3} disabled={locked||!isMyBracket} style={{width:60,textAlign:"center",background:"#0a0c14",border:"1px solid #2a2d38",borderRadius:6,padding:"8px",color:"#ed5a5a",fontSize:20,fontFamily:"'DM Mono',monospace",fontWeight:700}}/></div>
+                <div style={{textAlign:"center"}}><div style={{fontFamily:"'DM Mono',monospace",fontSize:8,color:"#8090a0",marginBottom:4}}>RUNNER-UP</div><input value={picks.champScore2||""} onChange={e=>makePick("champScore2",e.target.value)} placeholder="65" maxLength={3} disabled={locked} style={{width:60,textAlign:"center",background:"#0a0c14",border:"1px solid #2a2d38",borderRadius:6,padding:"8px",color:"#ed5a5a",fontSize:20,fontFamily:"'DM Mono',monospace",fontWeight:700}}/></div>
               </div>
             </div>)}
-            {!locked&&isMyBracket&&complete&&!confirmLock&&(<button onClick={()=>setConfirmLock(true)} style={{width:"100%",marginTop:16,background:"linear-gradient(135deg,#3ded7a,#2acd5a)",border:"none",borderRadius:8,padding:"14px",color:"#08090c",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:12,fontWeight:700,letterSpacing:1}}>{"\uD83D\uDD12"} LOCK BRACKET</button>)}
+            {!locked&&complete&&!confirmLock&&(<button onClick={()=>setConfirmLock(true)} style={{width:"100%",marginTop:16,background:"linear-gradient(135deg,#3ded7a,#2acd5a)",border:"none",borderRadius:8,padding:"14px",color:"#08090c",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:12,fontWeight:700,letterSpacing:1}}>{"\uD83D\uDD12"} LOCK BRACKET</button>)}
             {!locked&&confirmLock&&(<div style={{background:"#1a0e10",border:"1px solid #3a1a1e",borderRadius:8,padding:"14px",marginTop:16,textAlign:"center"}}><div style={{fontFamily:"'DM Mono',monospace",fontSize:10,color:"#ed5a5a",marginBottom:8}}>Are you sure? Once locked, picks can't change.</div><div style={{display:"flex",gap:8}}><button onClick={()=>setConfirmLock(false)} style={{flex:1,background:"#1a1d28",border:"1px solid #3a4560",borderRadius:6,padding:"10px",color:"#e2ddd5",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:10}}>CANCEL</button><button onClick={lockBracket} style={{flex:1,background:"linear-gradient(135deg,#ed3d3d,#cd2a2a)",border:"none",borderRadius:6,padding:"10px",color:"#fff",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:10,fontWeight:700}}>YES, LOCK IT {"\uD83D\uDD12"}</button></div></div>)}
             {locked&&(<div style={{background:"#0a1a10",border:"1px solid #1a3a22",borderRadius:8,padding:"14px",marginTop:16,textAlign:"center"}}><div style={{fontFamily:"'DM Mono',monospace",fontSize:10,color:"#3ded7a"}}>{"\uD83D\uDD12"} BRACKET LOCKED {active.lockedAt?"\u2014 "+new Date(active.lockedAt).toLocaleString():""}</div></div>)}
           </div>)}
