@@ -81,7 +81,7 @@ function saveBrackets(brackets) {
   localStorage.setItem("miq_brackets", JSON.stringify(brackets));
 }
 
-// Encode a bracket into a compact URL-safe string
+// Encode a single bracket into a compact string
 function encodeBracket(bracket) {
   try {
     const data = { n: bracket.name, p: bracket.picks, l: bracket.locked, t: bracket.lockedAt || null };
@@ -89,7 +89,7 @@ function encodeBracket(bracket) {
   } catch { return null; }
 }
 
-// Decode a bracket from URL
+// Decode a single bracket from string
 function decodeBracket(str) {
   try {
     const data = JSON.parse(decodeURIComponent(escape(atob(str))));
@@ -97,21 +97,52 @@ function decodeBracket(str) {
   } catch { return null; }
 }
 
-// Check URL for a shared bracket on load
+// Encode ALL brackets into one URL (family board)
+function encodeAllBrackets(brackets) {
+  try {
+    const arr = brackets.map(b => ({ n: b.name, p: b.picks, l: b.locked, t: b.lockedAt || null }));
+    return btoa(unescape(encodeURIComponent(JSON.stringify(arr))));
+  } catch { return null; }
+}
+
+// Decode multiple brackets from URL
+function decodeAllBrackets(str) {
+  try {
+    const arr = JSON.parse(decodeURIComponent(escape(atob(str))));
+    return arr.map(d => ({ name: d.n, picks: d.p, locked: d.l || false, lockedAt: d.t || null, created: new Date().toISOString() }));
+  } catch { return null; }
+}
+
+// Check URL for shared bracket(s) on load
 function loadFromURL() {
   const hash = window.location.hash;
-  if (hash && hash.startsWith("#b=")) {
+  if (!hash) return null;
+  // Multiple brackets: #all=...
+  if (hash.startsWith("#all=")) {
+    const encoded = hash.substring(5);
+    return { type: "all", brackets: decodeAllBrackets(encoded) || [] };
+  }
+  // Single bracket: #b=...
+  if (hash.startsWith("#b=")) {
     const encoded = hash.substring(3);
-    return decodeBracket(encoded);
+    const bracket = decodeBracket(encoded);
+    return bracket ? { type: "single", brackets: [bracket] } : null;
   }
   return null;
 }
 
-// Generate shareable URL for a bracket
+// Generate shareable URL for a single bracket
 function getShareURL(bracket) {
   const encoded = encodeBracket(bracket);
   if (!encoded) return null;
   return window.location.origin + window.location.pathname + "#b=" + encoded;
+}
+
+// Generate shareable URL for ALL brackets (family board)
+function getShareAllURL(brackets) {
+  const encoded = encodeAllBrackets(brackets);
+  if (!encoded) return null;
+  return window.location.origin + window.location.pathname + "#all=" + encoded;
 }
 
 // ── BRACKET LOGIC ────────────────────────────────────────
@@ -255,37 +286,41 @@ function Matchup({ teams, pickKey, picks, onPick, disabled, regionColor, matchNu
 function BracketApp() {
   const [brackets, setBrackets] = useState(() => {
     const stored = loadBrackets();
-    // Check URL for a shared bracket
     const fromURL = loadFromURL();
-    if (fromURL) {
-      // Check if this bracket name already exists
-      const existing = stored.findIndex(b => b.name === fromURL.name);
-      if (existing >= 0) {
-        // Update existing bracket with shared data
-        stored[existing] = fromURL;
-      } else {
-        stored.push(fromURL);
-      }
+    if (fromURL && fromURL.brackets.length > 0) {
+      fromURL.brackets.forEach(incoming => {
+        const existing = stored.findIndex(b => b.name === incoming.name);
+        if (existing >= 0) {
+          // Update if incoming is locked or has more picks
+          if (incoming.locked || Object.keys(incoming.picks).length > Object.keys(stored[existing].picks).length) {
+            stored[existing] = incoming;
+          }
+        } else {
+          stored.push(incoming);
+        }
+      });
       saveBrackets(stored);
-      // Clear the hash so refreshing doesn't re-import
       window.history.replaceState(null, "", window.location.pathname);
     }
     return stored;
   });
-  const [activeIdx, setActiveIdx] = useState(() => {
-    const fromURL = loadFromURL();
-    if (fromURL) {
-      const stored = loadBrackets();
-      const idx = stored.findIndex(b => b.name === fromURL.name);
-      return idx >= 0 ? idx : stored.length - 1;
-    }
-    return 0;
-  });
+  const [activeIdx, setActiveIdx] = useState(0);
   const [showCreate, setShowCreate] = useState(brackets.length === 0);
   const [newName, setNewName] = useState("");
   const [region, setRegion] = useState("EAST");
   const [confirmLock, setConfirmLock] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [copiedAll, setCopiedAll] = useState(false);
+  const [sharedBrackets, setSharedBrackets] = useState([]);
+  const [viewingShared, setViewingShared] = useState(null);
+  const [sharedRegion, setSharedRegion] = useState("EAST");
+
+  // Fetch all locked brackets from server on load
+  useEffect(() => {
+    fetch("/api/brackets").then(r => r.json()).then(data => {
+      if (data.brackets) setSharedBrackets(data.brackets);
+    }).catch(() => {});
+  }, []);
 
   const active = brackets[activeIdx] || null;
   const picks = active?.picks || {};
@@ -329,12 +364,26 @@ function BracketApp() {
   }, [activeIdx, locked]);
 
   const lockBracket = () => {
+    const lockedBracket = {...brackets[activeIdx], locked: true, lockedAt: new Date().toISOString()};
     setBrackets(prev => {
       const updated = [...prev];
-      updated[activeIdx] = {...updated[activeIdx], locked: true, lockedAt: new Date().toISOString()};
+      updated[activeIdx] = lockedBracket;
       return updated;
     });
     setConfirmLock(false);
+    // POST to server so everyone can see it
+    fetch("/api/brackets", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(lockedBracket),
+    }).then(r => r.json()).then(data => {
+      if (data.success) {
+        // Refresh shared brackets
+        fetch("/api/brackets").then(r => r.json()).then(d => {
+          if (d.brackets) setSharedBrackets(d.brackets);
+        });
+      }
+    }).catch(() => {});
   };
 
   const deleteBracket = () => {
@@ -386,6 +435,32 @@ function BracketApp() {
               padding:"4px 10px", borderRadius:4, cursor:"pointer",
               fontFamily:"'DM Mono',monospace", fontSize:9,
             }}>+ NEW</button>
+          </div>
+        )}
+
+        {/* Share All Brackets button */}
+        {brackets.filter(b => b.locked).length > 0 && (
+          <div style={{ marginTop:6, paddingBottom:4 }}>
+            <button onClick={() => {
+              const url = getShareAllURL(brackets);
+              if (url) {
+                navigator.clipboard.writeText(url).then(() => {
+                  setCopiedAll(true);
+                  setTimeout(() => setCopiedAll(false), 2000);
+                }).catch(() => {
+                  window.prompt("Copy this link — it has ALL brackets:", url);
+                });
+              }
+            }} style={{
+              width:"100%", background: copiedAll ? "#0a1a10" : "transparent",
+              border: copiedAll ? "1px solid #1a3a22" : "1px solid #2a2540",
+              borderRadius:5, padding:"6px 10px", cursor:"pointer",
+              fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:1,
+              color: copiedAll ? "#3ded7a" : "#8090a0",
+              transition:"all 0.2s ease",
+            }}>
+              {copiedAll ? "✓ FAMILY LINK COPIED!" : "👨‍👩‍👧‍👧 SHARE ALL BRACKETS (FAMILY LINK)"}
+            </button>
           </div>
         )}
       </div>
@@ -634,6 +709,112 @@ function BracketApp() {
               </div>
             )}
           </>
+        )}
+
+        {/* ── ALL LOCKED BRACKETS (shared across devices) ── */}
+        {sharedBrackets.length > 0 && (
+          <div style={{ marginTop:20 }}>
+            <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:2, color:"#ff6b3d", marginBottom:8 }}>
+              ALL LOCKED BRACKETS ({sharedBrackets.length})
+            </div>
+            <div style={{ display:"flex", gap:4, marginBottom:8, flexWrap:"wrap" }}>
+              {sharedBrackets.map((sb, i) => (
+                <button key={i} onClick={() => { setViewingShared(viewingShared === i ? null : i); setSharedRegion("EAST"); }} style={{
+                  background: viewingShared === i ? "#1a1d28" : "#0c0e14",
+                  border: viewingShared === i ? "1px solid #3a4560" : "1px solid #1a1d28",
+                  color: viewingShared === i ? "#e2ddd5" : "#8090a0",
+                  padding:"5px 10px", borderRadius:5, cursor:"pointer",
+                  fontFamily:"'DM Mono',monospace", fontSize:9,
+                }}>
+                  🔒 {sb.name} — {countPicks(sb.picks)}/63
+                </button>
+              ))}
+            </div>
+
+            {/* Viewing a shared bracket */}
+            {viewingShared !== null && sharedBrackets[viewingShared] && (() => {
+              const sb = sharedBrackets[viewingShared];
+              const sp = sb.picks || {};
+              return (
+                <div style={{ background:"#0c0e14", border:"1px solid #1a2030", borderRadius:8, padding:"10px 12px" }}>
+                  <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:8 }}>
+                    <span style={{ fontFamily:"'DM Mono',monospace", fontSize:10, color:"#e2ddd5" }}>
+                      🔒 {sb.name}'s Bracket
+                    </span>
+                    <span style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:"#6a7080" }}>
+                      Locked {sb.lockedAt ? new Date(sb.lockedAt).toLocaleDateString() : ""}
+                    </span>
+                  </div>
+
+                  {/* Region tabs for viewing */}
+                  <div style={{ display:"flex", gap:2, marginBottom:8 }}>
+                    {[...REGIONS, "FINAL4"].map(r => (
+                      <button key={r} onClick={() => setSharedRegion(r)} style={{
+                        flex:1, background: sharedRegion === r ? "#1a1d28" : "transparent",
+                        borderBottom: sharedRegion === r ? `2px solid ${r === "FINAL4" ? "#ff6b3d" : REGION_COLORS[r]}` : "2px solid transparent",
+                        border:"none", borderTop:"none", borderLeft:"none", borderRight:"none",
+                        color: sharedRegion === r ? "#e2ddd5" : "#6a7080",
+                        padding:"4px 2px 3px", cursor:"pointer",
+                        fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:1,
+                      }}>
+                        {r === "FINAL4" ? "F4" : r.substring(0,1)}
+                      </button>
+                    ))}
+                  </div>
+
+                  {/* Show picks for selected region */}
+                  {REGIONS.includes(sharedRegion) && ROUNDS.map(round => {
+                    const numMatchups = 8 / Math.pow(2, ROUNDS.indexOf(round));
+                    const picks_in_round = Array.from({length: numMatchups}, (_, i) => {
+                      const key = `${sharedRegion}-${round}-${i}`;
+                      return sp[key];
+                    }).filter(Boolean);
+                    if (picks_in_round.length === 0) return null;
+                    return (
+                      <div key={round} style={{ marginBottom:6 }}>
+                        <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, letterSpacing:1, color: REGION_COLORS[sharedRegion], marginBottom:3 }}>
+                          {ROUND_NAMES[round]}
+                        </div>
+                        <div style={{ display:"flex", flexWrap:"wrap", gap:4 }}>
+                          {picks_in_round.map((pick, j) => (
+                            <span key={j} style={{
+                              fontFamily:"'DM Mono',monospace", fontSize:9, color:"#e2ddd5",
+                              background:"#12141e", padding:"3px 8px", borderRadius:4,
+                              border:`1px solid ${REGION_COLORS[sharedRegion]}30`,
+                            }}>{pick}</span>
+                          ))}
+                        </div>
+                      </div>
+                    );
+                  })}
+
+                  {/* F4 + Championship */}
+                  {sharedRegion === "FINAL4" && (
+                    <div>
+                      {[0,1].map(i => sp[`F4-${i}`] && (
+                        <div key={i} style={{ marginBottom:4 }}>
+                          <span style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#ff6b3d" }}>SEMI {i+1}: </span>
+                          <span style={{ fontFamily:"'DM Mono',monospace", fontSize:10, color:"#e2ddd5" }}>{sp[`F4-${i}`]}</span>
+                        </div>
+                      ))}
+                      {sp["CHAMP"] && (
+                        <div style={{ background:"#141620", borderRadius:6, padding:"8px 12px", marginTop:6, textAlign:"center",
+                          border:"1px solid #3a3558" }}>
+                          <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, letterSpacing:2, color:"#ff6b3d" }}>CHAMPION</div>
+                          <div style={{ fontSize:16, fontWeight:700, marginTop:2 }}>🏆 {sp["CHAMP"]}</div>
+                          {sp.champScore1 && sp.champScore2 && (
+                            <div style={{ fontFamily:"'DM Mono',monospace", fontSize:11, color:"#8090a0", marginTop:2 }}>
+                              {sp.champScore1} — {sp.champScore2}
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              );
+            })()}
+          </div>
         )}
       </div>
     </div>
