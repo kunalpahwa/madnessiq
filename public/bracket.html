@@ -25,7 +25,7 @@
 const { useState, useEffect, useCallback, useRef } = React;
 
 const SUPABASE_URL = "https://wbjtljlhmnboiyfkdvfn.supabase.co";
-const SUPABASE_KEY = "sb_publishable_IlhQhpM034OK4XKHd6V1Ew_5Y9drVNK";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndianRsamxobW5ib2l5ZmtkdmZuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyMTYzNjcsImV4cCI6MjA4OTc5MjM2N30.DAKCTdrZ-SaE3gYo6iwVyo65MMJEvM1qzGiqpl0dclQ";
 const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const TEAMS = {
@@ -105,6 +105,27 @@ function BracketApp() {
     if(!code||!name) return;
     localStorage.setItem("miq_room",code); localStorage.setItem("miq_name",name);
     setRoomCode(code); setMyName(name); setLoading(true);
+
+    // Migrate old localStorage brackets to Supabase
+    try {
+      const oldBrackets = JSON.parse(localStorage.getItem("miq_brackets") || "[]");
+      if (oldBrackets.length > 0) {
+        for (const ob of oldBrackets) {
+          if (!ob.name || !ob.picks) continue;
+          // Check if this name already exists in the room
+          const {data: existing} = await sb.from("brackets").select("id").eq("room_code", code).eq("name", ob.name).single();
+          if (!existing) {
+            await sb.from("brackets").insert({
+              room_code: code, name: ob.name, picks: ob.picks,
+              locked: ob.locked || false, locked_at: ob.lockedAt || null
+            });
+          }
+        }
+        // Clear old localStorage after migration
+        localStorage.removeItem("miq_brackets");
+      }
+    } catch(e) { console.log("Migration:", e); }
+
     const {data}=await sb.from("brackets").select("*").eq("room_code",code).order("created_at");
     let all=(data||[]).map(r=>({id:r.id,name:r.name,picks:r.picks||{},locked:r.locked,lockedAt:r.locked_at,created:r.created_at}));
     const myIdx=all.findIndex(r=>r.name===name);
