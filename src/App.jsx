@@ -808,7 +808,7 @@ function StatPill({ stat }) {
   return (
     <div style={{
       background: stat.hot ? "#1e1828" : "#121620",
-      border:`1px solid ${stat.hot ? "#3a2a48" : "#222530"}`,
+      border:`1px solid ${stat.hot ? "#3a2a48" : "#3a3f52"}`,
       borderRadius:6, padding:"5px 8px", flex:1, minWidth:0,
     }}>
       <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color: stat.hot ? "#ed8aed" : "#a0a3ae", letterSpacing:1, marginBottom:2 }}>{stat.label}</div>
@@ -930,7 +930,7 @@ function ChatView() {
         )}
         <div ref={endRef} />
       </div>
-      <div style={{ padding:"6px 14px 14px", borderTop:"1px solid #1a1d25", background:"#08090c" }}>
+      <div style={{ padding:"6px 14px 14px", borderTop:"1px solid #2e3140", background:"#08090c" }}>
         <div style={{ display:"flex", gap:8 }}>
           <input value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === "Enter" && send()}
             placeholder="Ask about any matchup, team, injury..."
@@ -987,7 +987,7 @@ export default function MadnessIQ() {
       `}</style>
 
       {/* HEADER */}
-      <div style={{ background:"linear-gradient(180deg,#0e1018,#08090c)", borderBottom:"1px solid #1a1d25", padding:"12px 16px 8px", position:"sticky", top:0, zIndex:100 }}>
+      <div style={{ background:"linear-gradient(180deg,#0e1018,#08090c)", borderBottom:"1px solid #2e3140", padding:"12px 16px 8px", position:"sticky", top:0, zIndex:100 }}>
         <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center" }}>
           <div>
             <h1 style={{ fontSize:19, fontWeight:700, margin:0 }}>
@@ -1020,17 +1020,17 @@ export default function MadnessIQ() {
         <div style={{ padding:"10px 12px 80px" }}>
 
           {/* Thursday scorecard banner */}
-          <div style={{ background:"linear-gradient(135deg,#101420,#141018)", border:"1px solid #2a2540", borderRadius:8, padding:"10px 12px", marginBottom:10 }}>
+          <div style={{ background:"linear-gradient(135deg,#101420,#141018)", border:"1px solid #4a4568", borderRadius:8, padding:"10px 12px", marginBottom:10 }}>
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:6 }}>
               <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:2, color:"#ff6b3d" }}>R64 COMPLETE — 2 DAYS</div>
               <div style={{ fontFamily:"'DM Mono',monospace", fontSize:9, color:"#8a8d9a" }}>Updated Mar 19</div>
             </div>
             <div style={{ display:"flex", gap:6 }}>
-              <div style={{ flex:1, background:"#0a1a10", borderRadius:6, padding:"6px 8px", textAlign:"center", border:"1px solid #1a3a22" }}>
+              <div style={{ flex:1, background:"#0a1a10", borderRadius:6, padding:"6px 8px", textAlign:"center", border:"1px solid #2a4a32" }}>
                 <div style={{ fontFamily:"'DM Mono',monospace", fontSize:18, fontWeight:700, color:"#3ded7a" }}>25</div>
                 <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#3ded7a", letterSpacing:1 }}>CORRECT</div>
               </div>
-              <div style={{ flex:1, background:"#1a0e10", borderRadius:6, padding:"6px 8px", textAlign:"center", border:"1px solid #3a1a1e" }}>
+              <div style={{ flex:1, background:"#1a0e10", borderRadius:6, padding:"6px 8px", textAlign:"center", border:"1px solid #4a2a2e" }}>
                 <div style={{ fontFamily:"'DM Mono',monospace", fontSize:18, fontWeight:700, color:"#ed5a5a" }}>7</div>
                 <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#ed5a5a", letterSpacing:1 }}>MISSED</div>
               </div>
@@ -1049,7 +1049,7 @@ export default function MadnessIQ() {
           </div>
 
           {/* Bracket picker link */}
-          <a href="/bracket.html" style={{ display:"block", background:"linear-gradient(135deg,#1a1420,#141018)", border:"1px solid #3a2a50", borderRadius:8, padding:"10px 14px", marginBottom:10, textDecoration:"none", textAlign:"center" }}>
+          <a href="/bracket.html" style={{ display:"block", background:"linear-gradient(135deg,#1a1420,#141018)", border:"1px solid #4a3a60", borderRadius:8, padding:"10px 14px", marginBottom:10, textDecoration:"none", textAlign:"center" }}>
             <span style={{ fontFamily:"'DM Mono',monospace", fontSize:9, letterSpacing:1, color:"#ff6b3d" }}>🏀 FILL OUT YOUR BRACKET →</span>
             <span style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:"#6a7080", display:"block", marginTop:2 }}>Pick all 63 games with your family</span>
           </a>
@@ -1104,7 +1104,7 @@ export default function MadnessIQ() {
                 return (
                   <div key={`${round}-${i}`} onClick={() => { setExpanded(isExp ? null : i); setDetailSection(g.result ? "postgame" : g.edge ? "matchup" : "why"); }} style={{
                     background: isExp ? "linear-gradient(135deg,#12141e,#161424)" : "#0e1016",
-                    border:`1px solid ${isExp ? "#3a3a5a" : g.upset ? "#3a1a20" : "#282c38"}`,
+                    border:`1px solid ${isExp ? "#4a4a6a" : g.upset ? "#3a1a20" : "#2e3140"}`,
                     borderLeft: g.upset ? "3px solid #ed3d5a" : g.riskLevel === "TOSS-UP" ? "3px solid #ed8a3d" : `3px solid ${regionColors[region]}40`,
                     borderRadius:8, marginBottom:5, cursor:"pointer", overflow:"hidden",
                     animation:`slideUp 0.25s ease ${i*0.03}s both`,
@@ -1144,7 +1144,7 @@ export default function MadnessIQ() {
                     </div>
 
                     {isExp && (
-                      <div style={{ borderTop:"1px solid #2a2d3a", padding:"10px", animation:"slideUp 0.2s ease" }} onClick={e => e.stopPropagation()}>
+                      <div style={{ borderTop:"1px solid #3a3f52", padding:"10px", animation:"slideUp 0.2s ease" }} onClick={e => e.stopPropagation()}>
                         <div style={{ display:"flex", gap:2, marginBottom:10 }}>
                           {[
                             ...(g.result ? [{id:"postgame",label:g.result.correct ? "\u2713 RESULT" : "\u2717 RESULT"}] : []),
@@ -1154,7 +1154,7 @@ export default function MadnessIQ() {
                           ].map(s => (
                             <button key={s.id} onClick={() => setDetailSection(s.id)} style={{
                               flex:1, background: detailSection === s.id ? "#1a1d28" : "transparent",
-                              border:`1px solid ${detailSection === s.id ? "#3a4560" : "#222530"}`,
+                              border:`1px solid ${detailSection === s.id ? "#4a5570" : "#3a3f52"}`,
                               color: detailSection === s.id ? "#e2ddd5" : "#8090a0",
                               padding:"4px 2px", borderRadius:4, cursor:"pointer",
                               fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:1,
@@ -1214,7 +1214,7 @@ export default function MadnessIQ() {
                               <div style={{ fontSize:11, lineHeight:1.6, color:"#b0aca4" }}>{g.whyNot}</div>
                             </div>
                             {g.historicalNote && (
-                              <div style={{ background:"#0e1018", borderRadius:5, padding:"6px 8px", border:"1px solid #222530" }}>
+                              <div style={{ background:"#10121c", borderRadius:5, padding:"6px 8px", border:"1px solid #3a3f52" }}>
                                 <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:"#8090a0", letterSpacing:1, marginBottom:2 }}>{"\uD83D\uDCCA"} HISTORICAL</div>
                                 <div style={{ fontFamily:"'DM Mono',monospace", fontSize:9, color:"#8a8d9a" }}>{g.historicalNote}</div>
                               </div>
@@ -1254,7 +1254,7 @@ export default function MadnessIQ() {
               {LATER_ROUNDS.FINAL_FOUR.map((rawG, i) => { const g = processGame(rawG); return (
                 <div key={`ff-${i}`} onClick={() => setExpanded(expanded === `ff${i}` ? null : `ff${i}`)} style={{
                   background: expanded === `ff${i}` ? "linear-gradient(135deg,#12141e,#161424)" : "#0e1016",
-                  border:`1px solid ${expanded === `ff${i}` ? "#3a3a5a" : "#282c38"}`,
+                  border:`1px solid ${expanded === `ff${i}` ? "#4a4a6a" : "#2e3140"}`,
                   borderLeft:"3px solid #ff6b3d", borderRadius:8, marginBottom:5, cursor:"pointer", overflow:"hidden",
                 }}>
                   <div style={{ padding:"9px 10px" }}>
@@ -1277,7 +1277,7 @@ export default function MadnessIQ() {
                     </div>
                   </div>
                   {expanded === `ff${i}` && (
-                    <div style={{ borderTop:"1px solid #2a2d3a", padding:"10px" }} onClick={e => e.stopPropagation()}>
+                    <div style={{ borderTop:"1px solid #3a3f52", padding:"10px" }} onClick={e => e.stopPropagation()}>
                       <div style={{ marginBottom:8 }}>
                         <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:"#3ded7a", letterSpacing:1, marginBottom:3 }}>WHY {g.pick.toUpperCase()} WINS</div>
                         <div style={{ fontSize:11, lineHeight:1.6, color:"#d0ccc4" }}>{g.whyPick}</div>
@@ -1316,7 +1316,7 @@ export default function MadnessIQ() {
                     </div>
                   </div>
                   {expanded === "champ" && (
-                    <div style={{ borderTop:"1px solid #2a2d3a", padding:"10px" }} onClick={e => e.stopPropagation()}>
+                    <div style={{ borderTop:"1px solid #3a3f52", padding:"10px" }} onClick={e => e.stopPropagation()}>
                       <div style={{ marginBottom:8 }}>
                         <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:"#3ded7a", letterSpacing:1, marginBottom:3 }}>WHY {g.pick.toUpperCase()} WINS IT ALL</div>
                         <div style={{ fontSize:11, lineHeight:1.6, color:"#d0ccc4" }}>{g.whyPick}</div>
@@ -1330,7 +1330,7 @@ export default function MadnessIQ() {
                 </div>
               )})}
 
-              <div style={{ marginTop:12, background:"linear-gradient(135deg,#141620,#1a1428)", border:"1px solid #3a3558", borderRadius:10, padding:"16px", textAlign:"center" }}>
+              <div style={{ marginTop:12, background:"linear-gradient(135deg,#141620,#1a1428)", border:"1px solid #4a4568", borderRadius:10, padding:"16px", textAlign:"center" }}>
                 <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:4, color:"#6a5aaa", marginBottom:4 }}>MADNESSIQ PREDICTION</div>
                 <div style={{ fontSize:26, fontWeight:700, marginBottom:4 }}>{"\uD83C\uDFC6"} Duke Blue Devils</div>
                 <div style={{ fontFamily:"'DM Mono',monospace", fontSize:10, color:"#b0a8cc" }}>Cameron Boozer {"\u2014"} Most Outstanding Player</div>
