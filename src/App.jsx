@@ -1059,11 +1059,17 @@ export default function MadnessIQ() {
             </div>
           </div>
 
-          {/* Bracket link */}
-          <a href="/bracket.html" style={{ display:"block", background:"linear-gradient(135deg,#1a1420,#141018)", border:"1px solid #5a4a70", borderRadius:8, padding:"10px 14px", marginBottom:10, textDecoration:"none", textAlign:"center" }}>
-            <span style={{ fontFamily:"'DM Mono',monospace", fontSize:9, letterSpacing:1, color:"#ff6b3d" }}>🏀 BRACKET CHALLENGE — PICKS + SCOREBOARD →</span>
-            <span style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#6a7080", display:"block", marginTop:2 }}>Fill out your bracket · See who's winning</span>
-          </a>
+          {/* Bracket links */}
+          <div style={{ display:"flex", gap:6, marginBottom:10 }}>
+            <a href="/bracket-view.html" style={{ flex:1, display:"block", background:"linear-gradient(135deg,#141420,#101018)", border:"1px solid #4a5068", borderRadius:8, padding:"10px 14px", textDecoration:"none", textAlign:"center" }}>
+              <span style={{ fontFamily:"'DM Mono',monospace", fontSize:9, letterSpacing:1, color:"#ffe050" }}>📊 FULL BRACKET</span>
+              <span style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#6a7080", display:"block", marginTop:2 }}>Traditional view · Pinch to zoom</span>
+            </a>
+            <a href="/bracket.html" style={{ flex:1, display:"block", background:"linear-gradient(135deg,#1a1420,#141018)", border:"1px solid #5a4a70", borderRadius:8, padding:"10px 14px", textDecoration:"none", textAlign:"center" }}>
+              <span style={{ fontFamily:"'DM Mono',monospace", fontSize:9, letterSpacing:1, color:"#ff6b3d" }}>🏀 BRACKET CHALLENGE</span>
+              <span style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#6a7080", display:"block", marginTop:2 }}>Family picks + scoreboard</span>
+            </a>
+          </div>
 
           {/* Region tabs — includes FINAL 4 */}
           <div style={{ display:"flex", gap:2, marginBottom:6 }}>
