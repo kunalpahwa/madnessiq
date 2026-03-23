@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>MadnessIQ Scoreboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.9/babel.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#08090c;color:#f2ede5;font-family:'Libre Baskerville',Georgia,serif;min-height:100vh}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-thumb{background:#4a5068;border-radius:2px}
+@keyframes slideUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+input:focus{outline:none}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const {useState,useEffect} = React;
+
+const SUPABASE_URL = "https://wbjtljlhmnboiyfkdvfn.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndianRsamxobW5ib2l5ZmtkdmZuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzQyMTYzNjcsImV4cCI6MjA4OTc5MjM2N30.DAKCTdrZ-SaE3gYo6iwVyo65MMJEvM1qzGiqpl0dclQ";
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+const ROUNDS = ["R64","R32","S16","E8","F4","CHAMP"];
+const ROUND_NAMES = {R64:"Round of 64",R32:"Round of 32",S16:"Sweet 16",E8:"Elite Eight",F4:"Final Four",CHAMP:"Championship"};
+const BASE_PTS = {R64:1,R32:2,S16:4,E8:8,F4:16,CHAMP:32};
+const REGIONS = ["EAST","WEST","SOUTH","MIDWEST"];
+const REGION_COLORS = {EAST:"#5090ff",WEST:"#ff7855",SOUTH:"#60ff90",MIDWEST:"#ffe050"};
+
+const TEAMS = {};
+const ALL_TEAMS = [
+  ["EAST",1,"Duke"],["EAST",16,"Siena"],["EAST",8,"Ohio State"],["EAST",9,"TCU"],["EAST",5,"St. John's"],["EAST",12,"Northern Iowa"],["EAST",4,"Kansas"],["EAST",13,"Cal Baptist"],["EAST",6,"Louisville"],["EAST",11,"S. Florida"],["EAST",3,"Michigan St."],["EAST",14,"N. Dakota St."],["EAST",7,"UCLA"],["EAST",10,"UCF"],["EAST",2,"UConn"],["EAST",15,"Furman"],
+  ["WEST",1,"Arizona"],["WEST",16,"Long Island"],["WEST",8,"Villanova"],["WEST",9,"Utah State"],["WEST",5,"Wisconsin"],["WEST",12,"High Point"],["WEST",4,"Arkansas"],["WEST",13,"Hawaii"],["WEST",6,"BYU"],["WEST",11,"Texas"],["WEST",3,"Gonzaga"],["WEST",14,"Kennesaw St."],["WEST",7,"Miami (FL)"],["WEST",10,"Missouri"],["WEST",2,"Purdue"],["WEST",15,"Queens"],
+  ["SOUTH",1,"Florida"],["SOUTH",16,"Prairie View"],["SOUTH",8,"Clemson"],["SOUTH",9,"Iowa"],["SOUTH",5,"Vanderbilt"],["SOUTH",12,"McNeese"],["SOUTH",4,"Nebraska"],["SOUTH",13,"Troy"],["SOUTH",6,"North Carolina"],["SOUTH",11,"VCU"],["SOUTH",3,"Illinois"],["SOUTH",14,"Penn"],["SOUTH",7,"Saint Mary's"],["SOUTH",10,"Texas A&M"],["SOUTH",2,"Houston"],["SOUTH",15,"Idaho"],
+  ["MIDWEST",1,"Michigan"],["MIDWEST",16,"Howard"],["MIDWEST",8,"Georgia"],["MIDWEST",9,"Saint Louis"],["MIDWEST",5,"Texas Tech"],["MIDWEST",12,"Akron"],["MIDWEST",4,"Alabama"],["MIDWEST",13,"Hofstra"],["MIDWEST",6,"Tennessee"],["MIDWEST",11,"Miami (OH)"],["MIDWEST",3,"Virginia"],["MIDWEST",14,"Wright State"],["MIDWEST",7,"Kentucky"],["MIDWEST",10,"Santa Clara"],["MIDWEST",2,"Iowa State"],["MIDWEST",15,"Tenn. State"],
+];
+const SEED_MAP = {};
+ALL_TEAMS.forEach(([r,s,t]) => { SEED_MAP[t] = s; });
+
+function getUpsetBonus(winnerSeed, loserSeed) {
+  if (winnerSeed <= loserSeed) return 0;
+  const diff = winnerSeed - loserSeed;
+  return Math.max(0, diff - 2);
+}
+
+function scorePickForResult(pickTeam, result, round) {
+  if (!result || !pickTeam) return { pts: 0, base: 0, bonus: 0, correct: null, status: "pending" };
+  const correct = pickTeam === result.winner;
+  if (!correct) return { pts: 0, base: 0, bonus: 0, correct: false, status: "wrong" };
+  const base = BASE_PTS[round] || 0;
+  const winnerSeed = result.winner === result.team1 ? result.seed1 : result.seed2;
+  const loserSeed = result.winner === result.team1 ? result.seed2 : result.seed1;
+  const bonus = getUpsetBonus(winnerSeed, loserSeed);
+  return { pts: base + bonus, base, bonus, correct: true, status: "correct" };
+}
+
+function pickKeyToRound(key) {
+  if (key === "CHAMP") return "CHAMP";
+  if (key.startsWith("F4-")) return "F4";
+  const parts = key.split("-");
+  if (parts.length === 3) return parts[1];
+  return null;
+}
+
+function pickKeyToResultId(key) {
+  if (key === "CHAMP") return "CHAMP";
+  if (key.startsWith("F4-")) return key.replace("-", "");
+  const parts = key.split("-");
+  if (parts.length === 3) {
+    const region = parts[0][0];
+    const round = parts[1];
+    const idx = parts[2];
+    if (round === "R64") return region + idx;
+    if (round === "R32") return region + "R" + idx;
+    if (round === "S16") return region + "S" + idx;
+    if (round === "E8") return region + "E";
+  }
+  return null;
+}
+
+function scoreBracket(picks, resultsMap) {
+  let total = 0, totalBase = 0, totalBonus = 0, correct = 0, wrong = 0, pending = 0;
+  const byRound = {};
+  ROUNDS.forEach(r => { byRound[r] = { pts: 0, base: 0, bonus: 0, correct: 0, wrong: 0, pending: 0, picks: [] }; });
+
+  Object.entries(picks).forEach(([key, team]) => {
+    if (key.startsWith("champScore") || !team) return;
+    const round = pickKeyToRound(key);
+    if (!round || !byRound[round]) return;
+    const resultId = pickKeyToResultId(key);
+    const result = resultId ? resultsMap[resultId] : null;
+    const score = scorePickForResult(team, result, round);
+    total += score.pts;
+    totalBase += score.base;
+    totalBonus += score.bonus;
+    if (score.correct === true) correct++;
+    else if (score.correct === false) wrong++;
+    else pending++;
+    byRound[round].pts += score.pts;
+    byRound[round].base += score.base;
+    byRound[round].bonus += score.bonus;
+    if (score.correct === true) byRound[round].correct++;
+    else if (score.correct === false) byRound[round].wrong++;
+    else byRound[round].pending++;
+    byRound[round].picks.push({ key, team, ...score, round });
+  });
+
+  return { total, totalBase, totalBonus, correct, wrong, pending, byRound };
+}
+
+function generateCommentary(picks, score, resultsMap) {
+  const notes = [];
+  const { byRound } = score;
+
+  // Big upset calls
+  byRound.R64.picks.filter(p => p.correct && p.bonus >= 3).forEach(p => {
+    notes.push({ type: "fire", text: `Called ${p.team} upset (+${p.bonus} bonus)` });
+  });
+  byRound.R32.picks.filter(p => p.correct && p.bonus >= 3).forEach(p => {
+    notes.push({ type: "fire", text: `Called ${p.team} R32 upset (+${p.bonus} bonus)` });
+  });
+
+  // Painful misses — high seeds picked to go deep that lost early
+  const champPick = picks["CHAMP"];
+  const f4picks = [picks["F4-0"], picks["F4-1"]].filter(Boolean);
+  if (champPick) {
+    const champLostEarly = Object.values(byRound).some(rd => rd.picks.some(p => !p.correct && p.correct === false && p.team === champPick));
+    if (champLostEarly) notes.push({ type: "skull", text: `Champion pick ${champPick} already eliminated` });
+  }
+  f4picks.forEach(t => {
+    const lost = Object.values(byRound).some(rd => rd.picks.some(p => p.correct === false && p.team === t));
+    if (lost && t !== champPick) notes.push({ type: "warning", text: `F4 pick ${t} eliminated` });
+  });
+
+  // Perfect round
+  ROUNDS.forEach(r => {
+    const rd = byRound[r];
+    if (rd.correct > 0 && rd.wrong === 0 && rd.pending === 0) {
+      notes.push({ type: "star", text: `Perfect ${ROUND_NAMES[r]}!` });
+    }
+  });
+
+  // Strong round
+  if (byRound.R64.correct >= 26) notes.push({ type: "star", text: `Elite R64: ${byRound.R64.correct}/32 correct` });
+  else if (byRound.R64.correct >= 22) notes.push({ type: "good", text: `Strong R64: ${byRound.R64.correct}/32 correct` });
+
+  // Future outlook
+  const alive = [];
+  const e8picks = REGIONS.map(r => picks[`${r}-E8-0`]).filter(Boolean);
+  e8picks.forEach(t => {
+    const eliminated = Object.values(byRound).some(rd => rd.picks.some(p => p.correct === false && p.team === t));
+    if (!eliminated) alive.push(t);
+  });
+
+  if (alive.length === 4) notes.push({ type: "outlook", text: `All 4 region champ picks still alive` });
+  else if (alive.length >= 2) notes.push({ type: "outlook", text: `${alive.length}/4 region champs still alive: ${alive.join(", ")}` });
+  else if (alive.length === 1) notes.push({ type: "warning", text: `Only 1 region champ pick alive: ${alive[0]}` });
+  else if (e8picks.length > 0) notes.push({ type: "skull", text: `All region champ picks eliminated` });
+
+  // Max possible remaining
+  let maxRemaining = 0;
+  Object.values(byRound).forEach(rd => {
+    rd.picks.filter(p => p.status === "pending").forEach(p => {
+      maxRemaining += BASE_PTS[p.round] || 0;
+    });
+  });
+  if (maxRemaining > 0) notes.push({ type: "outlook", text: `Max ${maxRemaining} pts still possible from pending picks` });
+
+  return notes;
+}
+
+const ICONS = { fire: "\uD83D\uDD25", skull: "\uD83D\uDC80", warning: "\u26A0\uFE0F", star: "\u2B50", good: "\u2705", outlook: "\uD83D\uDD2E" };
+const NOTE_COLORS = { fire: "#ff9050", skull: "#ff8888", warning: "#ffe050", star: "#70ffaa", good: "#70ffaa", outlook: "#80c8ff" };
+
+function Scoreboard() {
+  const [roomCode, setRoomCode] = useState(() => localStorage.getItem("miq_room") || "");
+  const [brackets, setBrackets] = useState([]);
+  const [results, setResults] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [joined, setJoined] = useState(false);
+  const [expandedIdx, setExpandedIdx] = useState(null);
+
+  const join = async () => {
+    const code = roomCode.trim().toUpperCase();
+    if (!code) return;
+    localStorage.setItem("miq_room", code);
+    setRoomCode(code);
+    setLoading(true);
+
+    const [bRes, rRes] = await Promise.all([
+      sb.from("brackets").select("*").eq("room_code", code).order("created_at"),
+      sb.from("results").select("*"),
+    ]);
+
+    if (bRes.data) setBrackets(bRes.data.map(b => ({ ...b, picks: b.picks || {} })));
+    if (rRes.data) {
+      const map = {};
+      rRes.data.forEach(r => { map[r.id] = r; });
+      setResults(map);
+    }
+    setLoading(false);
+    setJoined(true);
+  };
+
+  // Score each bracket
+  const scored = brackets.map(b => ({
+    ...b,
+    score: scoreBracket(b.picks, results),
+    commentary: generateCommentary(b.picks, scoreBracket(b.picks, results), results),
+  })).sort((a, b) => b.score.total - a.score.total);
+
+  if (!joined) return (
+    <div style={{maxWidth:520,margin:"0 auto",minHeight:"100vh",display:"flex",flexDirection:"column",justifyContent:"center",padding:"20px"}}>
+      <div style={{textAlign:"center",marginBottom:30}}>
+        <a href="/" style={{textDecoration:"none"}}><h1 style={{fontSize:24,fontWeight:700,margin:"0 0 4px"}}><span style={{color:"#ff9050"}}>Madness</span><span style={{color:"#f2ede5"}}>IQ</span></h1></a>
+        <div style={{fontFamily:"'DM Mono',monospace",fontSize:10,color:"#c8d0e0",letterSpacing:2}}>SCOREBOARD</div>
+      </div>
+      <div style={{background:"linear-gradient(135deg,#1a1e2a,#1e1822)",border:"1px solid #4a4568",borderRadius:12,padding:"24px"}}>
+        <div style={{fontFamily:"'DM Mono',monospace",fontSize:9,letterSpacing:2,color:"#ff9050",marginBottom:16}}>ENTER ROOM CODE</div>
+        <input value={roomCode} onChange={e=>setRoomCode(e.target.value.toUpperCase())} onKeyDown={e=>e.key==="Enter"&&join()} placeholder="e.g. PAHWA" style={{width:"100%",background:"#222a38",border:"1px solid #5a6078",borderRadius:6,padding:"12px",color:"#ff9050",fontSize:22,fontFamily:"'DM Mono',monospace",fontWeight:700,letterSpacing:4,textTransform:"uppercase",textAlign:"center"}}/>
+        <button onClick={join} disabled={!roomCode.trim()||loading} style={{width:"100%",marginTop:12,background:roomCode.trim()?"linear-gradient(135deg,#ff9050,#ff6840)":"#242838",border:"none",borderRadius:8,padding:"12px",color:"#fff",cursor:roomCode.trim()?"pointer":"default",fontFamily:"'DM Mono',monospace",fontSize:12,fontWeight:700,letterSpacing:1}}>{loading?"LOADING...":"VIEW SCORES \u2192"}</button>
+      </div>
+      <div style={{display:"flex",gap:12,justifyContent:"center",marginTop:16}}>
+        <a href="/" style={{fontFamily:"'DM Mono',monospace",fontSize:8,color:"#ff9050",textDecoration:"none"}}>{"\u2190"} PREDICTIONS</a>
+        <a href="/bracket.html" style={{fontFamily:"'DM Mono',monospace",fontSize:8,color:"#ff9050",textDecoration:"none"}}>BRACKET {"\u2192"}</a>
+      </div>
+    </div>
+  );
+
+  const totalResults = Object.keys(results).length;
+
+  return (
+    <div style={{maxWidth:520,margin:"0 auto",minHeight:"100vh"}}>
+      <div style={{background:"linear-gradient(180deg,#10121a,#08090c)",borderBottom:"1px solid #4a5068",padding:"12px 16px 8px",position:"sticky",top:0,zIndex:100}}>
+        <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
+          <a href="/" style={{textDecoration:"none"}}><h1 style={{fontSize:17,fontWeight:700,margin:0}}><span style={{color:"#ff9050"}}>Madness</span><span style={{color:"#f2ede5"}}>IQ</span><span style={{fontFamily:"'DM Mono',monospace",fontSize:9,color:"#c8d0e0",marginLeft:6}}>SCOREBOARD</span></h1></a>
+          <span style={{fontFamily:"'DM Mono',monospace",fontSize:8,color:"#ff9050",background:"#2a1a1e",padding:"2px 8px",borderRadius:4,border:"1px solid #6a5a48"}}>{roomCode}</span>
+        </div>
+      </div>
+
+      <div style={{padding:"12px 16px 80px"}}>
+        {/* Stats bar */}
+        <div style={{background:"#1a1e2a",border:"1px solid #4a5068",borderRadius:8,padding:"10px 12px",marginBottom:12}}>
+          <div style={{display:"flex",justifyContent:"space-between",fontFamily:"'DM Mono',monospace",fontSize:8,color:"#c8d0e0"}}>
+            <span>{scored.length} brackets</span>
+            <span>{totalResults} games scored</span>
+            <span>Seed Shock Scoring</span>
+          </div>
+        </div>
+
+        {/* Leaderboard */}
+        {scored.map((b, idx) => {
+          const s = b.score;
+          const isExp = expandedIdx === idx;
+          return (
+            <div key={b.id} onClick={() => setExpandedIdx(isExp ? null : idx)} style={{
+              background: isExp ? "linear-gradient(135deg,#1a1e2a,#1e1826)" : "#13151f",
+              border: idx === 0 ? "1px solid #ffe050" : "1px solid #4a5068",
+              borderLeft: idx === 0 ? "4px solid #ffe050" : idx === 1 ? "4px solid #b0b8c8" : idx === 2 ? "4px solid #c08040" : "4px solid #4a5068",
+              borderRadius:8, marginBottom:8, cursor:"pointer", overflow:"hidden",
+              animation: `slideUp 0.2s ease ${idx*0.05}s both`,
+            }}>
+              {/* Header row */}
+              <div style={{padding:"12px 14px",display:"flex",alignItems:"center",gap:10}}>
+                <div style={{fontFamily:"'DM Mono',monospace",fontSize:20,fontWeight:700,color:idx===0?"#ffe050":idx===1?"#d0d8e8":idx===2?"#d0a060":"#8890a0",minWidth:28,textAlign:"center"}}>
+                  {idx+1}
+                </div>
+                <div style={{flex:1}}>
+                  <div style={{fontSize:15,fontWeight:700,color:"#faf6f0"}}>{b.name} {b.locked ? "\uD83D\uDD12" : ""}</div>
+                  <div style={{fontFamily:"'DM Mono',monospace",fontSize:9,color:"#b0b8c8",marginTop:2}}>
+                    {s.correct} correct \u00B7 {s.wrong} wrong \u00B7 {s.pending} pending
+                  </div>
+                </div>
+                <div style={{textAlign:"right"}}>
+                  <div style={{fontFamily:"'DM Mono',monospace",fontSize:24,fontWeight:700,color:idx===0?"#ffe050":"#faf6f0"}}>{s.total}</div>
+                  <div style={{fontFamily:"'DM Mono',monospace",fontSize:7,color:"#b0b8c8"}}>
+                    {s.totalBase} base + {s.totalBonus} upset
+                  </div>
+                </div>
+              </div>
+
+              {/* Expanded detail */}
+              {isExp && (
+                <div style={{borderTop:"1px solid #4a5068",padding:"12px 14px"}} onClick={e=>e.stopPropagation()}>
+                  {/* Per-round breakdown */}
+                  <div style={{fontFamily:"'DM Mono',monospace",fontSize:8,letterSpacing:2,color:"#ff9050",marginBottom:8}}>ROUND BY ROUND</div>
+                  {ROUNDS.map(r => {
+                    const rd = s.byRound[r];
+                    if (rd.correct === 0 && rd.wrong === 0 && rd.pending === 0) return null;
+                    return (
+                      <div key={r} style={{display:"flex",justifyContent:"space-between",alignItems:"center",padding:"6px 0",borderBottom:"1px solid #2a3040"}}>
+                        <span style={{fontFamily:"'DM Mono',monospace",fontSize:10,color:"#d0d8e8",minWidth:90}}>{ROUND_NAMES[r]}</span>
+                        <div style={{display:"flex",gap:8,alignItems:"center"}}>
+                          <span style={{fontFamily:"'DM Mono',monospace",fontSize:8,color:"#70ffaa"}}>{rd.correct}{"\u2713"}</span>
+                          <span style={{fontFamily:"'DM Mono',monospace",fontSize:8,color:"#ff8888"}}>{rd.wrong}{"\u2717"}</span>
+                          {rd.pending > 0 && <span style={{fontFamily:"'DM Mono',monospace",fontSize:8,color:"#80c8ff"}}>{rd.pending}?</span>}
+                          <span style={{fontFamily:"'DM Mono',monospace",fontSize:12,fontWeight:700,color:"#faf6f0",minWidth:30,textAlign:"right"}}>{rd.pts}</span>
+                          {rd.bonus > 0 && <span style={{fontFamily:"'DM Mono',monospace",fontSize:7,color:"#ffe050"}}>+{rd.bonus}</span>}
+                        </div>
+                      </div>
+                    );
+                  })}
+
+                  {/* Commentary */}
+                  {b.commentary.length > 0 && (
+                    <div style={{marginTop:12}}>
+                      <div style={{fontFamily:"'DM Mono',monospace",fontSize:8,letterSpacing:2,color:"#ff9050",marginBottom:6}}>STORY OF THIS BRACKET</div>
+                      {b.commentary.map((note, ni) => (
+                        <div key={ni} style={{display:"flex",gap:8,alignItems:"flex-start",padding:"4px 0",fontSize:11,lineHeight:1.5}}>
+                          <span style={{fontSize:14,flexShrink:0}}>{ICONS[note.type]}</span>
+                          <span style={{color:NOTE_COLORS[note.type]}}>{note.text}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  {/* Individual picks for completed rounds */}
+                  <div style={{marginTop:12}}>
+                    <div style={{fontFamily:"'DM Mono',monospace",fontSize:8,letterSpacing:2,color:"#ff9050",marginBottom:6}}>PICK DETAILS</div>
+                    {ROUNDS.map(r => {
+                      const rd = s.byRound[r];
+                      const completedPicks = rd.picks.filter(p => p.status !== "pending");
+                      if (completedPicks.length === 0) return null;
+                      return (
+                        <div key={r} style={{marginBottom:8}}>
+                          <div style={{fontFamily:"'DM Mono',monospace",fontSize:8,color:"#b0b8c8",marginBottom:3}}>{ROUND_NAMES[r]}</div>
+                          <div style={{display:"flex",flexWrap:"wrap",gap:4}}>
+                            {completedPicks.map((p,pi) => (
+                              <span key={pi} style={{
+                                fontFamily:"'DM Mono',monospace",fontSize:8,
+                                padding:"2px 6px",borderRadius:4,
+                                background: p.correct ? "#1e4028" : "#48282e",
+                                color: p.correct ? "#70ffaa" : "#ff8888",
+                                border: p.correct ? "1px solid #3a6a42" : "1px solid #6a4048",
+                              }}>
+                                {p.correct ? "\u2713" : "\u2717"} {p.team} {p.bonus > 0 ? `+${p.bonus}` : ""}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+            </div>
+          );
+        })}
+
+        {scored.length === 0 && (
+          <div style={{textAlign:"center",padding:"40px",color:"#8890a0",fontSize:13}}>No brackets in this room yet.</div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<Scoreboard />);
+</script>
+</body>
+</html>

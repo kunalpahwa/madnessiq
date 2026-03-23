@@ -1048,11 +1048,17 @@ export default function MadnessIQ() {
             </div>
           </div>
 
-          {/* Bracket picker link */}
-          <a href="/bracket.html" style={{ display:"block", background:"linear-gradient(135deg,#1a1420,#141018)", border:"1px solid #5a4a70", borderRadius:8, padding:"10px 14px", marginBottom:10, textDecoration:"none", textAlign:"center" }}>
-            <span style={{ fontFamily:"'DM Mono',monospace", fontSize:9, letterSpacing:1, color:"#ff6b3d" }}>🏀 FILL OUT YOUR BRACKET →</span>
-            <span style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:"#6a7080", display:"block", marginTop:2 }}>Pick all 63 games with your family</span>
-          </a>
+          {/* Bracket + Scoreboard links */}
+          <div style={{ display:"flex", gap:6, marginBottom:10 }}>
+            <a href="/bracket.html" style={{ flex:1, display:"block", background:"linear-gradient(135deg,#1a1420,#141018)", border:"1px solid #5a4a70", borderRadius:8, padding:"10px 14px", textDecoration:"none", textAlign:"center" }}>
+              <span style={{ fontFamily:"'DM Mono',monospace", fontSize:9, letterSpacing:1, color:"#ff6b3d" }}>🏀 BRACKET</span>
+              <span style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#6a7080", display:"block", marginTop:2 }}>Fill out your picks</span>
+            </a>
+            <a href="/scores.html" style={{ flex:1, display:"block", background:"linear-gradient(135deg,#141a20,#101418)", border:"1px solid #4a5a70", borderRadius:8, padding:"10px 14px", textDecoration:"none", textAlign:"center" }}>
+              <span style={{ fontFamily:"'DM Mono',monospace", fontSize:9, letterSpacing:1, color:"#ffe050" }}>🏆 SCOREBOARD</span>
+              <span style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#6a7080", display:"block", marginTop:2 }}>See who's winning</span>
+            </a>
+          </div>
 
           {/* Region tabs — includes FINAL 4 */}
           <div style={{ display:"flex", gap:2, marginBottom:6 }}>
