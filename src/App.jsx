@@ -963,6 +963,15 @@ export default function MadnessIQ() {
   const [tab, setTab] = useState("bracket");
   const [region, setRegion] = useState("EAST");
   const [round, setRound] = useState("R64");
+
+  // Deep-link: read ?region=EAST&round=R32 from URL
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const r = params.get("region");
+    const rd = params.get("round");
+    if (r && ["EAST","WEST","SOUTH","MIDWEST","FINAL4"].includes(r)) { setRegion(r); }
+    if (rd && ["R64","R32","S16","E8","F4"].includes(rd)) { setRound(rd); }
+  }, []);
   const [expanded, setExpanded] = useState(null);
   const [detailSection, setDetailSection] = useState("matchup");
   const [liveResults] = useState({});
