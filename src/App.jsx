@@ -338,7 +338,8 @@ const LATER_ROUNDS = {
   EAST: {
     R32: [
       { id:"ER0", s1:1, t1:"Duke", t1Short:"DUKE", s2:9, t2:"TCU", t2Short:"TCU", date:"Sat Mar 21", pick:"Duke", confidence:78, originalConfidence:88, riskLevel:"LEAN",
-        headline:"Duke survived Siena. Now faces TCU who just upset Ohio State. Duke -10.5.",
+        headline:"FINAL: Duke 81-58. Boozer 19/11 (17 in 2H), 37-14 run. Ngongba back.",
+        result: { score1:81, score2:58, winner:"Duke", correct:true, postGame:"Tied 44-44 with 13:56 left, then Duke exploded on a 37-14 run. Boozer had only 2 pts at half but scored 17 of his 19 after the break — twice on high-low feeds from Ngongba in his return. TCU went 10-38 from the field in the second half (26%). Four flagrant fouls called in a physical, chippy game. Evans had 17, Sarr 14 with 4 threes. Duke advances to Sweet 16 vs St. John's." },
         edge: { offense: 80, defense: 92, experience: 82, health: 70 },
         edgeOpp: { offense: 58, defense: 68, experience: 62, health: 85 },
         keyStats: [
@@ -353,7 +354,8 @@ const LATER_ROUNDS = {
         whyPick:"Duke's second-half comeback vs Siena showed championship DNA — Boozer brothers combined for 21 in the comeback. TCU won a tight 66-64 over Ohio State but doesn't have the firepower to exploit Duke's perimeter weakness like a higher seed would. Duke's defense tightens up in Round 2.",
         whyNot:"Duke went 2-15 from 3 against Siena. If that shooting continues, TCU's defense — which just locked down Ohio State late — could make this uncomfortable. Duke's title odds took a real hit Thursday." },
       { id:"ER1", s1:5, t1:"St. John's", t1Short:"SJU", s2:4, t2:"Kansas", t2Short:"KU", date:"Sun Mar 22", pick:"St. John's", confidence:58, originalConfidence:55, upset:true, riskLevel:"UPSET",
-        headline:"🚨 Pitino vs. Self. SJU dominated R64 (20-3 run). Peterson had 28 for KU.",
+        headline:"FINAL: St. John's 67-65. Darling buzzer-beater layup! First S16 since 1999.",
+        result: { score1:67, score2:65, winner:"St. John's", correct:true, postGame:"Dylan Darling's driving layup — his only points of the game — beat the buzzer to send SJU to the Sweet 16 for the first time since 1999. SJU led by 14 in the 2nd half but Kansas clawed back. Peterson tied it 65-65 with 13 sec left. Then Darling attacked. Ejiofor and Bryce Hopkins each had 18 pts. Peterson had 21 but Kansas committed 16 turnovers. SJU faces No. 1 Duke in the Sweet 16 on Friday." },
         edge: { offense: 75, defense: 78, experience: 78, health: 90 },
         edgeOpp: { offense: 80, defense: 68, experience: 68, health: 75 },
         keyStats: [
@@ -426,7 +428,8 @@ const LATER_ROUNDS = {
       { id:"WR0", s1:1, t1:"Arizona", t1Short:"ARIZ", s2:9, t2:"Utah State", t2Short:"USU", date:"Sun Mar 22", pick:"Arizona", confidence:84, riskLevel:"SAFE",
         headline:"Arizona's switching D neutralizes USU's ball-screen game.", whyPick:"Peat and Awaka can switch onto guards. Krivas protects the rim. Burries and Bradley attack on the other end. The talent gap is significant.", whyNot:"USU is well-coached and their offense is efficient. Could keep it within 10." },
       { id:"WR1", s1:4, t1:"Arkansas", t1Short:"ARK", s2:12, t2:"High Point", t2Short:"HPU", date:"Sat Mar 21", pick:"Arkansas", confidence:72, originalConfidence:62, riskLevel:"LEAN",
-        headline:"ARK -11.5. Acuff (24 pts R64) vs Johnston (passed Steph Curry in career 3s).",
+        headline:"FINAL: Arkansas 94-88. Acuff 36 pts! 7 straight to break 83-83 tie.",
+        result: { score1:94, score2:88, winner:"Arkansas", correct:true, postGame:"Tied 83-83 with 3 min left, then Darius Acuff scored 7 consecutive to seal it. Acuff finished with 36 pts and 6 ast — joining Chris Paul as the only freshmen with consecutive 20pt/5ast NCAA openers since 1973. Rob Martin had 30 and Fletcher 25 for High Point. Arkansas advances to Sweet 16 vs Arizona or Utah State." },
         edge: { offense: 85, defense: 65, experience: 62, health: 78 },
         edgeOpp: { offense: 72, defense: 48, experience: 50, health: 90 },
         keyStats: [
@@ -440,7 +443,8 @@ const LATER_ROUNDS = {
         whyPick:"Arkansas was dominant — 97-78 over Hawaii, all 5 starters in double figures. High Point's stunning upset of Wisconsin was inspiring but they've never faced this level of athleticism. Acuff Jr. is a different tier of player than anyone HP has seen. Arkansas's interior scoring overwhelms HP's undersized frontcourt.",
         whyNot:"High Point just beat a Power Four team for the first time in program history. Chase Johnston (415 career 3s, more than Steph Curry at Davidson) can get scorching hot. If HP shoots 45%+ from 3, Arkansas's mediocre perimeter defense could be exposed." },
       { id:"WR2", s1:3, t1:"Gonzaga", t1Short:"ZAGA", s2:11, t2:"Texas", t2Short:"TEX", date:"Sat Mar 21", pick:"Gonzaga", confidence:68, originalConfidence:60, riskLevel:"LEAN",
-        headline:"Gonzaga faces Texas, who upset BYU 79-71. Ike's interior vs Texas length.",
+        headline:"FINAL: Texas 74-68. 11-seed UPSETS 3-seed Gonzaga! Miller to S16 with 3rd program.",
+        result: { score1:68, score2:74, winner:"Texas", correct:false, postGame:"First upset since R64. 11-seed Texas knocked off Gonzaga in a physical battle. Texas is the 6th team ever from First Four to Sweet 16. Sean Miller becomes 10th coach to take 3 programs to the second weekend. Gonzaga misses the Sweet 16 for a 2nd straight year after 9 consecutive appearances. Texas faces Purdue on Thursday." },
         edge: { offense: 78, defense: 75, experience: 85, health: 72 },
         edgeOpp: { offense: 62, defense: 65, experience: 60, health: 82 },
         keyStats: [
@@ -454,7 +458,9 @@ const LATER_ROUNDS = {
         whyPick:"Gonzaga beat Kennesaw 73-64 and Ike was efficient inside. Texas upset BYU but the Longhorns don't have the interior scoring to match Ike and Grant-Foster. Gonzaga's experience in March is a real advantage here.",
         whyNot:"Texas has the length and athleticism to bother Ike. They just beat a team with the best player in the tournament (Dybantsa). If Texas's defense travels from the BYU game, Gonzaga could struggle to create open looks on the perimeter." },
       { id:"WR3", s1:7, t1:"Miami (FL)", t1Short:"MIA", s2:2, t2:"Purdue", t2Short:"PUR", date:"Sun Mar 22", pick:"Purdue", confidence:64, riskLevel:"LEAN",
-        headline:"Purdue sweats. Miami's guards test their weak perimeter D.", whyPick:"Smith's playmaking + historic offensive efficiency generates enough quality looks. Kaufman-Renn overwhelms Miami's frontcourt. But Miami makes this uncomfortable.", whyNot:"Miami's perimeter scorers are exactly the type that have punished Purdue all season. This could go either way." },
+        headline:"FINAL: Purdue 79-69. Loyer 24 pts, 21/22 FTs. Cox knee injury concern.",
+        result: { score1:69, score2:79, winner:"Purdue", correct:true, postGame:"Purdue outscored Miami by 12 in the second half behind Loyer's 24 pts. Shot 53.2% and hit 21/22 FTs. Concern: CJ Cox went down with non-contact knee injury on a fastbreak. He drilled 3 triples in the first half before going down. 3rd straight year in the Sweet 16 for Purdue — faces 11-seed Texas on Thursday." },
+        whyPick:"Purdue's offensive efficiency overwhelmed Miami.", whyNot:"Cox's knee injury could be a factor going forward." },
     ],
     S16: [
       { date:"Fri Mar 27", s1:1, t1:"Arizona", t1Short:"ARIZ", s2:4, t2:"Arkansas", t2Short:"ARK", pick:"Arizona", confidence:72, riskLevel:"LEAN",
@@ -493,7 +499,8 @@ const LATER_ROUNDS = {
         injuries: [],
         whyPick:"Haugh, Condon, Chinyelu — the best rebounding frontcourt in the field — overwhelm Iowa on the boards. Todd Golden's system creates easy transition looks.", whyNot:"Iowa has tournament experience. If they shoot well from 3, they can keep it within striking distance." },
       { id:"SR1", date:"Sat Mar 21", s1:5, t1:"Vanderbilt", t1Short:"VANDY", s2:4, t2:"Nebraska", t2Short:"NEB", pick:"Vanderbilt", confidence:58, upset:true, riskLevel:"UPSET",
-        headline:"🚨 Tanner/Miles outscore Nebraska's rock-fight defense.",
+        headline:"FINAL: Nebraska 74-72. Frager GW layup 2.2 sec left! Tanner half-court heave in/out.",
+        result: { score1:72, score2:74, winner:"Nebraska", correct:false, postGame:"INSTANT CLASSIC. Nebraska led 39-32 at half shooting 56%, but Vandy stormed back behind Tyler Tanner (27 pts, 4 stl, eight 3s). Tanner gave Vandy a 70-68 lead with 1:42 left. Frager (15 pts off bench) hit the go-ahead layup with 2.2 sec. Tanner's desperation half-court heave bounced in and out. Nebraska to Sweet 16 for the FIRST TIME ever." },
         edge: { offense: 82, defense: 58, experience: 62, health: 88 },
         edgeOpp: { offense: 60, defense: 85, experience: 65, health: 88 },
         keyStats: [
@@ -504,7 +511,8 @@ const LATER_ROUNDS = {
         injuries: [],
         whyPick:"Nebraska went 6-6 down the stretch. The pressure of the program's first-ever tournament win followed by facing red-hot Vanderbilt (just beat Florida) is brutal.", whyNot:"Nebraska's defense (7th KenPom) makes everything difficult. If they grind Vandy into the 50s, anything can happen." },
       { id:"SR2", s1:11, t1:"VCU", t1Short:"VCU", s2:3, t2:"Illinois", t2Short:"ILL", date:"Sat Mar 21", pick:"Illinois", confidence:82, originalConfidence:76, riskLevel:"SAFE",
-        headline:"UPDATED: Illinois faces VCU (who upset UNC in OT). Confidence UP from 76% to 82%.",
+        headline:"FINAL: Illinois 76-55. Stojakovic 21 pts, Ivisic 14/11. Dominant.",
+        result: { score1:55, score2:76, winner:"Illinois", correct:true, postGame:"VCU's Cinderella run ended hard. Illinois opened with a 15-5 run, led by double digits early in the second half, and never let VCU closer. Stojakovic had 21 pts off the bench, Ivisic posted 14/11 double-double. Illinois had 4 in double figures, dominated rebounding 45-29. VCU shot 2-6 from FT. Advances to face Houston in the Sweet 16." },
         edge: { offense: 95, defense: 68, experience: 72, health: 90 },
         edgeOpp: { offense: 58, defense: 72, experience: 68, health: 82 },
         keyStats: [
@@ -516,7 +524,8 @@ const LATER_ROUNDS = {
         whyPick:"VCU pulled off a historic 19-point comeback to beat UNC in OT. That's incredible heart — but Illinois is a completely different matchup. The No. 1 offense in KenPom history just put up 105 on Penn. Mirkovic (29/17) and the Ivisic brothers give Illinois too many weapons. VCU's Cinderella energy meets an offensive buzzsaw.",
         whyNot:"VCU just pulled off the biggest R64 comeback ever. Momentum and belief are real in March. Their defensive pressure could force Illinois into turnovers. But the talent gap is wide." },
       { id:"SR3", date:"Sat Mar 21", s1:10, t1:"Texas A&M", t1Short:"TAMU", s2:2, t2:"Houston", t2Short:"HOU", pick:"Houston", confidence:76, riskLevel:"LEAN",
-        headline:"Sampson's defense frustrates A&M. Toyota Center looms.",
+        headline:"FINAL: Houston 88-57. Sharp 18, Cenac 17/9. Total blowout.",
+        result: { score1:57, score2:88, winner:"Houston", correct:true, postGame:"A&M trailed by just 1 with 8 min left in the first half, then got outscored 21-4 to close it. Houston cruised in the second half. Emanuel Sharp led with 18 pts, Chris Cenac had 17 and 9 boards. Houston advances to its 7th consecutive Sweet 16 — faces Illinois on Thursday." },
         edge: { offense: 78, defense: 92, experience: 90, health: 88 },
         edgeOpp: { offense: 60, defense: 62, experience: 88, health: 85 },
         keyStats: [
@@ -580,7 +589,8 @@ const LATER_ROUNDS = {
         ],
         whyPick:"Alabama's offense showed its full ceiling with Philon's 29 pts and Sherrell's 15/15 double-double. Texas Tech shot 64% in R64 but that's unsustainable. Alabama's raw talent and pace should overwhelm Tech in a shootout.", whyNot:"Texas Tech just shot 64% and hit 11 threes — their best game of the season. If Petty and Anderson repeat that performance, Tech's offense can outscore anyone. But shooting that hot twice in a row is unlikely." },
       { id:"MR2", date:"Sun Mar 22", s1:6, t1:"Tennessee", t1Short:"TENN", s2:3, t2:"Virginia", t2Short:"UVA", pick:"Virginia", confidence:58, riskLevel:"LEAN",
-        headline:"Virginia's system (3s + offensive boards) outlasts Tennessee's grind.",
+        headline:"FINAL: Tennessee 79-72. 6-seed upsets 3-seed Virginia! Boswell 3 triples.",
+        result: { score1:79, score2:72, winner:"Tennessee", correct:false, postGame:"Tennessee led by as many as 9 in the second half. Virginia fought back within 5 but couldn't close. Bishop Boswell hit 3 triples to build the Vols' lead. Tennessee outscored UVA 18-8 in the paint in the first half. This was the game that busted the last perfect bracket in the country. Tennessee faces Iowa State in the Sweet 16 on Friday." },
         edge: { offense: 72, defense: 85, experience: 80, health: 90 },
         edgeOpp: { offense: 62, defense: 82, experience: 72, health: 72 },
         keyStats: [
@@ -593,7 +603,8 @@ const LATER_ROUNDS = {
         ],
         whyPick:"Virginia has multiple paths to scoring. Tennessee relies too heavily on Gillespie creating individually. UVA's balanced attack wins a close one.", whyNot:"Barnes' defense can contain anyone. If Gillespie goes off (25+), Tennessee wins." },
       { id:"MR3", date:"Sun Mar 22", s1:7, t1:"Kentucky", t1Short:"UK", s2:2, t2:"Iowa State", t2Short:"ISU", pick:"Iowa State", confidence:68, originalConfidence:80, riskLevel:"LEAN",
-        headline:"Jefferson injury CHANGES EVERYTHING. Oweh 35 pts vs ISU without their Wooden candidate.",
+        headline:"FINAL: Iowa State 82-63. Lipsey 26/10/5 stl! Jefferson OUT but ISU dominates.",
+        result: { score1:63, score2:82, winner:"Iowa State", correct:true, postGame:"Iowa State proved it's more than Joshua Jefferson. Tamin Lipsey posted 26 pts, 10 ast, 5 steals. Milan Momcilovic added 20. Kentucky committed 20 turnovers leading to 18 ISU points. UK fell behind early, briefly rallied, then got outscored 51-33 in the second half. Kentucky's $20M roster exits in the Round of 32. ISU faces Tennessee in the Sweet 16." },
         edge: { offense: 72, defense: 82, experience: 78, health: 50 },
         edgeOpp: { offense: 75, defense: 62, experience: 68, health: 90 },
         keyStats: [
@@ -1019,23 +1030,23 @@ export default function MadnessIQ() {
       {tab === "bracket" && (
         <div style={{ padding:"10px 12px 80px" }}>
 
-          {/* Thursday scorecard banner */}
+          {/* Scorecard banner */}
           <div style={{ background:"linear-gradient(135deg,#101420,#141018)", border:"1px solid #4a4568", borderRadius:8, padding:"10px 12px", marginBottom:10 }}>
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:6 }}>
-              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:2, color:"#ff6b3d" }}>R64 COMPLETE — 2 DAYS</div>
-              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:9, color:"#8a8d9a" }}>Updated Mar 19</div>
+              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:2, color:"#ff6b3d" }}>R64 + R32 (12 of 16)</div>
+              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:9, color:"#8a8d9a" }}>Updated Mar 22</div>
             </div>
             <div style={{ display:"flex", gap:6 }}>
               <div style={{ flex:1, background:"#0a1a10", borderRadius:6, padding:"6px 8px", textAlign:"center", border:"1px solid #3a5a42" }}>
-                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:18, fontWeight:700, color:"#3ded7a" }}>25</div>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:18, fontWeight:700, color:"#3ded7a" }}>34</div>
                 <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#3ded7a", letterSpacing:1 }}>CORRECT</div>
               </div>
               <div style={{ flex:1, background:"#1a0e10", borderRadius:6, padding:"6px 8px", textAlign:"center", border:"1px solid #5a3a3e" }}>
-                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:18, fontWeight:700, color:"#ed5a5a" }}>7</div>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:18, fontWeight:700, color:"#ed5a5a" }}>10</div>
                 <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#ed5a5a", letterSpacing:1 }}>MISSED</div>
               </div>
               <div style={{ flex:1, background:"#0e1420", borderRadius:6, padding:"6px 8px", textAlign:"center", border:"1px solid #1a2a40" }}>
-                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:18, fontWeight:700, color:"#4a9aed" }}>78%</div>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:18, fontWeight:700, color:"#4a9aed" }}>77%</div>
                 <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#4a9aed", letterSpacing:1 }}>ACCURACY</div>
               </div>
               <div style={{ flex:1, background:"#1a1410", borderRadius:6, padding:"6px 8px", textAlign:"center", border:"1px solid #3a2a1a" }}>
@@ -1044,7 +1055,7 @@ export default function MadnessIQ() {
               </div>
             </div>
             <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:"#6a6d78", marginTop:6, lineHeight:1.5 }}>
-              R64 COMPLETE: 25-7 (78%). Called A&M upset. All four 9-seeds won (first time ever). Reed Jr. 31/27 for UConn. Florida won by 59. Our Cinderella Akron busted (Tech shot 64%). Iowa State's Jefferson injury changes the bracket.
+              R32 UPDATE (12 of 16): 9-3. Duke blew open TCU with 37-14 run. SJU buzzer-beater over Kansas! Texas upset Gonzaga (11 over 3). Nebraska survived on Frager's 2.2-sec layup — Tanner's half-court heave in/out. Tennessee upset Virginia. ISU dominated UK without Jefferson (Lipsey 26/10/5). We missed: Gonzaga, Vanderbilt, Virginia.
             </div>
           </div>
 
