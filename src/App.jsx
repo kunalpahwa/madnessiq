@@ -384,7 +384,8 @@ const LATER_ROUNDS = {
         whyPick:"Michigan State was dominant — 92-67 over NDSU, shot 60%, controlled the glass. Louisville needed McKneely's heroic 7-three night to survive South Florida's 23-point comeback. The Spartans' physicality and rebounding will overwhelm a Louisville team that turned it over 22 times Thursday.",
         whyNot:"Louisville showed resilience surviving that USF rally. McKneely (23 pts) can get hot from anywhere. If Louisville protects the ball better than Thursday (22 TOs), this gets competitive." },
       { id:"ER3", s1:7, t1:"UCLA", t1Short:"UCLA", s2:2, t2:"UConn", t2Short:"UCONN", date:"Sun Mar 22", pick:"UConn", confidence:74, riskLevel:"LEAN",
-        headline:"Reed Jr.'s 31/27 game changes everything. UConn's interior vs UCLA's guards.",
+        headline:"FINAL: UConn 73-57. Huskies pull away in 2H. Two-time champs rolling.",
+        result: { score1:57, score2:73, winner:"UConn", correct:true, postGame:"UConn's defense suffocated UCLA in the second half. After leading 65-54 with 4:40 left, the Huskies kept the pressure on and won 73-57. Dan Hurley's squad looks increasingly dangerous — they've now won their last two by 16+ each. Reed Jr. and Karaban continue to dominate. Advances to Sweet 16 vs Michigan State in a fascinating matchup of tournament pedigree — Hurley vs Izzo in DC." },
         edge: { offense: 72, defense: 82, experience: 90, health: 75 },
         edgeOpp: { offense: 70, defense: 65, experience: 68, health: 70 },
         keyStats: [
@@ -426,7 +427,17 @@ const LATER_ROUNDS = {
   WEST: {
     R32: [
       { id:"WR0", s1:1, t1:"Arizona", t1Short:"ARIZ", s2:9, t2:"Utah State", t2Short:"USU", date:"Sun Mar 22", pick:"Arizona", confidence:84, riskLevel:"SAFE",
-        headline:"Arizona's switching D neutralizes USU's ball-screen game.", whyPick:"Peat and Awaka can switch onto guards. Krivas protects the rim. Burries and Bradley attack on the other end. The talent gap is significant.", whyNot:"USU is well-coached and their offense is efficient. Could keep it within 10." },
+        headline:"FINAL: Arizona 78-66. Wildcats roll. Bradley and Peat control the game.",
+        result: { score1:78, score2:66, winner:"Arizona", correct:true, postGame:"Arizona handled Utah State comfortably, never seriously threatened. Jayden Bradley orchestrated the offense while the Wildcats' switching defense neutralized USU's ball-screen attack. Arizona's depth and talent were evident throughout. Advances to Sweet 16 vs Arkansas in San Jose — the path to the Final Four is clear." },
+        edge: { offense: 90, defense: 88, experience: 82, health: 95 },
+        edgeOpp: { offense: 68, defense: 72, experience: 70, health: 90 },
+        keyStats: [
+          { label: "AZ R64", value: "92-58, dominant", hot: true },
+          { label: "USU R64", value: "Beat Villanova 86-76", hot: false },
+          { label: "AZ Def", value: "Top-3 KenPom", hot: true },
+        ],
+        injuries: [],
+        whyPick:"Arizona's talent gap is massive. Top-3 Net Rating, deep rotation, elite defense.", whyNot:"USU's unique defensive scheme could cause turnovers, but Arizona wins in multiple styles." },
       { id:"WR1", s1:4, t1:"Arkansas", t1Short:"ARK", s2:12, t2:"High Point", t2Short:"HPU", date:"Sat Mar 21", pick:"Arkansas", confidence:72, originalConfidence:62, riskLevel:"LEAN",
         headline:"FINAL: Arkansas 94-88. Acuff 36 pts! 7 straight to break 83-83 tie.",
         result: { score1:94, score2:88, winner:"Arkansas", correct:true, postGame:"Tied 83-83 with 3 min left, then Darius Acuff scored 7 consecutive to seal it. Acuff finished with 36 pts and 6 ast — joining Chris Paul as the only freshmen with consecutive 20pt/5ast NCAA openers since 1973. Rob Martin had 30 and Fletcher 25 for High Point. Arkansas advances to Sweet 16 vs Arizona or Utah State." },
@@ -488,7 +499,8 @@ const LATER_ROUNDS = {
   SOUTH: {
     R32: [
       { id:"SR0", s1:1, t1:"Florida", t1Short:"UF", s2:9, t2:"Iowa", t2Short:"IOWA", date:"Sun Mar 22", pick:"Florida", confidence:82, riskLevel:"SAFE",
-        headline:"Florida's frontcourt dominates the glass. Defending champs roll.",
+        headline:"FINAL: Iowa 73-72. 9-SEED UPSETS 1-SEED FLORIDA! Defending champs OUT.",
+        result: { score1:72, score2:73, winner:"Iowa", correct:false, postGame:"STUNNER. 9-seed Iowa knocks off the defending national champion and 1-seed Florida 73-72. Iowa led at halftime and matched the Gators possession for possession. Florida's frontcourt advantage couldn't overcome Iowa's guard play and composure. The biggest upset of the tournament — Florida was -10.5. Iowa advances to face Nebraska in the Sweet 16, a game nobody predicted. The South region is wide open." },
         edge: { offense: 85, defense: 82, experience: 95, health: 92 },
         edgeOpp: { offense: 65, defense: 58, experience: 65, health: 85 },
         keyStats: [
@@ -576,7 +588,8 @@ const LATER_ROUNDS = {
         ],
         whyPick:"SLU shoots 40.1% from 3, but Michigan's defense contests shots without leaving the rim unprotected. Mara's wingspan wins the Avila matchup.", whyNot:"If SLU hits 12+ threes, they can hang. Avila vs. Mara is a genuinely fun matchup." },
       { id:"MR1", s1:5, t1:"Texas Tech", t1Short:"TTU", s2:4, t2:"Alabama", t2Short:"BAMA", date:"Sun Mar 22", pick:"Alabama", confidence:60, originalConfidence:54, riskLevel:"LEAN",
-        headline:"Two explosive offenses collide. Petty (24 pts R64) vs Philon (29 pts R64).",
+        headline:"FINAL: Alabama 90-65. Bama DEMOLISHES Texas Tech. Philon and offense explode.",
+        result: { score1:65, score2:90, winner:"Alabama", correct:true, postGame:"Alabama's offense was overwhelming — led 49-25 at halftime and never looked back. This was the most dominant performance of the round. The Crimson Tide scored 90 points against a team that was supposed to play defense. Alabama advances to face 1-seed Michigan in the Sweet 16 in Chicago — that's a blockbuster. Nate Oats has this team peaking at the right time." },
         edge: { offense: 78, defense: 55, experience: 85, health: 95 },
         edgeOpp: { offense: 80, defense: 45, experience: 55, health: 62 },
         keyStats: [
@@ -1042,16 +1055,16 @@ export default function MadnessIQ() {
           {/* Scorecard banner */}
           <div style={{ background:"linear-gradient(135deg,#101420,#141018)", border:"1px solid #4a4568", borderRadius:8, padding:"10px 12px", marginBottom:10 }}>
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:6 }}>
-              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:2, color:"#ff6b3d" }}>R64 + R32 (12 of 16)</div>
+              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:2, color:"#ff6b3d" }}>R64 + R32 COMPLETE</div>
               <div style={{ fontFamily:"'DM Mono',monospace", fontSize:9, color:"#8a8d9a" }}>Updated Mar 22</div>
             </div>
             <div style={{ display:"flex", gap:6 }}>
               <div style={{ flex:1, background:"#0a1a10", borderRadius:6, padding:"6px 8px", textAlign:"center", border:"1px solid #3a5a42" }}>
-                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:18, fontWeight:700, color:"#3ded7a" }}>34</div>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:18, fontWeight:700, color:"#3ded7a" }}>37</div>
                 <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#3ded7a", letterSpacing:1 }}>CORRECT</div>
               </div>
               <div style={{ flex:1, background:"#1a0e10", borderRadius:6, padding:"6px 8px", textAlign:"center", border:"1px solid #5a3a3e" }}>
-                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:18, fontWeight:700, color:"#ed5a5a" }}>10</div>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:18, fontWeight:700, color:"#ed5a5a" }}>11</div>
                 <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#ed5a5a", letterSpacing:1 }}>MISSED</div>
               </div>
               <div style={{ flex:1, background:"#0e1420", borderRadius:6, padding:"6px 8px", textAlign:"center", border:"1px solid #1a2a40" }}>
@@ -1064,7 +1077,7 @@ export default function MadnessIQ() {
               </div>
             </div>
             <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:"#6a6d78", marginTop:6, lineHeight:1.5 }}>
-              R32 UPDATE (12 of 16): 9-3. Duke blew open TCU with 37-14 run. SJU buzzer-beater over Kansas! Texas upset Gonzaga (11 over 3). Nebraska survived on Frager's 2.2-sec layup — Tanner's half-court heave in/out. Tennessee upset Virginia. ISU dominated UK without Jefferson (Lipsey 26/10/5). We missed: Gonzaga, Vanderbilt, Virginia.
+              R32 FINAL: 12-4 (75%). Florida stunned by Iowa 73-72 — biggest upset of tourney. Tennessee upset Virginia. Texas upset Gonzaga. Alabama demolished Tech 90-65. UConn pulled away from UCLA. Our F4 path (Duke/Arizona/Houston/Michigan) fully intact. Sweet 16 starts Thursday.
             </div>
           </div>
 
