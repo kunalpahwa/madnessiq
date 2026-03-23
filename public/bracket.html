@@ -11,9 +11,9 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: #08090c; color: #e2ddd5; font-family: 'Libre Baskerville', Georgia, serif; min-height: 100vh; }
+  body { background: #08090c; color: #f2ede5; font-family: 'Libre Baskerville', Georgia, serif; min-height: 100vh; }
   ::-webkit-scrollbar { width: 3px; }
-  ::-webkit-scrollbar-thumb { background: #2a2d35; border-radius: 2px; }
+  ::-webkit-scrollbar-thumb { background: #4a5068; border-radius: 2px; }
   @keyframes slideUp { from { opacity:0; transform:translateY(8px) } to { opacity:1; transform:translateY(0) } }
   @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
   input:focus { outline: none; }
@@ -37,7 +37,7 @@ const TEAMS = {
 const REGIONS = ["EAST","WEST","SOUTH","MIDWEST"];
 const ROUNDS = ["R64","R32","S16","E8"];
 const ROUND_NAMES = {R64:"Round of 64",R32:"Round of 32",S16:"Sweet 16",E8:"Elite Eight"};
-const REGION_COLORS = {EAST:"#3d7aed",WEST:"#ed5a3d",SOUTH:"#3ded7a",MIDWEST:"#edcc3d"};
+const REGION_COLORS = {EAST:"#5090ff",WEST:"#ff7855",SOUTH:"#60ff90",MIDWEST:"#ffe050"};
 const REGION_SITES = {EAST:"Washington, D.C.",WEST:"San Jose, CA",SOUTH:"Houston, TX",MIDWEST:"Chicago, IL"};
 const F4_MATCHUP = [["EAST","SOUTH"],["WEST","MIDWEST"]];
 
@@ -69,16 +69,16 @@ function countPicks(p){return Object.keys(p).filter(k=>!k.startsWith("champScore
 function isBracketComplete(p){return countPicks(p)===63&&p.champScore1&&p.champScore2;}
 
 function TeamSlot({team,isPicked,onClick,disabled,regionColor}) {
-  if(!team) return (<div style={{height:36,background:"#1e2430",border:"1px dashed #90a0b8",borderRadius:6,display:"flex",alignItems:"center",padding:"0 10px",fontFamily:"'DM Mono',monospace",fontSize:9,color:"#808898"}}>{"— waiting —"}</div>);
-  return (<div onClick={disabled?undefined:onClick} style={{height:36,background:isPicked?"#1a3828":"#222838",border:isPicked?`1px solid ${regionColor}aa`:"1px solid #707890",borderLeft:isPicked?`4px solid ${regionColor}`:"3px solid transparent",borderRadius:6,display:"flex",alignItems:"center",padding:"0 10px",gap:6,cursor:disabled?"default":"pointer",transition:"all 0.15s ease",opacity:disabled?0.5:1}}>
-    <span style={{fontFamily:"'DM Mono',monospace",fontSize:9,color:"#b0b8c8",minWidth:16}}>{team.s}</span>
-    <span style={{fontSize:12,fontWeight:isPicked?700:400,color:isPicked?"#4aed7a":"#f0ece4",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{team.t}</span>
-    {isPicked && <span style={{marginLeft:"auto",fontSize:12,color:"#5cffaa"}}>{"\u2713"}</span>}
+  if(!team) return (<div style={{height:36,background:"#283040",border:"1px dashed #b0c0d8",borderRadius:6,display:"flex",alignItems:"center",padding:"0 10px",fontFamily:"'DM Mono',monospace",fontSize:9,color:"#a8b0c8"}}>{"— waiting —"}</div>);
+  return (<div onClick={disabled?undefined:onClick} style={{height:36,background:isPicked?"#224830":"#2a3242",border:isPicked?`1px solid ${regionColor}aa`:"1px solid #98a0b8",borderLeft:isPicked?`4px solid ${regionColor}`:"3px solid transparent",borderRadius:6,display:"flex",alignItems:"center",padding:"0 10px",gap:6,cursor:disabled?"default":"pointer",transition:"all 0.15s ease",opacity:disabled?0.5:1}}>
+    <span style={{fontFamily:"'DM Mono',monospace",fontSize:9,color:"#d0d8e8",minWidth:16}}>{team.s}</span>
+    <span style={{fontSize:12,fontWeight:isPicked?700:400,color:isPicked?"#60ff90":"#faf6f0",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{team.t}</span>
+    {isPicked && <span style={{marginLeft:"auto",fontSize:12,color:"#70ffc0"}}>{"\u2713"}</span>}
   </div>);
 }
 function Matchup({teams,pickKey,picks,onPick,disabled,regionColor,matchNum}) {
   const [t1,t2]=teams; const cur=picks[pickKey];
-  return (<div style={{marginBottom:8,paddingBottom:2,borderBottom:"1px solid #607088",animation:`slideUp 0.2s ease ${matchNum*0.03}s both`}}><div style={{display:"flex",flexDirection:"column",gap:2}}>
+  return (<div style={{marginBottom:8,paddingBottom:2,borderBottom:"1px solid #8898b0",animation:`slideUp 0.2s ease ${matchNum*0.03}s both`}}><div style={{display:"flex",flexDirection:"column",gap:2}}>
     <TeamSlot team={t1} isPicked={cur===t1?.t} onClick={()=>t1&&onPick(pickKey,t1.t)} disabled={disabled||!t1} regionColor={regionColor}/>
     <TeamSlot team={t2} isPicked={cur===t2?.t} onClick={()=>t2&&onPick(pickKey,t2.t)} disabled={disabled||!t2} regionColor={regionColor}/>
   </div></div>);
@@ -198,45 +198,45 @@ function BracketApp() {
   if(screen==="join") return (
     <div style={{maxWidth:520,margin:"0 auto",minHeight:"100vh",display:"flex",flexDirection:"column",justifyContent:"center",padding:"20px"}}>
       <div style={{textAlign:"center",marginBottom:30}}>
-        <h1 style={{fontSize:24,fontWeight:700,margin:"0 0 4px"}}><span style={{color:"#ff8855"}}>Madness</span><span>IQ</span></h1>
-        <div style={{fontFamily:"'DM Mono',monospace",fontSize:10,color:"#c8d0e0",letterSpacing:2}}>BRACKET CHALLENGE</div>
+        <h1 style={{fontSize:24,fontWeight:700,margin:"0 0 4px"}}><span style={{color:"#ffa070"}}>Madness</span><span>IQ</span></h1>
+        <div style={{fontFamily:"'DM Mono',monospace",fontSize:10,color:"#e0e8f4",letterSpacing:2}}>BRACKET CHALLENGE</div>
       </div>
-      <div style={{background:"linear-gradient(135deg,#101420,#141018)",border:"1px solid #908aaa",borderRadius:12,padding:"24px"}}>
-        <div style={{fontFamily:"'DM Mono',monospace",fontSize:9,letterSpacing:2,color:"#ffa070",marginBottom:16}}>ENTER ROOM CODE</div>
-        <div style={{fontSize:12,color:"#e0e4ee",marginBottom:16,lineHeight:1.6}}>Everyone in your family enters the same code to see all brackets in one place.</div>
+      <div style={{background:"linear-gradient(135deg,#1a1e2a,#1e1822)",border:"1px solid #b0aac8",borderRadius:12,padding:"24px"}}>
+        <div style={{fontFamily:"'DM Mono',monospace",fontSize:9,letterSpacing:2,color:"#ffb888",marginBottom:16}}>ENTER ROOM CODE</div>
+        <div style={{fontSize:12,color:"#f0f2fa",marginBottom:16,lineHeight:1.6}}>Everyone in your family enters the same code to see all brackets in one place.</div>
         <div style={{marginBottom:18}}>
-          <input value={roomCode} onChange={e=>setRoomCode(e.target.value.toUpperCase())} onKeyDown={e=>e.key==="Enter"&&joinRoom()} placeholder="e.g. PAHWA" maxLength={20} style={{width:"100%",background:"#1a2028",border:"1px solid #808898",borderRadius:6,padding:"12px",color:"#ff8855",fontSize:22,fontFamily:"'DM Mono',monospace",fontWeight:700,letterSpacing:4,textTransform:"uppercase",textAlign:"center"}}/>
+          <input value={roomCode} onChange={e=>setRoomCode(e.target.value.toUpperCase())} onKeyDown={e=>e.key==="Enter"&&joinRoom()} placeholder="e.g. PAHWA" maxLength={20} style={{width:"100%",background:"#222a38",border:"1px solid #a8b0c8",borderRadius:6,padding:"12px",color:"#ffa070",fontSize:22,fontFamily:"'DM Mono',monospace",fontWeight:700,letterSpacing:4,textTransform:"uppercase",textAlign:"center"}}/>
         </div>
-        <button onClick={joinRoom} disabled={!roomCode.trim()||loading} style={{width:"100%",background:roomCode.trim()?"linear-gradient(135deg,#ff6b3d,#ed4a2a)":"#1a1d28",border:"none",borderRadius:8,padding:"12px",color:"#fff",cursor:roomCode.trim()?"pointer":"default",fontFamily:"'DM Mono',monospace",fontSize:12,fontWeight:700,letterSpacing:1}}>{loading?"JOINING...":"ENTER ROOM \u2192"}</button>
+        <button onClick={joinRoom} disabled={!roomCode.trim()||loading} style={{width:"100%",background:roomCode.trim()?"linear-gradient(135deg,#ff9050,#ff6840)":"#242838",border:"none",borderRadius:8,padding:"12px",color:"#fff",cursor:roomCode.trim()?"pointer":"default",fontFamily:"'DM Mono',monospace",fontSize:12,fontWeight:700,letterSpacing:1}}>{loading?"JOINING...":"ENTER ROOM \u2192"}</button>
       </div>
-      <a href="/" style={{display:"block",textAlign:"center",marginTop:16,fontFamily:"'DM Mono',monospace",fontSize:8,color:"#ff8855",textDecoration:"none"}}>{"\u2190"} BACK TO MADNESSIQ</a>
+      <a href="/" style={{display:"block",textAlign:"center",marginTop:16,fontFamily:"'DM Mono',monospace",fontSize:8,color:"#ffa070",textDecoration:"none"}}>{"\u2190"} BACK TO MADNESSIQ</a>
     </div>
   );
 
   return (
     <div style={{maxWidth:520,margin:"0 auto",minHeight:"100vh"}}>
-      <div style={{background:"linear-gradient(180deg,#1e2430,#08090c)",borderBottom:"1px solid #707890",padding:"12px 16px 8px",position:"sticky",top:0,zIndex:100}}>
+      <div style={{background:"linear-gradient(180deg,#283040,#08090c)",borderBottom:"1px solid #98a0b8",padding:"12px 16px 8px",position:"sticky",top:0,zIndex:100}}>
         <div style={{display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-          <a href="/" style={{textDecoration:"none"}}><h1 style={{fontSize:17,fontWeight:700,margin:0}}><span style={{color:"#ff8855"}}>Madness</span><span style={{color:"#e2ddd5"}}>IQ</span><span style={{fontFamily:"'DM Mono',monospace",fontSize:9,color:"#c8d0e0",marginLeft:6}}>BRACKET</span></h1></a>
+          <a href="/" style={{textDecoration:"none"}}><h1 style={{fontSize:17,fontWeight:700,margin:0}}><span style={{color:"#ffa070"}}>Madness</span><span style={{color:"#f2ede5"}}>IQ</span><span style={{fontFamily:"'DM Mono',monospace",fontSize:9,color:"#e0e8f4",marginLeft:6}}>BRACKET</span></h1></a>
           <div style={{display:"flex",alignItems:"center",gap:8}}>
-            <span style={{fontFamily:"'DM Mono',monospace",fontSize:8,color:"#ffa070",background:"#381e24",padding:"2px 8px",borderRadius:4,border:"1px solid #908060"}}>{roomCode}</span>
+            <span style={{fontFamily:"'DM Mono',monospace",fontSize:8,color:"#ffb888",background:"#48282e",padding:"2px 8px",borderRadius:4,border:"1px solid #b0a080"}}>{roomCode}</span>
             {saving && <span style={{fontFamily:"'DM Mono',monospace",fontSize:7,color:"#edaa3d",animation:"pulse 1s infinite"}}>saving...</span>}
           </div>
         </div>
         <div style={{display:"flex",gap:4,marginTop:8,alignItems:"center",overflowX:"auto"}}>
-          {brackets.map((b,i)=>(<button key={b.id||i} onClick={()=>{setActiveIdx(i);setConfirmDelete(null);}} style={{background:activeIdx===i?"#2e3448":"transparent",border:activeIdx===i?"1px solid #a0b0c0":"1px solid #707890",color:activeIdx===i?"#f0ece4":"#8a90a0",padding:"4px 10px",borderRadius:4,cursor:"pointer",whiteSpace:"nowrap",fontFamily:"'DM Mono',monospace",fontSize:9}}>{b.name} {b.locked?"\uD83D\uDD12":""}</button>))}
-          <button onClick={()=>setShowCreate(true)} style={{background:"transparent",border:"1px dashed #90a0b0",color:"#ff8855",padding:"4px 10px",borderRadius:4,cursor:"pointer",whiteSpace:"nowrap",fontFamily:"'DM Mono',monospace",fontSize:9}}>+ NEW</button>
+          {brackets.map((b,i)=>(<button key={b.id||i} onClick={()=>{setActiveIdx(i);setConfirmDelete(null);}} style={{background:activeIdx===i?"#384258":"transparent",border:activeIdx===i?"1px solid #b8c8d8":"1px solid #98a0b8",color:activeIdx===i?"#faf6f0":"#b0b8c8",padding:"4px 10px",borderRadius:4,cursor:"pointer",whiteSpace:"nowrap",fontFamily:"'DM Mono',monospace",fontSize:9}}>{b.name} {b.locked?"\uD83D\uDD12":""}</button>))}
+          <button onClick={()=>setShowCreate(true)} style={{background:"transparent",border:"1px dashed #b0c0d0",color:"#ffa070",padding:"4px 10px",borderRadius:4,cursor:"pointer",whiteSpace:"nowrap",fontFamily:"'DM Mono',monospace",fontSize:9}}>+ NEW</button>
         </div>
       </div>
       <div style={{padding:"12px 16px 80px"}}>
         {/* Create bracket form */}
         {showCreate && (
-          <div style={{background:"linear-gradient(135deg,#101420,#141018)",border:"1px solid #908aaa",borderRadius:8,padding:"16px",marginBottom:10,animation:"slideUp 0.2s ease"}}>
-            <div style={{fontFamily:"'DM Mono',monospace",fontSize:9,letterSpacing:2,color:"#ffa070",marginBottom:8}}>CREATE NEW BRACKET</div>
+          <div style={{background:"linear-gradient(135deg,#1a1e2a,#1e1822)",border:"1px solid #b0aac8",borderRadius:8,padding:"16px",marginBottom:10,animation:"slideUp 0.2s ease"}}>
+            <div style={{fontFamily:"'DM Mono',monospace",fontSize:9,letterSpacing:2,color:"#ffb888",marginBottom:8}}>CREATE NEW BRACKET</div>
             <div style={{display:"flex",gap:6}}>
-              <input value={newName} onChange={e=>setNewName(e.target.value)} onKeyDown={e=>e.key==="Enter"&&createBracket()} placeholder="Enter name..." style={{flex:1,background:"#1a2028",border:"1px solid #808898",borderRadius:6,padding:"8px 10px",color:"#e2ddd5",fontSize:13,fontFamily:"'Libre Baskerville',Georgia,serif"}}/>
-              <button onClick={createBracket} disabled={!newName.trim()} style={{background:newName.trim()?"linear-gradient(135deg,#ff6b3d,#ed4a2a)":"#1a1d28",border:"none",borderRadius:6,padding:"8px 14px",color:"#fff",cursor:newName.trim()?"pointer":"default",fontFamily:"'DM Mono',monospace",fontSize:9,fontWeight:700}}>CREATE</button>
-              <button onClick={()=>{setShowCreate(false);setNewName("");}} style={{background:"transparent",border:"1px solid #a0b0c0",borderRadius:6,padding:"8px 10px",color:"#b0b8c8",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:9}}>X</button>
+              <input value={newName} onChange={e=>setNewName(e.target.value)} onKeyDown={e=>e.key==="Enter"&&createBracket()} placeholder="Enter name..." style={{flex:1,background:"#222a38",border:"1px solid #a8b0c8",borderRadius:6,padding:"8px 10px",color:"#f2ede5",fontSize:13,fontFamily:"'Libre Baskerville',Georgia,serif"}}/>
+              <button onClick={createBracket} disabled={!newName.trim()} style={{background:newName.trim()?"linear-gradient(135deg,#ff9050,#ff6840)":"#242838",border:"none",borderRadius:6,padding:"8px 14px",color:"#fff",cursor:newName.trim()?"pointer":"default",fontFamily:"'DM Mono',monospace",fontSize:9,fontWeight:700}}>CREATE</button>
+              <button onClick={()=>{setShowCreate(false);setNewName("");}} style={{background:"transparent",border:"1px solid #b8c8d8",borderRadius:6,padding:"8px 10px",color:"#d0d8e8",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:9}}>X</button>
             </div>
           </div>
         )}
@@ -244,8 +244,8 @@ function BracketApp() {
         {/* No brackets yet */}
         {brackets.length === 0 && !showCreate && (
           <div style={{textAlign:"center",padding:"40px 20px"}}>
-            <div style={{fontSize:14,color:"#b0b8c8",marginBottom:12}}>No brackets in this room yet.</div>
-            <button onClick={()=>setShowCreate(true)} style={{background:"linear-gradient(135deg,#ff6b3d,#ed4a2a)",border:"none",borderRadius:8,padding:"12px 24px",color:"#fff",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:11,fontWeight:700,letterSpacing:1}}>CREATE FIRST BRACKET</button>
+            <div style={{fontSize:14,color:"#d0d8e8",marginBottom:12}}>No brackets in this room yet.</div>
+            <button onClick={()=>setShowCreate(true)} style={{background:"linear-gradient(135deg,#ff9050,#ff6840)",border:"none",borderRadius:8,padding:"12px 24px",color:"#fff",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:11,fontWeight:700,letterSpacing:1}}>CREATE FIRST BRACKET</button>
           </div>
         )}
 
@@ -253,54 +253,54 @@ function BracketApp() {
           {/* Delete button for unlocked brackets */}
           {!locked && confirmDelete !== activeIdx && (
             <div style={{display:"flex",justifyContent:"flex-end",marginBottom:6}}>
-              <button onClick={()=>setConfirmDelete(activeIdx)} style={{background:"transparent",border:"1px solid #806868",borderRadius:4,padding:"3px 8px",color:"#6a4048",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:7,letterSpacing:1}}>DELETE THIS BRACKET</button>
+              <button onClick={()=>setConfirmDelete(activeIdx)} style={{background:"transparent",border:"1px solid #a08888",borderRadius:4,padding:"3px 8px",color:"#907068",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:7,letterSpacing:1}}>DELETE THIS BRACKET</button>
             </div>
           )}
           {confirmDelete === activeIdx && (
-            <div style={{background:"#381e24",border:"1px solid #906068",borderRadius:6,padding:"10px",marginBottom:8,textAlign:"center"}}>
-              <div style={{fontFamily:"'DM Mono',monospace",fontSize:9,color:"#ff6a6a",marginBottom:6}}>Delete {active.name}'s bracket? This can't be undone.</div>
+            <div style={{background:"#48282e",border:"1px solid #b08088",borderRadius:6,padding:"10px",marginBottom:8,textAlign:"center"}}>
+              <div style={{fontFamily:"'DM Mono',monospace",fontSize:9,color:"#ff8888",marginBottom:6}}>Delete {active.name}'s bracket? This can't be undone.</div>
               <div style={{display:"flex",gap:6,justifyContent:"center"}}>
-                <button onClick={()=>setConfirmDelete(null)} style={{background:"#1a1d28",border:"1px solid #a0b0c0",borderRadius:4,padding:"6px 14px",color:"#e2ddd5",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:9}}>CANCEL</button>
+                <button onClick={()=>setConfirmDelete(null)} style={{background:"#242838",border:"1px solid #b8c8d8",borderRadius:4,padding:"6px 14px",color:"#f2ede5",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:9}}>CANCEL</button>
                 <button onClick={()=>deleteBracket(activeIdx)} style={{background:"linear-gradient(135deg,#ed3d3d,#cd2a2a)",border:"none",borderRadius:4,padding:"6px 14px",color:"#fff",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:9,fontWeight:700}}>DELETE</button>
               </div>
             </div>
           )}
-          <div style={{background:"#0c0e14",borderRadius:8,padding:"10px 12px",marginBottom:10,border:"1px solid #707890"}}>
+          <div style={{background:"#161a24",borderRadius:8,padding:"10px 12px",marginBottom:10,border:"1px solid #98a0b8"}}>
             <div style={{display:"flex",justifyContent:"space-between",alignItems:"center",marginBottom:6}}>
               <span style={{fontFamily:"'DM Mono',monospace",fontSize:10,color:"#faf6ee"}}>{active.name}'s Bracket {locked&&"\uD83D\uDD12 LOCKED"}</span>
-              <span style={{fontFamily:"'DM Mono',monospace",fontSize:9,color:complete?"#3ded7a":"#ff6b3d"}}>{totalPicks}/63 picks</span>
+              <span style={{fontFamily:"'DM Mono',monospace",fontSize:9,color:complete?"#60ff90":"#ff9050"}}>{totalPicks}/63 picks</span>
             </div>
-            <div style={{height:5,background:"#50586e",borderRadius:2,overflow:"hidden"}}><div style={{height:"100%",background:complete?"#3ded7a":"linear-gradient(90deg,#ff6b3d,#ed4a2a)",width:`${(totalPicks/63)*100}%`,borderRadius:2,transition:"width 0.3s ease"}}/></div>
+            <div style={{height:5,background:"#78809a",borderRadius:2,overflow:"hidden"}}><div style={{height:"100%",background:complete?"#60ff90":"linear-gradient(90deg,#ff9050,#ff6840)",width:`${(totalPicks/63)*100}%`,borderRadius:2,transition:"width 0.3s ease"}}/></div>
             <div style={{display:"flex",justifyContent:"space-between",marginTop:6}}>{REGIONS.map(r=>(<span key={r} style={{fontFamily:"'DM Mono',monospace",fontSize:8,color:REGION_COLORS[r]}}>{r}: {regionPicks(r)}/15</span>))}</div>
           </div>
-          <div style={{display:"flex",gap:2,marginBottom:8}}>{[...REGIONS,"FINAL4"].map(r=>(<button key={r} onClick={()=>setRegion(r)} style={{flex:1,background:region===r?"#2e3448":"transparent",borderBottom:region===r?`3px solid ${r==="FINAL4"?"#ff8855":REGION_COLORS[r]}`:"2px solid transparent",border:"none",borderTop:"none",borderLeft:"none",borderRight:"none",color:region===r?"#f0ece4":"#8a90a0",padding:"6px 2px 4px",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:r==="FINAL4"?8:9,letterSpacing:1}}>{r==="FINAL4"?"FINAL 4":r}</button>))}</div>
+          <div style={{display:"flex",gap:2,marginBottom:8}}>{[...REGIONS,"FINAL4"].map(r=>(<button key={r} onClick={()=>setRegion(r)} style={{flex:1,background:region===r?"#384258":"transparent",borderBottom:region===r?`3px solid ${r==="FINAL4"?"#ffa070":REGION_COLORS[r]}`:"2px solid transparent",border:"none",borderTop:"none",borderLeft:"none",borderRight:"none",color:region===r?"#faf6f0":"#b0b8c8",padding:"6px 2px 4px",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:r==="FINAL4"?8:9,letterSpacing:1}}>{r==="FINAL4"?"FINAL 4":r}</button>))}</div>
 
           {REGIONS.includes(region) && (<div>
-            <div style={{fontFamily:"'DM Mono',monospace",fontSize:9,color:"#d0d4e0",marginBottom:8,textAlign:"center"}}>{REGION_SITES[region]} Regional</div>
-            {ROUNDS.map((round,rIdx)=>{const num=8/Math.pow(2,rIdx);return(<div key={round} style={{marginBottom:14,padding:"10px",background:"#1c222e",borderRadius:8,border:"1px solid #707890"}}>
+            <div style={{fontFamily:"'DM Mono',monospace",fontSize:9,color:"#e8ecf4",marginBottom:8,textAlign:"center"}}>{REGION_SITES[region]} Regional</div>
+            {ROUNDS.map((round,rIdx)=>{const num=8/Math.pow(2,rIdx);return(<div key={round} style={{marginBottom:14,padding:"10px",background:"#242c3a",borderRadius:8,border:"1px solid #98a0b8"}}>
               <div style={{fontFamily:"'DM Mono',monospace",fontSize:10,letterSpacing:2,fontWeight:700,color:REGION_COLORS[region],marginBottom:6}}>{ROUND_NAMES[round]}</div>
               {Array.from({length:num},(_,i)=>{const key=`${region}-${round}-${i}`;const teams=getMatchupTeams(region,round,i,picks);return <Matchup key={key} teams={teams} pickKey={key} picks={picks} onPick={makePick} disabled={locked} regionColor={REGION_COLORS[region]} matchNum={i}/>;})}
             </div>);})}
-            {picks[`${region}-E8-0`]&&(<div style={{background:"linear-gradient(135deg,#101420,#141018)",border:`1px solid ${REGION_COLORS[region]}aa`,borderRadius:8,padding:"12px",textAlign:"center",animation:"slideUp 0.3s ease"}}><div style={{fontFamily:"'DM Mono',monospace",fontSize:7,letterSpacing:2,color:REGION_COLORS[region]}}>{region} CHAMPION</div><div style={{fontSize:20,fontWeight:700,marginTop:4,color:"#fffcf4"}}>{picks[`${region}-E8-0`]}</div><div style={{fontFamily:"'DM Mono',monospace",fontSize:8,color:"#b0b8c8",marginTop:2}}>{"\u2192"} FINAL FOUR</div></div>)}
+            {picks[`${region}-E8-0`]&&(<div style={{background:"linear-gradient(135deg,#1a1e2a,#1e1822)",border:`1px solid ${REGION_COLORS[region]}aa`,borderRadius:8,padding:"12px",textAlign:"center",animation:"slideUp 0.3s ease"}}><div style={{fontFamily:"'DM Mono',monospace",fontSize:7,letterSpacing:2,color:REGION_COLORS[region]}}>{region} CHAMPION</div><div style={{fontSize:20,fontWeight:700,marginTop:4,color:"#fffcf4"}}>{picks[`${region}-E8-0`]}</div><div style={{fontFamily:"'DM Mono',monospace",fontSize:8,color:"#d0d8e8",marginTop:2}}>{"\u2192"} FINAL FOUR</div></div>)}
           </div>)}
 
           {region==="FINAL4"&&(<div>
-            <div style={{fontFamily:"'DM Mono',monospace",fontSize:9,letterSpacing:2,color:"#ffa070",marginBottom:8,textAlign:"center"}}>FINAL FOUR {"\u2014"} INDIANAPOLIS {"\u2014"} SAT APR 4</div>
-            {[0,1].map(si=>{const [r1,r2]=F4_MATCHUP[si];const teams=getF4Teams(si,picks);return(<div key={si} style={{marginBottom:12}}><div style={{fontFamily:"'DM Mono',monospace",fontSize:8,color:"#c8d0e0",marginBottom:4}}>SEMIFINAL {si+1}: <span style={{color:REGION_COLORS[r1]}}>{r1}</span> vs <span style={{color:REGION_COLORS[r2]}}>{r2}</span></div><Matchup teams={teams} pickKey={`F4-${si}`} picks={picks} onPick={makePick} disabled={locked} regionColor="#ff6b3d" matchNum={si}/></div>);})}
-            <div style={{fontFamily:"'DM Mono',monospace",fontSize:9,letterSpacing:2,color:"#ffa070",marginTop:16,marginBottom:8,textAlign:"center"}}>NATIONAL CHAMPIONSHIP {"\u2014"} MON APR 6</div>
-            {(()=>{const teams=getChampTeams(picks);return <Matchup teams={teams} pickKey="CHAMP" picks={picks} onPick={makePick} disabled={locked} regionColor="#ff6b3d" matchNum={0}/>;})()}
-            {picks["CHAMP"]&&(<div style={{background:"linear-gradient(135deg,#141620,#1a1428)",border:"1px solid #908aaa",borderRadius:10,padding:"16px",textAlign:"center",marginTop:12,animation:"slideUp 0.3s ease"}}>
-              <div style={{fontFamily:"'DM Mono',monospace",fontSize:7,letterSpacing:4,color:"#ffa070",marginBottom:8}}>PREDICT THE FINAL SCORE</div>
+            <div style={{fontFamily:"'DM Mono',monospace",fontSize:9,letterSpacing:2,color:"#ffb888",marginBottom:8,textAlign:"center"}}>FINAL FOUR {"\u2014"} INDIANAPOLIS {"\u2014"} SAT APR 4</div>
+            {[0,1].map(si=>{const [r1,r2]=F4_MATCHUP[si];const teams=getF4Teams(si,picks);return(<div key={si} style={{marginBottom:12}}><div style={{fontFamily:"'DM Mono',monospace",fontSize:8,color:"#e0e8f4",marginBottom:4}}>SEMIFINAL {si+1}: <span style={{color:REGION_COLORS[r1]}}>{r1}</span> vs <span style={{color:REGION_COLORS[r2]}}>{r2}</span></div><Matchup teams={teams} pickKey={`F4-${si}`} picks={picks} onPick={makePick} disabled={locked} regionColor="#ff9050" matchNum={si}/></div>);})}
+            <div style={{fontFamily:"'DM Mono',monospace",fontSize:9,letterSpacing:2,color:"#ffb888",marginTop:16,marginBottom:8,textAlign:"center"}}>NATIONAL CHAMPIONSHIP {"\u2014"} MON APR 6</div>
+            {(()=>{const teams=getChampTeams(picks);return <Matchup teams={teams} pickKey="CHAMP" picks={picks} onPick={makePick} disabled={locked} regionColor="#ff9050" matchNum={0}/>;})()}
+            {picks["CHAMP"]&&(<div style={{background:"linear-gradient(135deg,#1e2030,#241e32)",border:"1px solid #b0aac8",borderRadius:10,padding:"16px",textAlign:"center",marginTop:12,animation:"slideUp 0.3s ease"}}>
+              <div style={{fontFamily:"'DM Mono',monospace",fontSize:7,letterSpacing:4,color:"#ffb888",marginBottom:8}}>PREDICT THE FINAL SCORE</div>
               <div style={{fontSize:20,fontWeight:700,marginBottom:12}}>{"\uD83C\uDFC6"} {picks["CHAMP"]}</div>
               <div style={{display:"flex",gap:8,justifyContent:"center",alignItems:"center"}}>
-                <div style={{textAlign:"center"}}><div style={{fontFamily:"'DM Mono',monospace",fontSize:8,color:"#c8d0e0",marginBottom:4}}>WINNER</div><input value={picks.champScore1||""} onChange={e=>makePick("champScore1",e.target.value)} placeholder="72" maxLength={3} disabled={locked} style={{width:60,textAlign:"center",background:"#1a2028",border:"1px solid #808898",borderRadius:6,padding:"8px",color:"#50ff8a",fontSize:20,fontFamily:"'DM Mono',monospace",fontWeight:700}}/></div>
-                <span style={{fontFamily:"'DM Mono',monospace",fontSize:14,color:"#4a4d58",marginTop:16}}>{"\u2014"}</span>
-                <div style={{textAlign:"center"}}><div style={{fontFamily:"'DM Mono',monospace",fontSize:8,color:"#c8d0e0",marginBottom:4}}>RUNNER-UP</div><input value={picks.champScore2||""} onChange={e=>makePick("champScore2",e.target.value)} placeholder="65" maxLength={3} disabled={locked} style={{width:60,textAlign:"center",background:"#1a2028",border:"1px solid #808898",borderRadius:6,padding:"8px",color:"#ff6a6a",fontSize:20,fontFamily:"'DM Mono',monospace",fontWeight:700}}/></div>
+                <div style={{textAlign:"center"}}><div style={{fontFamily:"'DM Mono',monospace",fontSize:8,color:"#e0e8f4",marginBottom:4}}>WINNER</div><input value={picks.champScore1||""} onChange={e=>makePick("champScore1",e.target.value)} placeholder="72" maxLength={3} disabled={locked} style={{width:60,textAlign:"center",background:"#222a38",border:"1px solid #a8b0c8",borderRadius:6,padding:"8px",color:"#70ffaa",fontSize:20,fontFamily:"'DM Mono',monospace",fontWeight:700}}/></div>
+                <span style={{fontFamily:"'DM Mono',monospace",fontSize:14,color:"#707480",marginTop:16}}>{"\u2014"}</span>
+                <div style={{textAlign:"center"}}><div style={{fontFamily:"'DM Mono',monospace",fontSize:8,color:"#e0e8f4",marginBottom:4}}>RUNNER-UP</div><input value={picks.champScore2||""} onChange={e=>makePick("champScore2",e.target.value)} placeholder="65" maxLength={3} disabled={locked} style={{width:60,textAlign:"center",background:"#222a38",border:"1px solid #a8b0c8",borderRadius:6,padding:"8px",color:"#ff8888",fontSize:20,fontFamily:"'DM Mono',monospace",fontWeight:700}}/></div>
               </div>
             </div>)}
-            {!locked&&complete&&!confirmLock&&(<button onClick={()=>setConfirmLock(true)} style={{width:"100%",marginTop:16,background:"linear-gradient(135deg,#3ded7a,#2acd5a)",border:"none",borderRadius:8,padding:"14px",color:"#08090c",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:12,fontWeight:700,letterSpacing:1}}>{"\uD83D\uDD12"} LOCK BRACKET</button>)}
-            {!locked&&confirmLock&&(<div style={{background:"#381e24",border:"1px solid #906068",borderRadius:8,padding:"14px",marginTop:16,textAlign:"center"}}><div style={{fontFamily:"'DM Mono',monospace",fontSize:10,color:"#ff6a6a",marginBottom:8}}>Are you sure? Once locked, picks can't change.</div><div style={{display:"flex",gap:8}}><button onClick={()=>setConfirmLock(false)} style={{flex:1,background:"#1a1d28",border:"1px solid #a0b0c0",borderRadius:6,padding:"10px",color:"#e2ddd5",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:10}}>CANCEL</button><button onClick={lockBracket} style={{flex:1,background:"linear-gradient(135deg,#ed3d3d,#cd2a2a)",border:"none",borderRadius:6,padding:"10px",color:"#fff",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:10,fontWeight:700}}>YES, LOCK IT {"\uD83D\uDD12"}</button></div></div>)}
-            {locked&&(<div style={{background:"#1e4028",border:"1px solid #60906a",borderRadius:8,padding:"14px",marginTop:16,textAlign:"center"}}><div style={{fontFamily:"'DM Mono',monospace",fontSize:12,color:"#5cffaa"}}>{"\uD83D\uDD12"} BRACKET LOCKED {active.lockedAt?"\u2014 "+new Date(active.lockedAt).toLocaleString():""}</div></div>)}
+            {!locked&&complete&&!confirmLock&&(<button onClick={()=>setConfirmLock(true)} style={{width:"100%",marginTop:16,background:"linear-gradient(135deg,#60ff90,#2acd5a)",border:"none",borderRadius:8,padding:"14px",color:"#08090c",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:12,fontWeight:700,letterSpacing:1}}>{"\uD83D\uDD12"} LOCK BRACKET</button>)}
+            {!locked&&confirmLock&&(<div style={{background:"#48282e",border:"1px solid #b08088",borderRadius:8,padding:"14px",marginTop:16,textAlign:"center"}}><div style={{fontFamily:"'DM Mono',monospace",fontSize:10,color:"#ff8888",marginBottom:8}}>Are you sure? Once locked, picks can't change.</div><div style={{display:"flex",gap:8}}><button onClick={()=>setConfirmLock(false)} style={{flex:1,background:"#242838",border:"1px solid #b8c8d8",borderRadius:6,padding:"10px",color:"#f2ede5",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:10}}>CANCEL</button><button onClick={lockBracket} style={{flex:1,background:"linear-gradient(135deg,#ed3d3d,#cd2a2a)",border:"none",borderRadius:6,padding:"10px",color:"#fff",cursor:"pointer",fontFamily:"'DM Mono',monospace",fontSize:10,fontWeight:700}}>YES, LOCK IT {"\uD83D\uDD12"}</button></div></div>)}
+            {locked&&(<div style={{background:"#285030",border:"1px solid #80b08a",borderRadius:8,padding:"14px",marginTop:16,textAlign:"center"}}><div style={{fontFamily:"'DM Mono',monospace",fontSize:12,color:"#70ffc0"}}>{"\uD83D\uDD12"} BRACKET LOCKED {active.lockedAt?"\u2014 "+new Date(active.lockedAt).toLocaleString():""}</div></div>)}
           </div>)}
         </>)}
       </div>
