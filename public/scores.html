@@ -113,6 +113,39 @@ function scoreBracket(picks, resultsMap) {
   return { total, totalBase, totalBonus, correct, wrong, pending, byRound };
 }
 
+
+function getEliminatedTeams(resultsMap) {
+  const eliminated = new Set();
+  Object.values(resultsMap).forEach(r => {
+    if (r.winner) {
+      const loser = r.winner === r.team1 ? r.team2 : r.team1;
+      eliminated.add(loser);
+    }
+  });
+  return eliminated;
+}
+
+function calcMaxPossible(picks, score, resultsMap) {
+  const eliminated = getEliminatedTeams(resultsMap);
+  let maxPts = score.total; // start with current earned points
+  // Add potential points for each pending pick where team is still alive
+  Object.values(score.byRound).forEach(rd => {
+    rd.picks.filter(p => p.status === "pending").forEach(p => {
+      if (!eliminated.has(p.team)) {
+        // Team still alive — could earn base pts + potential upset bonus
+        const seed = SEED_MAP[p.team] || 8;
+        // Conservative: just base pts. Generous: base + max reasonable bonus
+        // Let's use base + seed-based estimate (higher seed = more bonus potential)
+        maxPts += BASE_PTS[p.round] || 0;
+        // Add potential upset bonus if they're a higher seed
+        if (seed >= 8) maxPts += Math.max(0, seed - 4); // rough bonus estimate
+      }
+      // eliminated teams contribute 0
+    });
+  });
+  return maxPts;
+}
+
 function generateCommentary(picks, score, resultsMap) {
   const notes = [];
   const { byRound } = score;
@@ -212,6 +245,7 @@ function Scoreboard() {
     ...b,
     score: scoreBracket(b.picks, results),
     commentary: generateCommentary(b.picks, scoreBracket(b.picks, results), results),
+    maxPossible: calcMaxPossible(b.picks, scoreBracket(b.picks, results), results),
   })).sort((a, b) => b.score.total - a.score.total);
 
   if (!joined) return (
@@ -280,6 +314,9 @@ function Scoreboard() {
                   <div style={{fontFamily:"'DM Mono',monospace",fontSize:24,fontWeight:700,color:idx===0?"#ffe050":"#faf6f0"}}>{s.total}</div>
                   <div style={{fontFamily:"'DM Mono',monospace",fontSize:7,color:"#b0b8c8"}}>
                     {s.totalBase} base + {s.totalBonus} upset
+                  </div>
+                  <div style={{fontFamily:"'DM Mono',monospace",fontSize:8,color:"#80c8ff",marginTop:2}}>
+                    max: {b.maxPossible}
                   </div>
                 </div>
               </div>
