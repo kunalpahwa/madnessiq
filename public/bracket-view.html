@@ -8,7 +8,7 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:#08090c;color:#f2ede5;font-family:'DM Mono',monospace;overflow:hidden;height:100vh;width:100vw}
-#wrap{width:100vw;height:100vh;overflow:hidden;position:relative;touch-action:none}
+#wrap{width:100vw;height:100vh;overflow:hidden;position:relative;touch-action:none;cursor:grab}
 #bracket{position:absolute;transform-origin:0 0;width:1500px;height:1100px}
 
 .slot{position:absolute;width:130px;height:22px;font-size:9px;display:flex;align-items:center;gap:3px;padding:0 5px;border-radius:3px;cursor:pointer;transition:background 0.15s;border-left:3px solid transparent;background:#12141e}
@@ -16,26 +16,38 @@ body{background:#08090c;color:#f2ede5;font-family:'DM Mono',monospace;overflow:h
 .slot .seed{color:#b0b8c8;width:16px;text-align:right;flex-shrink:0;font-size:8px}
 .slot .name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:400;font-size:9px;color:#90989a}
 .slot .sc{color:#808898;font-size:8px;flex-shrink:0;min-width:16px;text-align:right}
-.slot .badge{font-size:7px;flex-shrink:0;padding:1px 3px;border-radius:2px;font-weight:700;letter-spacing:0.5px}
+.slot .badge{font-size:6px;flex-shrink:0;padding:1px 3px;border-radius:2px;font-weight:700;letter-spacing:0.5px}
 
-/* Winner styling */
 .slot.winner{background:#1a2028}
 .slot.winner .name{color:#f8f6f0;font-weight:700}
 .slot.winner .sc{color:#d0d8e0;font-weight:600}
-
-/* Loser - just dimmed, no strikethrough */
 .slot.loser{opacity:0.30}
 
-/* Pick status borders */
+/* Pick results */
 .slot.pick-correct{border-left:3px solid #50ff8a}
 .slot.pick-wrong{border-left:3px solid #ff5050}
 .slot.pick-upset{border-left:3px solid #ffe050;background:#1a1e14}
+
+/* Future picks */
+.slot.pick-future{border-left:3px solid #4080d0;background:#101828}
+.slot.pick-future .name{color:#80b0e0;font-style:italic;font-weight:500}
+.slot.pick-future .seed{color:#5080b0}
+.slot.pick-future-opp{border-left:3px solid #303848;background:#0e1018}
+.slot.pick-future-opp .name{color:#606878;font-style:italic}
+
+/* Dead pick — team eliminated, can't happen */
+.slot.pick-dead{border-left:3px solid #802020;background:#1a1014}
+.slot.pick-dead .name{color:#a05050;text-decoration:line-through;font-style:italic}
+.slot.pick-dead .seed{color:#704040}
+
+/* Pending — game today/not yet played */
 .slot.pick-pending{border-left:3px solid #3a4868}
 
-/* Pick badges */
 .badge-correct{background:#1a3020;color:#60ff90}
 .badge-wrong{background:#301a1a;color:#ff7070}
 .badge-upset{background:#2a2810;color:#ffe050}
+.badge-future{background:#102040;color:#6090d0}
+.badge-dead{background:#2a1014;color:#a05050}
 
 .connector{position:absolute;border-color:#3a4058;border-style:solid;border-width:0}
 .region-label{position:absolute;font-size:11px;letter-spacing:4px;font-weight:700}
@@ -47,8 +59,7 @@ body{background:#08090c;color:#f2ede5;font-family:'DM Mono',monospace;overflow:h
 #header h1{font-size:15px;font-weight:700}
 #header h1 .o{color:#ff9050}
 #header h1 .w{color:#f2ede5}
-.hint{font-size:7px;color:#808898;letter-spacing:1px}
-#legend{display:flex;gap:8px;align-items:center;font-size:7px}
+#legend{display:flex;gap:6px;align-items:center;font-size:7px;color:#b0b8c8;flex-wrap:wrap}
 #legend span{display:flex;align-items:center;gap:2px}
 #legend .dot{width:8px;height:3px;border-radius:1px}
 
@@ -56,12 +67,9 @@ body{background:#08090c;color:#f2ede5;font-family:'DM Mono',monospace;overflow:h
 #zoom-controls button{width:38px;height:38px;border-radius:50%;border:1px solid #4a5068;background:#1a1e2a;color:#f2ede5;font-size:18px;cursor:pointer}
 #zoom-controls button:active{background:#2a3040}
 
-/* Landscape hint for mobile */
 #rotate-hint{display:none;position:fixed;top:0;left:0;right:0;bottom:0;z-index:200;background:rgba(8,9,12,0.95);justify-content:center;align-items:center;flex-direction:column;gap:12px;color:#b0b8c8;font-size:12px;text-align:center;padding:20px}
 #rotate-hint .icon{font-size:40px}
-@media (max-width:600px) and (orientation:portrait){
-  #rotate-hint{display:flex}
-}
+@media(max-width:600px)and(orientation:portrait){#rotate-hint{display:flex}}
 </style>
 </head>
 <body>
@@ -73,10 +81,11 @@ body{background:#08090c;color:#f2ede5;font-family:'DM Mono',monospace;overflow:h
 <div id="header">
   <a href="/"><h1><span class="o">Madness</span><span class="w">IQ</span> <span style="font-size:9px;color:#808898;margin-left:4px">BRACKET</span></h1></a>
   <div id="legend">
-    <span><span class="dot" style="background:#50ff8a"></span> Called</span>
-    <span><span class="dot" style="background:#ffe050"></span> Upset</span>
-    <span><span class="dot" style="background:#ff5050"></span> Missed</span>
-    <span><span class="dot" style="background:#3a4868"></span> Pending</span>
+    <span><span class="dot" style="background:#50ff8a"></span>Called</span>
+    <span><span class="dot" style="background:#ffe050"></span>Upset</span>
+    <span><span class="dot" style="background:#ff5050"></span>Missed</span>
+    <span><span class="dot" style="background:#4080d0"></span>Our Pick</span>
+    <span><span class="dot" style="background:#802020"></span>Dead</span>
   </div>
 </div>
 <div id="wrap"><div id="bracket"></div></div>
@@ -86,22 +95,24 @@ body{background:#08090c;color:#f2ede5;font-family:'DM Mono',monospace;overflow:h
   <button id="zfit">&square;</button>
 </div>
 <script>
-const TEAMS = {
+const TEAMS={
   EAST:[[1,"Duke"],[16,"Siena"],[8,"Ohio St."],[9,"TCU"],[5,"St. John's"],[12,"N. Iowa"],[4,"Kansas"],[13,"Cal Baptist"],[6,"Louisville"],[11,"S. Florida"],[3,"Mich. St."],[14,"NDSU"],[7,"UCLA"],[10,"UCF"],[2,"UConn"],[15,"Furman"]],
   WEST:[[1,"Arizona"],[16,"Long Island"],[8,"Villanova"],[9,"Utah St."],[5,"Wisconsin"],[12,"High Point"],[4,"Arkansas"],[13,"Hawaii"],[6,"BYU"],[11,"Texas"],[3,"Gonzaga"],[14,"Kennesaw"],[7,"Miami FL"],[10,"Missouri"],[2,"Purdue"],[15,"Queens"]],
   SOUTH:[[1,"Florida"],[16,"Pra. View"],[8,"Clemson"],[9,"Iowa"],[5,"Vanderbilt"],[12,"McNeese"],[4,"Nebraska"],[13,"Troy"],[6,"UNC"],[11,"VCU"],[3,"Illinois"],[14,"Penn"],[7,"St. Mary's"],[10,"Texas A&M"],[2,"Houston"],[15,"Idaho"]],
   MIDWEST:[[1,"Michigan"],[16,"Howard"],[8,"Georgia"],[9,"St. Louis"],[5,"Texas Tech"],[12,"Akron"],[4,"Alabama"],[13,"Hofstra"],[6,"Tennessee"],[11,"Miami OH"],[3,"Virginia"],[14,"Wright St."],[7,"Kentucky"],[10,"Santa Clara"],[2,"Iowa St."],[15,"Tenn. St."]]
 };
 
-// MadnessIQ picks
-const PICKS = {
+// MadnessIQ picks per round
+const PICKS={
   EAST:{R64:["Duke","TCU","St. John's","Kansas","Louisville","Mich. St.","UCLA","UConn"],R32:["Duke","St. John's","Mich. St.","UConn"],S16:["Duke","UConn"],E8:["Duke"]},
   WEST:{R64:["Arizona","Utah St.","Wisconsin","Arkansas","BYU","Gonzaga","Miami FL","Purdue"],R32:["Arizona","Arkansas","Gonzaga","Purdue"],S16:["Arizona","Purdue"],E8:["Arizona"]},
   SOUTH:{R64:["Florida","Iowa","Vanderbilt","Nebraska","UNC","Illinois","Texas A&M","Houston"],R32:["Florida","Vanderbilt","Illinois","Houston"],S16:["Florida","Houston"],E8:["Houston"]},
   MIDWEST:{R64:["Michigan","St. Louis","Texas Tech","Alabama","Tennessee","Virginia","Kentucky","Iowa St."],R32:["Michigan","Alabama","Virginia","Iowa St."],S16:["Michigan","Iowa St."],E8:["Michigan"]}
 };
+const FF_PICKS={semi1:"Duke",semi2:"Michigan",champ:"Duke"};
+// Semi1 = East vs South → Duke. Semi2 = West vs Midwest → Michigan. Champ = Duke.
 
-const RESULTS = {
+const RESULTS={
   E0:{w:"Duke",s1:71,s2:65},E1:{w:"TCU",s1:64,s2:66},E2:{w:"St. John's",s1:79,s2:53},E3:{w:"Kansas",s1:68,s2:60},E4:{w:"Louisville",s1:83,s2:79},E5:{w:"Mich. St.",s1:92,s2:67},E6:{w:"UCLA",s1:75,s2:71},E7:{w:"UConn",s1:77,s2:68},
   W0:{w:"Arizona",s1:92,s2:58},W1:{w:"Utah St.",s1:65,s2:70},W2:{w:"High Point",s1:82,s2:83},W3:{w:"Arkansas",s1:97,s2:78},W4:{w:"Texas",s1:71,s2:79},W5:{w:"Gonzaga",s1:73,s2:64},W6:{w:"Miami FL",s1:80,s2:66},W7:{w:"Purdue",s1:85,s2:60},
   S0:{w:"Florida",s1:114,s2:55},S1:{w:"Iowa",s1:61,s2:67},S2:{w:"Vanderbilt",s1:78,s2:68},S3:{w:"Nebraska",s1:76,s2:47},S4:{w:"VCU",s1:78,s2:82},S5:{w:"Illinois",s1:105,s2:70},S6:{w:"Texas A&M",s1:50,s2:63},S7:{w:"Houston",s1:78,s2:47},
@@ -112,33 +123,83 @@ const RESULTS = {
   MR0:{w:"Michigan",s1:95,s2:72},MR2:{w:"Tennessee",s1:79,s2:72},MR3:{w:"Iowa St.",s1:82,s2:63},
 };
 
-const COLORS = {EAST:"#5090ff",WEST:"#ff7855",SOUTH:"#60ff90",MIDWEST:"#ffe050"};
-const PREFIX = {EAST:"E",WEST:"W",SOUTH:"S",MIDWEST:"M"};
-const ROUNDS = ["R64","R32","S16","E8"];
-const ROUND_URL = {R64:"R64",R32:"R32",S16:"S16",E8:"E8"};
+const COLORS={EAST:"#5090ff",WEST:"#ff7855",SOUTH:"#60ff90",MIDWEST:"#ffe050"};
+const PREFIX={EAST:"E",WEST:"W",SOUTH:"S",MIDWEST:"M"};
+const ROUNDS=["R64","R32","S16","E8"];
+
+// Build eliminated set
+const eliminated=new Set();
+Object.values(RESULTS).forEach(r=>{
+  if(!r.w)return;
+  // We need to figure out the loser. But we only stored winner + scores, not team names for both sides.
+  // We can derive from TEAMS data. Actually let's just check: any team that appears in a game and ISN'T the winner is eliminated.
+});
+// Better approach: walk all results, find losers
+function buildEliminated(){
+  // For R64 results, we know both teams from TEAMS data
+  const regionKeys=Object.keys(TEAMS);
+  regionKeys.forEach(region=>{
+    const ts=TEAMS[region];
+    for(let i=0;i<8;i++){
+      const rid=PREFIX[region]+i;
+      const res=RESULTS[rid];
+      if(!res)continue;
+      const t1=ts[i*2][1],t2=ts[i*2+1][1];
+      if(res.w===t1)eliminated.add(t2);
+      else eliminated.add(t1);
+    }
+  });
+  // For R32+, derive from who played
+  // R32: winners of adjacent R64 games
+  regionKeys.forEach(region=>{
+    for(let i=0;i<4;i++){
+      const rid=PREFIX[region]+"R"+i;
+      const res=RESULTS[rid];
+      if(!res)continue;
+      // The two teams are winners of R64 games i*2 and i*2+1
+      const r0=RESULTS[PREFIX[region]+(i*2)];
+      const r1=RESULTS[PREFIX[region]+(i*2+1)];
+      if(r0&&r1){
+        const loser=res.w===r0.w?r1.w:r0.w;
+        eliminated.add(loser);
+      }
+    }
+  });
+}
+buildEliminated();
 
 function rid(region,round,idx){
   const p=PREFIX[region];
-  if(round==="R64")return p+idx;
-  if(round==="R32")return p+"R"+idx;
-  if(round==="S16")return p+"S"+idx;
-  if(round==="E8")return p+"E";
-  return null;
+  if(round==="R64")return p+idx;if(round==="R32")return p+"R"+idx;
+  if(round==="S16")return p+"S"+idx;if(round==="E8")return p+"E";return null;
 }
 function getResult(region,round,idx){const id=rid(region,round,idx);return RESULTS[id]||null;}
+
 function getTeams(region,round,idx){
   if(round==="R64"){const t=TEAMS[region];return[t[idx*2],t[idx*2+1]];}
   const prev=ROUNDS[ROUNDS.indexOf(round)-1];
   const r0=getResult(region,prev,idx*2),r1=getResult(region,prev,idx*2+1);
   const all=TEAMS[region];
   const fs=n=>{const t=all.find(x=>x[1]===n);return t?t[0]:"?";};
-  return[r0?[fs(r0.w),r0.w]:null, r1?[fs(r1.w),r1.w]:null];
+  // If results exist, use actual winners
+  if(r0&&r1)return[[fs(r0.w),r0.w],[fs(r1.w),r1.w]];
+  // Otherwise fill from picks
+  const picks=PICKS[region];
+  const prevPicks=picks[prev];
+  if(prevPicks){
+    const t1=prevPicks[idx*2]?[fs(prevPicks[idx*2]),prevPicks[idx*2]]:null;
+    const t2=prevPicks[idx*2+1]?[fs(prevPicks[idx*2+1]),prevPicks[idx*2+1]]:null;
+    // Mix: use result winner if available, pick if not
+    const a=r0?[fs(r0.w),r0.w]:t1;
+    const b=r1?[fs(r1.w),r1.w]:t2;
+    return[a,b];
+  }
+  return[null,null];
 }
 
 const B=document.getElementById("bracket");
 const COL=140,SLOT=22,GAP=3,MATCH=SLOT*2+GAP;
-const REG_H=460;
-const PAD=48;
+const REG_H=460,PAD=48;
 
 function makeSlot(x,y,seed,name,score,cls,badge,region,round){
   const d=document.createElement("div");
@@ -148,19 +209,16 @@ function makeSlot(x,y,seed,name,score,cls,badge,region,round){
   if(score)html+=`<span class="sc">${score}</span>`;
   if(badge)html+=`<span class="badge ${badge.cls}">${badge.txt}</span>`;
   d.innerHTML=html;
-  if(region&&round){
-    d.onclick=()=>{window.location.href=`/?region=${region}&round=${ROUND_URL[round]||"R64"}`;};
-  }
+  if(region&&round){d.onclick=()=>{window.location.href=`/?region=${region}&round=${round}`;};}
   return d;
 }
 
 function drawLine(x1,y1,x2,y2){
-  // Simple L-connector
   const mx=(x1+x2)/2;
   [[x1,y1,mx,y1],[mx,Math.min(y1,y2),mx,Math.max(y1,y2)],[mx,y2,x2,y2]].forEach(([ax,ay,bx,by])=>{
     const d=document.createElement("div");d.className="connector";
-    if(ay===by){d.style.cssText=`position:absolute;left:${Math.min(ax,bx)}px;top:${ay}px;width:${Math.abs(bx-ax)}px;border-top-width:1px`;}
-    else{d.style.cssText=`position:absolute;left:${ax}px;top:${Math.min(ay,by)}px;height:${Math.abs(by-ay)}px;border-left-width:1px`;}
+    if(ay===by)d.style.cssText=`position:absolute;left:${Math.min(ax,bx)}px;top:${ay}px;width:${Math.abs(bx-ax)}px;border-top-width:1px`;
+    else d.style.cssText=`position:absolute;left:${ax}px;top:${Math.min(ay,by)}px;height:${Math.abs(by-ay)}px;border-left-width:1px`;
     B.appendChild(d);
   });
 }
@@ -190,19 +248,30 @@ function renderRegion(region,baseX,baseY,dir){
         const isW=res&&res.w===name;
         const isL=res&&res.w&&!isW;
         const score=res?(ti===0?res.s1:res.s2):"";
+        const isDead=eliminated.has(name);
 
-        let cls=isW?"winner":isL?"loser":"";
-        let badge=null;
-        if(pick&&res){
-          if(pick===name&&isW){
-            const ws=seed,ls=teams[1-ti]?teams[1-ti][0]:1;
-            if(ws>ls&&ws-ls>2){cls+=" pick-upset";badge={cls:"badge-upset",txt:"\u{1F525} CALLED"};}
-            else{cls+=" pick-correct";badge={cls:"badge-correct",txt:"\u2713"};}
-          }else if(pick===name&&isL){
-            cls+=" pick-wrong";badge={cls:"badge-wrong",txt:"MISS"};
+        let cls="",badge=null;
+
+        if(res){
+          // Game completed
+          cls=isW?"winner":"loser";
+          if(pick&&pick===name&&isW){
+            const opp=teams[1-ti];
+            const ws=seed,ls=opp?opp[0]:1;
+            if(ws>ls&&ws-ls>2){cls+=" pick-upset";badge={cls:"badge-upset",txt:"\uD83D\uDD25 CALLED"};}
+            else{cls+=" pick-correct";badge={cls:"badge-correct",txt:"\u2713 CALLED"};}
+          }else if(pick&&pick===name&&isL){
+            cls+=" pick-wrong";badge={cls:"badge-wrong",txt:"\u2717 MISS"};
           }
-        }else if(!res){
-          cls+=" pick-pending";
+        }else{
+          // No result yet — future game
+          if(isDead){
+            cls="pick-dead";badge={cls:"badge-dead",txt:"OUT"};
+          }else if(pick===name){
+            cls="pick-future";badge={cls:"badge-future",txt:"\u2192 PICK"};
+          }else{
+            cls="pick-future-opp";
+          }
         }
 
         B.appendChild(makeSlot(cx,sy,seed,name,score,cls,badge,region,round));
@@ -224,104 +293,95 @@ function renderRegion(region,baseX,baseY,dir){
     }
   });
 
-  // Label
   const lbl=document.createElement("div");lbl.className="region-label";lbl.style.color=COLORS[region];
   lbl.style.left=(dir==="right"?baseX:baseX-3*COL)+"px";lbl.style.top=(baseY-20)+"px";
   lbl.textContent=region;B.appendChild(lbl);
-
   return pos;
 }
 
-// Layout
-const LX=10,RX=1380;
-const HALF=REG_H+30;
+const LX=10,RX=1380,HALF=REG_H+30;
+const ep=renderRegion("EAST",LX,PAD,"right");
+const sp=renderRegion("SOUTH",LX,PAD+HALF,"right");
+const wp=renderRegion("WEST",RX,PAD,"left");
+const mp=renderRegion("MIDWEST",RX,PAD+HALF,"left");
 
-renderRegion("EAST",LX,PAD,"right");
-renderRegion("SOUTH",LX,PAD+HALF,"right");
-renderRegion("WEST",RX,PAD,"left");
-renderRegion("MIDWEST",RX,PAD+HALF,"left");
-
-// Final Four
-const FFX=640,FFY1=PAD+REG_H/2,FFY2=PAD+HALF+REG_H/2;
-const CY=(FFY1+FFY2)/2;
+// Final Four + Championship
+const FFX=640,FFY1=PAD+REG_H/2,FFY2=PAD+HALF+REG_H/2,CY=(FFY1+FFY2)/2;
 
 const lbl1=document.createElement("div");lbl1.className="ff-label";
-lbl1.style.left=FFX+"px";lbl1.style.top=(FFY1-34)+"px";
+lbl1.style.left=FFX+"px";lbl1.style.top=(FFY1-36)+"px";
 lbl1.textContent="FINAL FOUR \u2022 APR 4";B.appendChild(lbl1);
 
 const lbl2=document.createElement("div");lbl2.className="champ-label";
-lbl2.style.left=(FFX+10)+"px";lbl2.style.top=(CY-40)+"px";
+lbl2.style.left=(FFX+10)+"px";lbl2.style.top=(CY-44)+"px";
 lbl2.textContent="\uD83C\uDFC6 CHAMPIONSHIP \u2022 APR 6";B.appendChild(lbl2);
 
-// FF + Champ slots (all pending for now)
-const ffTeams = [
-  getResult("EAST","E8",0), getResult("SOUTH","E8",0),
-  getResult("WEST","E8",0), getResult("MIDWEST","E8",0)
-];
-function ffSlot(x,y,team,label){
-  const d=makeSlot(x,y,"",team||"TBD","","pick-pending","",null,null);
-  if(label){const l=document.createElement("div");l.style.cssText=`position:absolute;left:${x}px;top:${y-10}px;font-size:6px;color:#606878;letter-spacing:1px`;l.textContent=label;B.appendChild(l);}
-  B.appendChild(d);
-}
-ffSlot(FFX,FFY1-SLOT-2,ffTeams[0]?ffTeams[0].w:null,"EAST CHAMP");
-ffSlot(FFX,FFY1+2,ffTeams[1]?ffTeams[1].w:null,"SOUTH CHAMP");
-ffSlot(FFX,FFY2-SLOT-2,ffTeams[2]?ffTeams[2].w:null,"WEST CHAMP");
-ffSlot(FFX,FFY2+2,ffTeams[3]?ffTeams[3].w:null,"MIDWEST CHAMP");
-ffSlot(FFX+20,CY-SLOT-2,null,"SEMIFINAL 1");
-ffSlot(FFX+20,CY+2,null,"SEMIFINAL 2");
+// Derive FF teams from E8 results or picks
+const fs2=n=>{for(const r of Object.keys(TEAMS)){const t=TEAMS[r].find(x=>x[1]===n);if(t)return t[0];}return"?";};
+const e8e=getResult("EAST","E8",0), e8s=getResult("SOUTH","E8",0), e8w=getResult("WEST","E8",0), e8m=getResult("MIDWEST","E8",0);
+const eastChamp=e8e?e8e.w:PICKS.EAST.E8[0];
+const southChamp=e8s?e8s.w:PICKS.SOUTH.E8[0];
+const westChamp=e8w?e8w.w:PICKS.WEST.E8[0];
+const midwestChamp=e8m?e8m.w:PICKS.MIDWEST.E8[0];
 
-// Score summary
+function ffSlot(x,y,name,isPick,isDead,label){
+  let cls="",badge=null;
+  if(isDead){cls="pick-dead";badge={cls:"badge-dead",txt:"OUT"};}
+  else if(isPick){cls="pick-future";badge={cls:"badge-future",txt:"\u2192 PICK"};}
+  else{cls="pick-future-opp";}
+  const d=makeSlot(x,y,name?fs2(name):"",name||"TBD","",cls,badge,null,null);
+  B.appendChild(d);
+  if(label){const l=document.createElement("div");l.style.cssText=`position:absolute;left:${x}px;top:${y-11}px;font-size:6px;color:#606878;letter-spacing:1px`;l.textContent=label;B.appendChild(l);}
+}
+
+// Semi 1: East champ vs South champ → we pick Duke
+ffSlot(FFX,FFY1-SLOT-2,eastChamp,FF_PICKS.semi1===eastChamp,eliminated.has(eastChamp),"EAST CHAMP");
+ffSlot(FFX,FFY1+2,southChamp,FF_PICKS.semi1===southChamp,eliminated.has(southChamp),"SOUTH CHAMP");
+
+// Semi 2: West champ vs Midwest champ → we pick Michigan  
+ffSlot(FFX,FFY2-SLOT-2,westChamp,FF_PICKS.semi2===westChamp,eliminated.has(westChamp),"WEST CHAMP");
+ffSlot(FFX,FFY2+2,midwestChamp,FF_PICKS.semi2===midwestChamp,eliminated.has(midwestChamp),"MIDWEST CHAMP");
+
+// Championship
+const semi1Winner=FF_PICKS.semi1;
+const semi2Winner=FF_PICKS.semi2;
+ffSlot(FFX+20,CY-SLOT-2,semi1Winner,FF_PICKS.champ===semi1Winner,eliminated.has(semi1Winner),"SEMIFINAL 1 WINNER");
+ffSlot(FFX+20,CY+2,semi2Winner,FF_PICKS.champ!==semi2Winner?false:true,eliminated.has(semi2Winner),"SEMIFINAL 2 WINNER");
+
+// Connectors for FF
+drawLine(ep["E8-0"]?ep["E8-0"].x:LX+4*COL,ep["E8-0"]?ep["E8-0"].y:FFY1-15,FFX,FFY1-SLOT/2);
+drawLine(sp["E8-0"]?sp["E8-0"].x:LX+4*COL,sp["E8-0"]?sp["E8-0"].y:FFY1+15,FFX,FFY1+SLOT/2+2);
+drawLine(wp["E8-0"]?wp["E8-0"].x:RX-4*COL,wp["E8-0"]?wp["E8-0"].y:FFY2-15,FFX+130,FFY2-SLOT/2);
+drawLine(mp["E8-0"]?mp["E8-0"].x:RX-4*COL,mp["E8-0"]?mp["E8-0"].y:FFY2+15,FFX+130,FFY2+SLOT/2+2);
+
+// Score summary in center
 const summary=document.createElement("div");
-summary.style.cssText=`position:absolute;left:${FFX-30}px;top:${CY+50}px;width:200px;text-align:center;font-size:8px;color:#b0b8c8;line-height:1.8`;
-summary.innerHTML=`<div style="font-size:10px;font-weight:700;color:#ffe050;letter-spacing:2px;margin-bottom:4px">MADNESSIQ RECORD</div><div style="font-size:18px;font-weight:700;color:#f2ede5">34-10 <span style="color:#60ff90;font-size:11px">(77%)</span></div><div style="margin-top:4px">R64: 25-7 \u00B7 R32: 9-3</div><div style="color:#ffe050">1 upset called (A&M over St. Mary's)</div>`;
+summary.style.cssText=`position:absolute;left:${FFX-20}px;top:${CY+55}px;width:180px;text-align:center;font-size:8px;color:#b0b8c8;line-height:1.8`;
+summary.innerHTML=`<div style="font-size:10px;font-weight:700;color:#ffe050;letter-spacing:2px;margin-bottom:4px">MADNESSIQ</div><div style="font-size:20px;font-weight:700;color:#f2ede5">34-10 <span style="color:#60ff90;font-size:12px">(77%)</span></div><div style="margin-top:2px">R64: 25-7 \u00B7 R32: 9-3</div><div style="color:#ffe050">1 upset called</div><div style="margin-top:6px;color:#80b0e0">Champion pick: Duke</div>`;
 B.appendChild(summary);
 
 // ── ZOOM / PAN ──
 let scale=1,tx=0,ty=0;
 const el=B,wrap=document.getElementById("wrap");
-
-function fitToScreen(){
-  const sw=window.innerWidth,sh=window.innerHeight-44;
-  scale=Math.min(sw/1500,sh/1100)*0.95;
-  tx=(sw-1500*scale)/2;ty=44;
-  applyTransform();
-}
+function fitToScreen(){const sw=window.innerWidth,sh=window.innerHeight-44;scale=Math.min(sw/1500,sh/1100)*0.95;tx=(sw-1500*scale)/2;ty=44;applyTransform();}
 function applyTransform(){el.style.transform=`translate(${tx}px,${ty}px) scale(${scale})`;}
 fitToScreen();
 
 let startDist=0,startScale=1,startTx,startTy,startMidX,startMidY,isDrag=false,dragSX,dragSY;
-
-wrap.addEventListener("touchstart",e=>{
-  if(e.touches.length===2){e.preventDefault();const dx=e.touches[0].clientX-e.touches[1].clientX,dy=e.touches[0].clientY-e.touches[1].clientY;startDist=Math.sqrt(dx*dx+dy*dy);startScale=scale;startMidX=(e.touches[0].clientX+e.touches[1].clientX)/2;startMidY=(e.touches[0].clientY+e.touches[1].clientY)/2;startTx=tx;startTy=ty;}
-  else if(e.touches.length===1){isDrag=true;dragSX=e.touches[0].clientX-tx;dragSY=e.touches[0].clientY-ty;}
-},{passive:false});
-
-wrap.addEventListener("touchmove",e=>{
-  if(e.touches.length===2){e.preventDefault();const dx=e.touches[0].clientX-e.touches[1].clientX,dy=e.touches[0].clientY-e.touches[1].clientY;const dist=Math.sqrt(dx*dx+dy*dy);const ns=Math.max(0.2,Math.min(4,startScale*(dist/startDist)));const mx=(e.touches[0].clientX+e.touches[1].clientX)/2,my=(e.touches[0].clientY+e.touches[1].clientY)/2;tx=startTx+(mx-startMidX)+(startMidX-startTx)*(1-ns/startScale);ty=startTy+(my-startMidY)+(startMidY-startTy)*(1-ns/startScale);scale=ns;applyTransform();}
-  else if(e.touches.length===1&&isDrag){tx=e.touches[0].clientX-dragSX;ty=e.touches[0].clientY-dragSY;applyTransform();}
-},{passive:false});
-
+wrap.addEventListener("touchstart",e=>{if(e.touches.length===2){e.preventDefault();const dx=e.touches[0].clientX-e.touches[1].clientX,dy=e.touches[0].clientY-e.touches[1].clientY;startDist=Math.sqrt(dx*dx+dy*dy);startScale=scale;startMidX=(e.touches[0].clientX+e.touches[1].clientX)/2;startMidY=(e.touches[0].clientY+e.touches[1].clientY)/2;startTx=tx;startTy=ty;}else if(e.touches.length===1){isDrag=true;dragSX=e.touches[0].clientX-tx;dragSY=e.touches[0].clientY-ty;}},{passive:false});
+wrap.addEventListener("touchmove",e=>{if(e.touches.length===2){e.preventDefault();const dx=e.touches[0].clientX-e.touches[1].clientX,dy=e.touches[0].clientY-e.touches[1].clientY;const dist=Math.sqrt(dx*dx+dy*dy);const ns=Math.max(0.2,Math.min(4,startScale*(dist/startDist)));const mx=(e.touches[0].clientX+e.touches[1].clientX)/2,my=(e.touches[0].clientY+e.touches[1].clientY)/2;tx=startTx+(mx-startMidX)+(startMidX-startTx)*(1-ns/startScale);ty=startTy+(my-startMidY)+(startMidY-startTy)*(1-ns/startScale);scale=ns;applyTransform();}else if(e.touches.length===1&&isDrag){tx=e.touches[0].clientX-dragSX;ty=e.touches[0].clientY-dragSY;applyTransform();}},{passive:false});
 wrap.addEventListener("touchend",()=>{isDrag=false;});
-
 wrap.addEventListener("wheel",e=>{e.preventDefault();const d=e.deltaY>0?0.9:1.1;const ns=Math.max(0.2,Math.min(4,scale*d));const r=wrap.getBoundingClientRect();const mx=e.clientX-r.left,my=e.clientY-r.top;tx=mx-(mx-tx)*(ns/scale);ty=my-(my-ty)*(ns/scale);scale=ns;applyTransform();},{passive:false});
-
-// Mouse drag
 let mDrag=false,mSX,mSY;
-wrap.addEventListener("mousedown",e=>{mDrag=true;mSX=e.clientX-tx;mSY=e.clientY-ty;wrap.style.cursor="grabbing";});
+wrap.addEventListener("mousedown",e=>{if(e.target.closest(".slot"))return;mDrag=true;mSX=e.clientX-tx;mSY=e.clientY-ty;wrap.style.cursor="grabbing";});
 wrap.addEventListener("mousemove",e=>{if(mDrag){tx=e.clientX-mSX;ty=e.clientY-mSY;applyTransform();}});
 wrap.addEventListener("mouseup",()=>{mDrag=false;wrap.style.cursor="grab";});
-wrap.style.cursor="grab";
 
 document.getElementById("zin").onclick=()=>{scale=Math.min(4,scale*1.3);applyTransform();};
 document.getElementById("zout").onclick=()=>{scale=Math.max(0.2,scale*0.7);applyTransform();};
 document.getElementById("zfit").onclick=fitToScreen;
 window.addEventListener("resize",fitToScreen);
-
-// Auto-dismiss rotate hint in landscape
-window.addEventListener("orientationchange",()=>{
-  if(window.innerWidth>window.innerHeight)document.getElementById("rotate-hint").style.display="none";
-  setTimeout(fitToScreen,300);
-});
+window.addEventListener("orientationchange",()=>{if(window.innerWidth>window.innerHeight)document.getElementById("rotate-hint").style.display="none";setTimeout(fitToScreen,300);});
 </script>
 </body>
 </html>
