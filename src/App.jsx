@@ -402,14 +402,16 @@ const LATER_ROUNDS = {
     S16: [
       { id:"ES0", s1:1, t1:"Duke", t1Short:"DUKE", s2:5, t2:"St. John's", t2Short:"SJU", date:"Fri Mar 27", time:"7:10 PM ET", site:"Capital One Arena, DC", pick:"Duke", confidence:61, originalConfidence:68, riskLevel:"LEAN",
         market: { spread:"Duke -6.5", ou:"142.5", ml1:"-280", ml2:"+220", take:"Line feels right. Duke's 2H explosion vs TCU showed they can flip the switch. But SJU is battle-tested — Pitino won't let this be a blowout. Lean Duke ATS but it's tight.", angle:"UNDER 142.5 — both elite defenses, Pitino slows tempo." },
-        headline:"Duke 81-58 over TCU (37-14 run) vs SJU's buzzer-beater over Kansas. Boozer vs Ejiofor.", whyPick:"Duke's second-half explosion (37-14 run, Boozer 17 in 2H, Ngongba back) showed championship-level adjustment. SJU needed a buzzer-beater layup to survive Kansas — they're battle-tested but also fragile. Duke's defense (#2 KenPom) can match St. John's intensity. The deeper roster grinds SJU down late.", whyNot:"Ejiofor is a legitimate matchup problem for Duke. Pitino's defensive schemes could frustrate Duke's guard-limited offense (Foster still OUT). SJU has won 20 of 21 and thrives in exactly this type of physical, half-court game. Darling's buzzer-beater gives them house-money confidence.",
+        headline:"FINAL: Duke 80-75. Evans 25 pts, Foster RETURNS. Survived SJU 13 threes.",
+        result: { score1:80, score2:75, winner:"Duke", correct:true, postGame:"Duke trailed by 10 in 2H. Foster returned from foot injury. Evans step-back 3 for 70-69 lead. Boozer 13/9 after half. SJU Darling missed tying 3 at buzzer. Advances to E8 vs UConn." }, whyPick:"Duke's second-half explosion (37-14 run, Boozer 17 in 2H, Ngongba back) showed championship-level adjustment. SJU needed a buzzer-beater layup to survive Kansas — they're battle-tested but also fragile. Duke's defense (#2 KenPom) can match St. John's intensity. The deeper roster grinds SJU down late.", whyNot:"Ejiofor is a legitimate matchup problem for Duke. Pitino's defensive schemes could frustrate Duke's guard-limited offense (Foster still OUT). SJU has won 20 of 21 and thrives in exactly this type of physical, half-court game. Darling's buzzer-beater gives them house-money confidence.",
         edge: { offense: 82, defense: 90, experience: 80, health: 68 },
         edgeOpp: { offense: 75, defense: 72, experience: 78, health: 90 },
         keyStats: [{ label: "Boozer", value: "Generational passer/scorer", hot: true },{ label: "Ejiofor", value: "B.East POTY interior", hot: true },{ label: "Duke 3PT", value: "2-15 in R64 (!)", hot: false }],
         injuries: [{ player: "C. Foster", team: "Duke", status: "OUT", impact: "HIGH", detail: "Broken foot — still out. Perimeter creation limited." }] },
       { id:"ES1", date:"Fri Mar 27", time:"9:40 PM ET", site:"Capital One Arena, DC", s1:3, t1:"Michigan St.", t1Short:"MSU", s2:2, t2:"UConn", t2Short:"UCONN", pick:"Michigan St.", confidence:52, originalConfidence:54, riskLevel:"TOSS-UP",
         market: { spread:"UConn -3.5", ou:"138.5", ml1:"+150", ml2:"-180", take:"UConn is rightfully favored but 3.5 is thin. MSU has the rebounding edge and Fears is a matchup nightmare. This is a value spot on MSU +3.5.", angle:"MSU +3.5 — Izzo in March, rebounding edge, Fears' playmaking." },
-        headline:"Izzo vs Hurley in DC. Fears' 27 ast in 2 games vs UConn's 73-57 dismantling of UCLA. Elite.",
+        headline:"FINAL: UConn 67-63. Held off MSU thriller. Karaban and Fears traded clutch 3s.",
+        result: { score1:63, score2:67, winner:"UConn", correct:false, postGame:"Tight game. Cooper cut it to 58-57 with 1:50 left. Karaban and Fears traded clutch 3s. Reed dominated inside. UConn survives to face Duke in East E8." },
         whyPick:"Fears just had 12 pts and 16 ASSISTS against Louisville — 27 assists in two games, most by a Big Ten player in 50 years. Carr's 21/10 double-double gives UConn a matchup problem. MSU's rebounding (#1 nationally) negates UConn's Reed inside. UConn shot 5-25 from 3 in R64 — inconsistent perimeter shooting is their Achilles heel.",
         whyNot:"UConn pulled away from UCLA 73-57 — looked dominant in the second half. Reed Jr. and Karaban are a lethal interior combo. Hurley has championship DNA (back-to-back titles in '23-'24) and his adjustments are elite. This UConn team is getting better every game.",
         edge: { offense: 72, defense: 80, experience: 88, health: 90 },
@@ -418,13 +420,14 @@ const LATER_ROUNDS = {
         injuries: [{ player: "J. Stewart", team: "UConn", status: "GTD", impact: "LOW", detail: "Lower body — uncertain since Feb." }] },
     ],
     E8: [
-      { id:"EE", date:"Sat Mar 28", s1:1, t1:"Duke", t1Short:"DUKE", s2:3, t2:"Michigan St.", t2Short:"MSU", pick:"Duke", confidence:60, originalConfidence:64, riskLevel:"LEAN",
-        headline:"Duke's 37-14 run vs TCU + Ngongba's return vs Fears' 27 assists in 2 games. Scheyer vs Izzo.", whyPick:"Boozer's second-half explosion (17 of 19 pts after half) showed he can flip the switch. Ngongba's return adds interior depth. But this assumes MSU beats UConn — which is a coin flip. Duke's talent in crunch time remains the tiebreaker.", whyNot:"Fears set a school tournament record with 16 assists. Carr's 21/10 double-double showed a different ceiling. If UConn wins instead, Duke faces a three-peat-chasing team with Hurley. Either opponent is dangerous.",
-        edge: { offense: 82, defense: 90, experience: 82, health: 68 },
-        edgeOpp: { offense: 75, defense: 82, experience: 88, health: 90 },
-        keyStats: [{ label: "Boozer", value: "Best big in CBB", hot: true },{ label: "Fears R32", value: "12 pts, 16 assists(!)", hot: true },{ label: "Duke 3PT", value: "2-15 vs Siena — concern", hot: true }],
-        injuries: [{ player: "C. Foster", team: "Duke", status: "OUT", impact: "HIGH", detail: "Broken foot — maybe back for F4?" }] },
-    ],
+      { id:"EE", date:"Sun Mar 29", time:"5:05 PM ET", site:"Capital One Arena, DC", s1:1, t1:"Duke", t1Short:"DUKE", s2:2, t2:"UConn", t2Short:"UCONN", pick:"Duke", confidence:55, riskLevel:"TOSS-UP",
+        headline:"Duke survived SJU (Foster back!). UConn held off MSU 67-63. Championship DNA vs championship DNA.",
+        market: { spread:"TBD", ou:"TBD", ml1:"TBD", ml2:"TBD", take:"True coin flip. Boozer + Foster vs Hurley + Reed.", angle:"If Duke -3 or less, take Duke. Boozer is the best player on the floor." },
+        edge: { offense: 82, defense: 90, experience: 85, health: 78 }, edgeOpp: { offense: 78, defense: 88, experience: 95, health: 82 },
+        keyStats: [{ label: "Foster BACK", value: "11 pts off bench vs SJU", hot: true },{ label: "Evans S16", value: "25 pts, clutch 3", hot: true },{ label: "UConn", value: "2x champs 23-24", hot: true }],
+        injuries: [{ player: "C. Foster", team: "Duke", status: "ACTIVE", impact: "HIGH", detail: "Returned vs SJU with 11 pts." }],
+        whyPick:"Foster changes everything. Evans 25 pts showed a second scorer. Boozer 13/9 in 2H. UConn barely survived MSU 67-63.", whyNot:"UConn won back-to-back titles. Hurley is elite. Reed dominates inside. Duke went 12-20 FT vs SJU." },
+      ],
   },
   WEST: {
     R32: [
@@ -478,14 +481,16 @@ const LATER_ROUNDS = {
     S16: [
       { id:"WS0", date:"Thu Mar 26", time:"7:10 PM ET", site:"SAP Center, San Jose", s1:1, t1:"Arizona", t1Short:"ARIZ", s2:4, t2:"Arkansas", t2Short:"ARK", pick:"Arizona", confidence:72, riskLevel:"LEAN",
         market: { spread:"Arizona -8.5", ou:"166.5", ml1:"-380", ml2:"+300", take:"166.5 is the highest total on the S16 board. Both teams can score. Arizona's defense is the difference — they'll contain Acuff enough. AZ covers.", angle:"OVER 166.5 — Acuff scores 25+ regardless, and Arizona pushes pace." },
-        headline:"Arizona 78-66 over USU vs Arkansas 94-88 over High Point. Acuff's 36 pts vs Arizona's elite D.", whyPick:"Arizona's defensive versatility limits Acuff's driving lanes. Arizona just controlled Utah State 78-66 without breaking a sweat. Arkansas's depth issues (Knox out) become pronounced against an 8-deep Arizona rotation. Acuff was brilliant (36 pts) but needed every bit of it to survive High Point.", whyNot:"Acuff is generational — 36 pts, 6 ast, joined Chris Paul in the record books. If he plays like that again, no defense stops him for 40 minutes. Arkansas's confidence is sky-high after surviving a tough game.",
+        headline:"FINAL: Arizona 109-88. HISTORIC. Burries 23, 64% FG, SIX players 14+.",
+        result: { score1:109, score2:88, winner:"Arizona", correct:true, postGame:"Most complete offensive game of the tourney. 64% FG, six players 14+. Burries 23, Peat 21. Hit 100 with 5 min left. Acuff 28 for Arkansas but irrelevant. Advances to West E8 vs Purdue." }, whyPick:"Arizona's defensive versatility limits Acuff's driving lanes. Arizona just controlled Utah State 78-66 without breaking a sweat. Arkansas's depth issues (Knox out) become pronounced against an 8-deep Arizona rotation. Acuff was brilliant (36 pts) but needed every bit of it to survive High Point.", whyNot:"Acuff is generational — 36 pts, 6 ast, joined Chris Paul in the record books. If he plays like that again, no defense stops him for 40 minutes. Arkansas's confidence is sky-high after surviving a tough game.",
         edge: { offense: 90, defense: 92, experience: 80, health: 95 },
         edgeOpp: { offense: 82, defense: 65, experience: 62, health: 75 },
         keyStats: [{ label: "AZ Depth", value: "8+ deep rotation", hot: true },{ label: "Acuff", value: "SEC POTY (frosh)", hot: true },{ label: "ARK depth", value: "Knox OUT, thin bench", hot: false }],
         injuries: [{ player: "K. Knox", team: "Arkansas", status: "OUT", impact: "MED", detail: "Season-ending." }] },
       { id:"WS1", date:"Thu Mar 26", time:"9:40 PM ET", site:"SAP Center, San Jose", s1:2, t1:"Purdue", t1Short:"PUR", s2:11, t2:"Texas", t2Short:"TEX", pick:"Purdue", confidence:74, riskLevel:"LEAN",
         market: { spread:"Purdue -7.5", ou:"148.5", ml1:"-340", ml2:"+270", take:"Biggest spread on the S16 board. Texas has been incredible but they're an 11-seed running on fumes from the First Four. Cox's injury matters. Purdue covers but it won't be comfortable.", angle:"TEXAS +7.5 — they've covered every game this tourney. House money energy is real." },
-        headline:"Purdue -8.5. Texas is the Cinderella but Purdue's offense is historic. Cox injury is the key.",
+        headline:"FINAL: Purdue 79-77. Kaufman-Renn GAME-WINNING TIP-IN at buzzer!",
+        result: { score1:77, score2:79, winner:"Purdue", correct:true, postGame:"Smith layup missed, TKR tipped it in with under a second. Texas tied it at 77 on and-1 with 11 sec left. TKR 20 pts 8 reb. Tramon Mark 29 for Texas. All 5 starters double figures. Purdue faces Arizona in West E8." },
         edge: { offense: 92, defense: 55, experience: 90, health: 72 },
         edgeOpp: { offense: 65, defense: 70, experience: 60, health: 82 },
         keyStats: [{ label: "Purdue Off.", value: "Best KenPom-era ever", hot: true },{ label: "Texas run", value: "First Four → S16 (3-0)", hot: true },{ label: "Cox injury", value: "Non-contact knee — status?", hot: true }],
@@ -557,7 +562,8 @@ const LATER_ROUNDS = {
     S16: [
       { id:"SS0", date:"Thu Mar 26", time:"7:10 PM ET", site:"Toyota Center, Houston", s1:4, t1:"Nebraska", t1Short:"NEB", s2:9, t2:"Iowa", t2Short:"IOWA", pick:"Nebraska", confidence:58, riskLevel:"TOSS-UP",
         market: { spread:"Nebraska -2.5", ou:"133.5", ml1:"-140", ml2:"+120", take:"Lowest total on the S16 board — both teams grind. Nebraska's defense is the edge. Iowa just pulled off the biggest upset of the tourney (Florida) — regression is real. But this is a coin flip.", angle:"UNDER 133.5 — Nebraska's defense holds opponents below 30% from 3. This is a 60s game." },
-        headline:"Nobody predicted this. Two mid-seeds in the Sweet 16 — Nebraska's first-ever, Iowa just killed Florida.",
+        headline:"FINAL: Iowa 77-71. Stirtz go-ahead 3, Folgueiras and-1. Nebraska dream ends.",
+        result: { score1:71, score2:77, winner:"Iowa", correct:false, postGame:"Iowa trailed 81% of game. Sage buzzer-3 at half cut it to 3. Stirtz go-ahead 3 with 2:10 left. Folgueiras breakaway and-1 (Nebraska had 4 on floor!). Iowa bench 38 pts. First E8 since 1987." },
         edge: { offense: 62, defense: 85, experience: 65, health: 88 },
         edgeOpp: { offense: 70, defense: 60, experience: 68, health: 85 },
         keyStats: [{ label: "NEB Def", value: "#7 KenPom adj. defense", hot: true },{ label: "Iowa", value: "Just beat 1-seed Florida 73-72", hot: true },{ label: "NEB 3PT", value: "14 made vs Troy, 4 shooters 50+", hot: false }],
@@ -566,21 +572,22 @@ const LATER_ROUNDS = {
         whyNot:"Iowa just beat a 1-seed. Tavion Banks and Bennett Stirtz have tournament confidence now. Iowa's ball movement can exploit Nebraska's aggressive help defense. If Iowa shoots 40%+ from 3, Nebraska's rim protection doesn't matter. This is a genuine toss-up." },
       { id:"SS1", date:"Thu Mar 26", time:"9:40 PM ET", site:"Toyota Center, Houston",
         market: { spread:"Houston -2.5", ou:"139.5", ml1:"-140", ml2:"+120", take:"Slimmest spread on the board. Houston gets home court at Toyota Center — that's worth 3-5 pts alone. Illinois has the #1 offense in KenPom history but Houston's defense is built to contain exactly this. Houston -2.5 is the best value on the board.", angle:"HOUSTON -2.5 — home court + elite defense. This spread should be -4.5." }, s1:3, t1:"Illinois", t1Short:"ILL", s2:2, t2:"Houston", t2Short:"HOU", pick:"Houston", confidence:58, riskLevel:"TOSS-UP",
-        headline:"Houston 88-57 demolition vs Illinois 76-55 dominance. Irresistible force vs immovable object AT Toyota Center.", whyPick:"Houston just obliterated A&M 88-57 and the game is AT TOYOTA CENTER — Houston's home arena. That crowd advantage is worth 3-5 points. Houston's defense is built to contain motion offenses and they've locked in for a potential home Regional Final.", whyNot:"Illinois has a historically great offense — Stojakovic's 21 off the bench, Ivisic's 14/11 double-double, 4 in double figures vs VCU. Wagler could go on a 15-point run that breaks any defense. This is a genuine toss-up without the venue factor.",
+        headline:"FINAL: Illinois 65-55. Held Houston to 34% FG. 17-0 run. Houston window may be closed.",
+        result: { score1:65, score2:55, winner:"Illinois", correct:false, postGame:"Illinois beat Houston at its own game. Held Cougars to 0.90 PPP. 17-0 run blew it open 44-26. Sampson spoke vaguely about future postgame. Illinois to South E8 vs Iowa." }, whyPick:"Houston just obliterated A&M 88-57 and the game is AT TOYOTA CENTER — Houston's home arena. That crowd advantage is worth 3-5 points. Houston's defense is built to contain motion offenses and they've locked in for a potential home Regional Final.", whyNot:"Illinois has a historically great offense — Stojakovic's 21 off the bench, Ivisic's 14/11 double-double, 4 in double figures vs VCU. Wagler could go on a 15-point run that breaks any defense. This is a genuine toss-up without the venue factor.",
         edge: { offense: 68, defense: 92, experience: 90, health: 88 },
         edgeOpp: { offense: 96, defense: 68, experience: 72, health: 90 },
         keyStats: [{ label: "HOU Defense", value: "Built to stop motion O", hot: true },{ label: "ILL Offense", value: "#1 in KenPom history", hot: true },{ label: "VENUE", value: "Toyota Center = HOME", hot: true }],
         injuries: [] },
     ],
     E8: [
-      { id:"SE", date:"Sat Mar 28", s1:2, t1:"Houston", t1Short:"HOU", s2:4, t2:"Nebraska", t2Short:"NEB", pick:"Houston", confidence:72, riskLevel:"LEAN",
-        headline:"Houston's path to F4 cleared. Florida and Vandy gone. Toyota Center = home court.",
-        edge: { offense: 78, defense: 92, experience: 90, health: 88 },
-        edgeOpp: { offense: 62, defense: 85, experience: 65, health: 88 },
-        keyStats: [{ label: "HOME COURT", value: "Toyota Center = HOU", hot: true },{ label: "HOU R32", value: "88-57 blowout of A&M", hot: true },{ label: "NEB story", value: "First-ever S16 — house money", hot: false }],
+      { id:"SE", date:"Sat Mar 28", time:"6:09 PM ET", site:"Toyota Center, Houston", s1:3, t1:"Illinois", t1Short:"ILL", s2:9, t2:"Iowa", t2Short:"IOWA", pick:"Illinois", confidence:68, riskLevel:"LEAN",
+        headline:"All-Big Ten South E8. Illinois held Houston to 34%. Iowa bench scored 38 vs Nebraska.",
+        market: { spread:"TBD", ou:"TBD", ml1:"TBD", ml2:"TBD", take:"Illinois should be a solid favorite after that Houston defensive masterclass.", angle:"Illinois spread. Iowa's Cinderella run ends here." },
+        edge: { offense: 92, defense: 72, experience: 72, health: 90 }, edgeOpp: { offense: 68, defense: 60, experience: 65, health: 85 },
+        keyStats: [{ label: "ILL Def", value: "Held Houston to 34% FG", hot: true },{ label: "17-0 run", value: "Broke Houston in 2H", hot: true },{ label: "Iowa bench", value: "38 pts vs Nebraska", hot: true }],
         injuries: [],
-        whyPick:"Houston's path cleared dramatically. No Florida, no Vanderbilt. Nebraska or Iowa in the E8 is the easiest possible draw for a Final Four bid. Houston's defense is elite and they're essentially playing at home. This is a gift bracket.", whyNot:"Nebraska's defense is genuinely elite (#7 KenPom). They can grind Houston into a 55-50 game where anything happens. But Houston has been here before and Nebraska hasn't." },
-    ],
+        whyPick:"Illinois held Houston to 0.90 PPP. 17-0 run showed they can flip the switch. Four guys can score 20.", whyNot:"Iowa controls tempo. Stirtz is clutch. Folgueiras and Sage off bench are tournament MVPs." },
+      ],
   },
   MIDWEST: {
     R32: [
@@ -645,7 +652,8 @@ const LATER_ROUNDS = {
     S16: [
       { id:"MS0", date:"Fri Mar 27", time:"7:10 PM ET", site:"United Center, Chicago", s1:1, t1:"Michigan", t1Short:"MICH", s2:4, t2:"Alabama", t2Short:"BAMA", pick:"Michigan", confidence:68, riskLevel:"LEAN",
         market: { spread:"Michigan -5.5", ou:"152.5", ml1:"-240", ml2:"+200", take:"Alabama just scored 90 on TTU — they can score on anyone. But Michigan's #1 defense is a different animal. This is the game of the S16. Michigan's size controls the paint. Lean Michigan but don't lay the points.", angle:"OVER 152.5 — Alabama pushes pace regardless. Michigan scores in the mid-70s, Bama gets 70+." },
-        headline:"BLOCKBUSTER. Michigan's #1 defense vs Alabama's nation-best offense. 90-65 demolition of TTU sets the stage.",
+        headline:"FINAL: Michigan 90-77. Lendeborg 23/12 near triple-double. 13-27 from 3.",
+        result: { score1:90, score2:77, winner:"Michigan", correct:true, postGame:"Lendeborg 23/12, nearly triple-double. McKenney 17, Cadeau 17 in 2H, Gayle 14. 13-27 from 3. Holloway not with Alabama (federal charges). Advances to Midwest E8 vs Tennessee." },
         edge: { offense: 85, defense: 98, experience: 78, health: 78 },
         edgeOpp: { offense: 95, defense: 45, experience: 60, health: 88 },
         keyStats: [{ label: "MICH Def", value: "#1 KenPom — packs paint", hot: true },{ label: "BAMA Off", value: "#1 scoring offense (90 vs TTU!)", hot: true },{ label: "MICH TOs", value: "179th — Bama can exploit", hot: true }],
@@ -654,7 +662,8 @@ const LATER_ROUNDS = {
         whyNot:"Alabama just scored 90 on Texas Tech and led 49-25 at HALF. Philon is explosive, the supporting cast showed up huge. Alabama's pace (top-5 nationally) can create transition chaos that exploits Michigan's 179th-ranked turnover rate. If Alabama forces 18+ turnovers and runs, Michigan's defense doesn't matter because they never get set. This is the most stylistically fascinating matchup of the Sweet 16." },
       { id:"MS1", date:"Fri Mar 27", time:"9:40 PM ET", site:"United Center, Chicago", s1:2, t1:"Iowa State", t1Short:"ISU", s2:6, t2:"Tennessee", t2Short:"TENN", pick:"Iowa State", confidence:62, riskLevel:"LEAN",
         market: { spread:"Iowa State -4.5", ou:"138.5", ml1:"-200", ml2:"+165", take:"ISU proved it can win without Jefferson. Lipsey's 26/10/5 was otherworldly. Tennessee is physical but ISU's turnover-forcing defense disrupts their half-court offense. ISU covers.", angle:"IOWA STATE -4.5 — Tennessee doesn't have the guard play to handle ISU's pressure." },
-        headline:"ISU proved it doesn't need Jefferson (82-63 over UK). Tennessee upset Virginia. Physical battle incoming.",
+        headline:"FINAL: Tennessee 76-62. Outrebounded ISU 43-22. Jefferson absence fatal.",
+        result: { score1:62, score2:76, winner:"Tennessee", correct:false, postGame:"Tennessee physicality overwhelmed ISU. Outrebounded 43-22. Without Jefferson, no answer inside. Ament 3 put Vols up 14 with under 2 min. 3rd straight E8. Faces Michigan Sunday." },
         edge: { offense: 78, defense: 92, experience: 82, health: 55 },
         edgeOpp: { offense: 72, defense: 78, experience: 72, health: 85 },
         keyStats: [{ label: "Lipsey R32", value: "26 pts, 10 ast, 5 stl", hot: true },{ label: "TENN R32", value: "Beat Virginia 79-72 (upset)", hot: true },{ label: "Jefferson", value: "OUT — ankle. Lipsey is the guy now.", hot: true }],
@@ -663,36 +672,37 @@ const LATER_ROUNDS = {
         whyNot:"Tennessee's physicality is real — they outscored Virginia 18-8 in the paint. Bishop Boswell can score in bunches. If Tennessee controls tempo and avoids turnovers (ISU forces TOs at the 3rd highest rate nationally), they can grind this into a coin flip. And Jefferson's absence eventually catches up — ISU's margin for error is thin." },
     ],
     E8: [
-      { id:"ME", date:"Sun Mar 29", s1:1, t1:"Michigan", t1Short:"MICH", s2:2, t2:"Iowa State", t2Short:"ISU", pick:"Michigan", confidence:62, riskLevel:"LEAN",
-        headline:"Michigan must survive Alabama's chaos first. Then ISU's press — Michigan's kryptonite.", whyPick:"If Michigan gets here, they've beaten Alabama's elite offense and proved they can handle pace. ISU without Jefferson is beatable — Lipsey is great but the supporting cast hasn't been tested deep into the tournament. Michigan's size overwhelms in a half-court game.", whyNot:"ISU's turnover-forcing defense (3rd nationally) exploits Michigan's worst weakness (179th TO rate). If Cyclones create 18+ turnovers, size doesn't matter. And if Jefferson returns by E8, this completely flips. Tennessee could also upset ISU — don't assume this matchup happens.",
-        edge: { offense: 88, defense: 98, experience: 78, health: 78 },
-        edgeOpp: { offense: 80, defense: 92, experience: 82, health: 60 },
-        keyStats: [{ label: "MICH TO rate", value: "179th (weakness!)", hot: true },{ label: "ISU TO forcing", value: "#3 nationally", hot: true },{ label: "MICH R32", value: "95-72, all 5 in dbl figs", hot: false }],
-        injuries: [{ player: "L.J. Cason", team: "Michigan", status: "OUT", impact: "MED", detail: "Torn ACL." },{ player: "J. Jefferson", team: "Iowa State", status: "UNCERTAIN", impact: "CRITICAL", detail: "Scary R64 injury. Status unknown." }] },
-    ],
+      { id:"ME", date:"Sun Mar 29", time:"2:15 PM ET", site:"United Center, Chicago", s1:1, t1:"Michigan", t1Short:"MICH", s2:6, t2:"Tennessee", t2Short:"TENN", pick:"Michigan", confidence:72, riskLevel:"LEAN",
+        headline:"Michigan 90-77 over Bama (Lendeborg 23/12). Tennessee outrebounded ISU 43-22.",
+        market: { spread:"TBD", ou:"TBD", ml1:"TBD", ml2:"TBD", take:"Michigan clear favorite. Lendeborg is the best non-Boozer player alive.", angle:"Michigan spread. Tennessee can't match the offensive ceiling." },
+        edge: { offense: 88, defense: 92, experience: 78, health: 78 }, edgeOpp: { offense: 68, defense: 78, experience: 72, health: 88 },
+        keyStats: [{ label: "Lendeborg", value: "23/12, near triple-double", hot: true },{ label: "MICH 3PT", value: "13-27 (48%) vs Bama", hot: true },{ label: "TENN boards", value: "Outrebounded ISU 43-22", hot: true }],
+        injuries: [{ player: "L.J. Cason", team: "Michigan", status: "OUT", impact: "MED", detail: "Torn ACL." }],
+        whyPick:"Michigan dismantled Alabama. 13-27 from 3. Four double-digit scorers.", whyNot:"Tennessee outrebounded ISU 43-22. If they dominate Michigan's glass, it becomes a grind." },
+      ],
   },
   FINAL_FOUR: [
-    { id:"FF0", date:"Sat Apr 4", s1:1, t1:"Duke", t1Short:"DUKE", region1:"EAST", s2:2, t2:"Houston", t2Short:"HOU", region2:"SOUTH", pick:"Duke", confidence:58, riskLevel:"TOSS-UP",
-      headline:"Boozer vs. Sampson's elite D. Duke's passing out of doubles decides it.", whyPick:"Boozer's passing when doubled creates impossible decisions for Houston's defense. Duke's #2 defense can match Houston's intensity. If Foster returns, Duke's ceiling goes even higher.", whyNot:"Houston's defensive scheme has frustrated bigger, more athletic opponents all season. Flemings + Cenac can score.",
-        edge: { offense: 82, defense: 90, experience: 82, health: 68 },
-        edgeOpp: { offense: 78, defense: 92, experience: 90, health: 88 },
-        keyStats: [{ label: "Boozer", value: "Passing out of doubles", hot: true },{ label: "HOU Def", value: "Elite under Sampson", hot: true },{ label: "Foster?", value: "Could return for F4", hot: true }],
-        injuries: [{ player: "C. Foster", team: "Duke", status: "GTD", impact: "HIGH", detail: "Broken foot — outside chance of F4 return." }] },
-    { id:"FF1", date:"Sat Apr 4", s1:1, t1:"Arizona", t1Short:"ARIZ", region1:"WEST", s2:1, t2:"Michigan", t2Short:"MICH", region2:"MIDWEST", pick:"Michigan", confidence:60, originalConfidence:56, riskLevel:"TOSS-UP",
-      headline:"Michigan is rolling — 101-80, then 95-72. Can Arizona's athletes disrupt the machine?", whyPick:"Michigan has been the most dominant team through two rounds — back-to-back blowouts with all five starters in double figures. Mara's rim protection neutralizes Arizona's interior attack, and Arizona's low 3PT rate means they can't spread Michigan's pack-the-paint defense.", whyNot:"Arizona's elite athletes (Burries, Bradley, Peat) can force Michigan into turnovers in transition. If Arizona pushes tempo and Michigan's 179th-ranked TO rate shows up, Arizona's talent takes over.",
-        edge: { offense: 90, defense: 92, experience: 80, health: 95 },
-        edgeOpp: { offense: 85, defense: 98, experience: 78, health: 78 },
-        keyStats: [{ label: "AZ 3PT rate", value: "4th-lowest in country", hot: true },{ label: "MICH Def", value: "#1 — packs the paint", hot: true },{ label: "MICH TOs", value: "179th — AZ can exploit", hot: false }],
-        injuries: [{ player: "L.J. Cason", team: "Michigan", status: "OUT", impact: "MED", detail: "Torn ACL." }] },
-  ],
+    { id:"FF0", date:"Sat Apr 4", s1:1, t1:"Duke", t1Short:"DUKE", region1:"EAST", s2:3, t2:"Illinois", t2Short:"ILL", region2:"SOUTH", pick:"Duke", confidence:58, riskLevel:"TOSS-UP",
+        headline:"Duke #2 defense vs Illinois #1 offense. Foster's return makes Duke complete.",
+        edge: { offense: 82, defense: 90, experience: 85, health: 78 }, edgeOpp: { offense: 92, defense: 72, experience: 72, health: 90 },
+        keyStats: [{ label: "Boozer", value: "Best player in CBB", hot: true },{ label: "ILL Off", value: "#1 KenPom ever", hot: true },{ label: "Foster", value: "Returned healthy", hot: true }],
+        injuries: [],
+        whyPick:"Boozer + Foster + #2 defense. Built to contain motion offenses.", whyNot:"Illinois held Houston to 34%. Defense transformed. Three go-to scorers." },
+    { id:"FF1", date:"Sat Apr 4", s1:1, t1:"Arizona", t1Short:"ARIZ", region1:"WEST", s2:1, t2:"Michigan", t2Short:"MICH", region2:"MIDWEST", pick:"Michigan", confidence:52, riskLevel:"TOSS-UP",
+        headline:"Arizona scored 109. Michigan hit 13 threes. Two most dominant teams collide.",
+        edge: { offense: 92, defense: 88, experience: 80, health: 95 }, edgeOpp: { offense: 88, defense: 92, experience: 78, health: 78 },
+        keyStats: [{ label: "AZ S16", value: "109-88, 64% FG", hot: true },{ label: "MICH S16", value: "90-77, 13/27 3PT", hot: true },{ label: "AZ paint", value: "46 pts vs Arkansas", hot: true }],
+        injuries: [{ player: "L.J. Cason", team: "Michigan", status: "OUT", impact: "MED", detail: "Torn ACL." }],
+        whyPick:"Michigan #1 defense proved vs elite offenses. Lendeborg generational. Mara limits paint scoring.", whyNot:"Arizona scored 109. Six players 14+. 64% FG. If they play like that, nothing stops them." },
+    ],
   CHAMPIONSHIP: [
-    { id:"CHAMP", date:"Mon Apr 6", s1:1, t1:"Duke", t1Short:"DUKE", region1:"EAST", s2:1, t2:"Michigan", t2Short:"MICH", region2:"MIDWEST", pick:"Duke", confidence:52, originalConfidence:55, riskLevel:"TOSS-UP",
-      headline:"🏆 Michigan is playing like the best team in the field. But Boozer is the best player.", whyPick:"Championship games favor the team with the best individual player. Boozer is that player. But Michigan's 95-72 R32 blowout — all five starters in double figures, Mara shutting down Avila — makes this closer than pre-tournament. Duke needs Foster back to create perimeter offense against Michigan's #1 defense.", whyNot:"Michigan looks SCARY. Lendeborg, Mara, Johnson, Cadeau, Burnett — five legitimate scorers. Their defense held the best 3PT-shooting center in the country to 3-13. If Duke can't shoot from outside (2-15 vs Siena), Michigan's defense suffocates them.",
-        edge: { offense: 82, defense: 90, experience: 82, health: 70 },
-        edgeOpp: { offense: 85, defense: 98, experience: 78, health: 78 },
-        keyStats: [{ label: "Boozer", value: "Best player = best team", hot: true },{ label: "MICH Def", value: "#1 in country", hot: true },{ label: "Foster?", value: "Return for title game?", hot: true }],
-        injuries: [{ player: "C. Foster", team: "Duke", status: "GTD", impact: "HIGH", detail: "Could return for title game — would transform perimeter offense." }] },
-  ],
+    { id:"CHAMP", date:"Mon Apr 6", s1:1, t1:"Duke", t1Short:"DUKE", region1:"EAST", s2:1, t2:"Michigan", t2Short:"MICH", region2:"MIDWEST", pick:"Duke", confidence:50, riskLevel:"TOSS-UP",
+        headline:"Two 1-seeds. Boozer vs Lendeborg. Foster back vs Michigan #1 defense. The dream final.",
+        edge: { offense: 82, defense: 90, experience: 85, health: 78 }, edgeOpp: { offense: 88, defense: 92, experience: 78, health: 78 },
+        keyStats: [{ label: "Boozer", value: "Best player = title edge", hot: true },{ label: "Lendeborg", value: "23/12, near triple-dbl", hot: true },{ label: "Foster", value: "Back and changes everything", hot: true }],
+        injuries: [],
+        whyPick:"Best player wins titles. Boozer. Foster gives perimeter creation vs pack-the-paint.", whyNot:"Michigan best defense, Lendeborg outplaying Boozer. 13 threes. Four scorers every game." },
+    ],
 };
 
 const ROUND_LABELS = { R64:"ROUND OF 64", R32:"ROUND OF 32", S16:"SWEET 16", E8:"ELITE EIGHT" };
@@ -1064,20 +1074,20 @@ export default function MadnessIQ() {
           {/* Scorecard banner */}
           <div style={{ background:"linear-gradient(135deg,#101420,#141018)", border:"1px solid #4a4568", borderRadius:8, padding:"10px 12px", marginBottom:10 }}>
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:6 }}>
-              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:2, color:"#ff6b3d" }}>R64 + R32 COMPLETE</div>
-              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:9, color:"#8a8d9a" }}>Updated Mar 22</div>
+              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:2, color:"#ff6b3d" }}>THROUGH SWEET 16</div>
+              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:9, color:"#8a8d9a" }}>Updated Mar 27</div>
             </div>
             <div style={{ display:"flex", gap:6 }}>
               <div style={{ flex:1, background:"#0a1a10", borderRadius:6, padding:"6px 8px", textAlign:"center", border:"1px solid #3a5a42" }}>
-                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:18, fontWeight:700, color:"#3ded7a" }}>37</div>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:18, fontWeight:700, color:"#3ded7a" }}>41</div>
                 <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#3ded7a", letterSpacing:1 }}>CORRECT</div>
               </div>
               <div style={{ flex:1, background:"#1a0e10", borderRadius:6, padding:"6px 8px", textAlign:"center", border:"1px solid #5a3a3e" }}>
-                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:18, fontWeight:700, color:"#ed5a5a" }}>11</div>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:18, fontWeight:700, color:"#ed5a5a" }}>15</div>
                 <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#ed5a5a", letterSpacing:1 }}>MISSED</div>
               </div>
               <div style={{ flex:1, background:"#0e1420", borderRadius:6, padding:"6px 8px", textAlign:"center", border:"1px solid #1a2a40" }}>
-                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:18, fontWeight:700, color:"#4a9aed" }}>77%</div>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:18, fontWeight:700, color:"#4a9aed" }}>73%</div>
                 <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#4a9aed", letterSpacing:1 }}>ACCURACY</div>
               </div>
               <div style={{ flex:1, background:"#1a1410", borderRadius:6, padding:"6px 8px", textAlign:"center", border:"1px solid #3a2a1a" }}>
@@ -1086,26 +1096,23 @@ export default function MadnessIQ() {
               </div>
             </div>
             <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:"#6a6d78", marginTop:6, lineHeight:1.5 }}>
-              R32 FINAL: 12-4 (75%). Florida stunned by Iowa 73-72 — biggest upset of tourney. Tennessee upset Virginia. Texas upset Gonzaga. Alabama demolished Tech 90-65. UConn pulled away from UCLA. Our F4 path (Duke/Arizona/Houston/Michigan) fully intact. Sweet 16 starts Thursday.
+              S16: 4-4. Purdue survived on TKR buzzer tip-in. Arizona scored 109(!). Illinois held Houston to 34%. Tennessee upset ISU (43-22 rebound edge). Duke held off SJU with Foster back. Michigan rolled Bama. Houston and ISU eliminated — 2 of our 4 F4 picks gone. Duke/Arizona/Michigan still alive.
             </div>
           </div>
 
           {/* Championship Futures */}
           <div style={{ background:"linear-gradient(135deg,#101420,#141018)", border:"1px solid #3a3558", borderRadius:8, padding:"10px 12px", marginBottom:10 }}>
-            <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:2, color:"#ffe050", marginBottom:8 }}>CHAMPIONSHIP FUTURES (Post-R32)</div>
+            <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:2, color:"#ffe050", marginBottom:8 }}>CHAMPIONSHIP FUTURES (Post-Sweet 16)</div>
             <div style={{ display:"flex", gap:4, flexWrap:"wrap" }}>
               {[
-                { team:"Michigan", odds:"+325", color:"#ffe050" },
-                { team:"Arizona", odds:"+325", color:"#ff7855" },
-                { team:"Duke", odds:"+425", color:"#5090ff" },
-                { team:"Houston", odds:"+850", color:"#60ff90" },
-                { team:"Purdue", odds:"16-1", color:"#b0b8c8" },
-                { team:"Illinois", odds:"17-1", color:"#b0b8c8" },
-                { team:"Iowa State", odds:"25-1", color:"#b0b8c8" },
-                { team:"MSU", odds:"30-1", color:"#b0b8c8" },
-                { team:"UConn", odds:"40-1", color:"#b0b8c8" },
-                { team:"Alabama", odds:"50-1", color:"#b0b8c8" },
-                { team:"SJU", odds:"50-1", color:"#b0b8c8" },
+                { team:"Michigan", odds:"+275", color:"#ffe050" },
+                { team:"Arizona", odds:"+300", color:"#ff7855" },
+                { team:"Duke", odds:"+350", color:"#5090ff" },
+                { team:"UConn", odds:"+800", color:"#b0b8c8" },
+                { team:"Purdue", odds:"10-1", color:"#b0b8c8" },
+                { team:"Illinois", odds:"12-1", color:"#b0b8c8" },
+                { team:"Tennessee", odds:"25-1", color:"#b0b8c8" },
+                { team:"Iowa", odds:"50-1", color:"#b0b8c8" },
               ].map((f, i) => (
                 <div key={i} style={{ background:"#0e1018", border:"1px solid #2a2d3a", borderRadius:4, padding:"4px 7px", textAlign:"center" }}>
                   <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:"#8090a0" }}>{f.team}</div>
@@ -1114,7 +1121,10 @@ export default function MadnessIQ() {
               ))}
             </div>
             <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#6a6d78", marginTop:6, lineHeight:1.5 }}>
-              Our pick: Duke +425. Michigan is the betting favorite but Duke has the best player (Boozer) and Ngongba's back. Florida's exit boosted Houston's path — our S. region champ pick now has the easiest E8 draw. Purdue 16-1 is intriguing value with Gonzaga gone from the West.
+              Our pick: Duke +350. Michigan is the betting favorite but Duke has Boozer + Foster back. Arizona scored 109 in the S16 — they're terrifying. Houston and Iowa State eliminated. Illinois is the Cinderella no one expected — held Houston to 34% FG. Only 8 teams remain.
+            </div>
+            <div style={{ fontFamily:"'DM Mono',monospace", fontSize:6.5, color:"#4a4d58", marginTop:4 }}>
+              Futures estimated post-S16 · As of Mar 27, 2026 · Odds shift — confirm before wagering
             </div>
           </div>
 
@@ -1278,6 +1288,9 @@ export default function MadnessIQ() {
                             <div style={{ background:"#101418", border:"1px solid #2a3040", borderRadius:6, padding:"8px 10px" }}>
                               <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:"#edaa3d", letterSpacing:1, marginBottom:3 }}>{"\uD83C\uDFAF"} BEST ANGLE</div>
                               <div style={{ fontSize:11, lineHeight:1.6, color:"#edcc3d", fontWeight:600 }}>{g.market.angle}</div>
+                            </div>
+                            <div style={{ fontFamily:"'DM Mono',monospace", fontSize:6.5, color:"#4a4d58", marginTop:8, lineHeight:1.4 }}>
+                              Odds via DraftKings/BetMGM · Collected Mar 22, 2026 · Lines move — verify before placing any wager
                             </div>
                           </div>
                         )}
