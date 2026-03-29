@@ -125,6 +125,8 @@ const RESULTS={
   // S16
   WS1:{w:"Purdue",s1:77,s2:79},SS0:{w:"Iowa",s1:71,s2:77},WS0:{w:"Arizona",s1:109,s2:88},SS1:{w:"Illinois",s1:55,s2:65},
   ES0:{w:"Duke",s1:80,s2:75},MS0:{w:"Michigan",s1:90,s2:77},ES1:{w:"UConn",s1:63,s2:67},MS1:{w:"Tennessee",s1:62,s2:76},
+  // E8
+  SE:{w:"Illinois",s1:71,s2:59},WE:{w:"Arizona",s1:79,s2:64},ME:{w:"Michigan",s1:95,s2:62},
 };
 
 const COLORS={EAST:"#5090ff",WEST:"#ff7855",SOUTH:"#60ff90",MIDWEST:"#ffe050"};
@@ -361,7 +363,7 @@ drawLine(mp["E8-0"]?mp["E8-0"].x:RX-4*COL,mp["E8-0"]?mp["E8-0"].y:FFY2+15,FFX+13
 // Score summary in center
 const summary=document.createElement("div");
 summary.style.cssText=`position:absolute;left:${FFX-20}px;top:${CY+55}px;width:180px;text-align:center;font-size:8px;color:#b0b8c8;line-height:1.8`;
-summary.innerHTML=`<div style="font-size:10px;font-weight:700;color:#ffe050;letter-spacing:2px;margin-bottom:4px">MADNESSIQ</div><div style="font-size:20px;font-weight:700;color:#f2ede5">41-15 <span style="color:#60ff90;font-size:12px">(73%)</span></div><div style="margin-top:2px">R64: 25-7 \u00B7 R32: 12-4 \u00B7 S16: 4-4</div><div style="color:#ffe050">1 upset called</div><div style="margin-top:6px;color:#80b0e0">Champion pick: Duke</div>`;
+summary.innerHTML=`<div style="font-size:10px;font-weight:700;color:#ffe050;letter-spacing:2px;margin-bottom:4px">MADNESSIQ</div><div style="font-size:20px;font-weight:700;color:#f2ede5">44-15 <span style="color:#60ff90;font-size:12px">(75%)</span></div><div style="margin-top:2px">R64: 25-7 \u00B7 R32: 12-4 \u00B7 S16: 4-4 \u00B7 E8: 3-0</div><div style="color:#ffe050">1 upset called</div><div style="margin-top:6px;color:#80b0e0">Champion pick: Duke</div>`;
 B.appendChild(summary);
 
 // ── ZOOM / PAN ──
