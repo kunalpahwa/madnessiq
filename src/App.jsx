@@ -421,7 +421,8 @@ const LATER_ROUNDS = {
     ],
     E8: [
       { id:"EE", date:"Sun Mar 29", time:"5:05 PM ET", site:"Capital One Arena, DC", s1:1, t1:"Duke", t1Short:"DUKE", s2:2, t2:"UConn", t2Short:"UCONN", pick:"Duke", confidence:55, riskLevel:"TOSS-UP",
-        headline:"Foster RETURNED and Duke survived SJU 80-75. UConn held off MSU 67-63. Blue blood showdown in DC.",
+        headline:"FINAL: UConn 73-72. DUKE ELIMINATED BY ONE POINT. MadnessIQ champion pick falls.",
+        result: { score1:72, score2:73, winner:"UConn", correct:false, postGame:"Heartbreaker. Duke fell one point short. UConn championship DNA proved decisive. Hurley takes UConn to 3rd Final Four in 4 years. MadnessIQ original champion pick is eliminated. UConn faces Illinois in the F4." },
         market: { spread:"Duke -3.5", ou:"140.5", ml1:"-170", ml2:"+145", take:"Razor-thin line for a reason. Duke has the best player (Boozer) and Foster's return transforms their perimeter. But UConn has won back-to-back titles and Hurley is the best tournament coach alive. This is a genuine coin flip that leans Duke because of Foster.", angle:"DUKE -3.5 — Foster's return is a game-changer the line hasn't fully priced in. Evans (25 pts S16) gives Duke a second option UConn hasn't game-planned for." },
         edge: { offense: 82, defense: 90, experience: 85, health: 80 },
         edgeOpp: { offense: 78, defense: 88, experience: 95, health: 82 },
@@ -694,32 +695,31 @@ const LATER_ROUNDS = {
       ],
   },
   FINAL_FOUR: [
-    { id:"FF0", date:"Sat Apr 4", s1:1, t1:"Arizona", t1Short:"ARIZ", region1:"WEST", s2:1, t2:"Duke", t2Short:"DUKE", region2:"EAST", pick:"Duke", confidence:48, riskLevel:"TOSS-UP",
-        headline:"Arizona looks unstoppable — 79-64 over Purdue after trailing at half. Duke/UConn winner faces the buzzsaw.",
+    { id:"FF0", date:"Sat Apr 4", s1:2, t1:"UConn", t1Short:"UCONN", region1:"EAST", s2:3, t2:"Illinois", t2Short:"ILL", region2:"SOUTH", pick:"UConn", confidence:56, riskLevel:"TOSS-UP",
+        headline:"UConn beat Duke by 1. Illinois held Houston to 34%. Three-peat chasers vs Big Ten dark horse.",
+        edge: { offense: 78, defense: 88, experience: 98, health: 82 },
+        edgeOpp: { offense: 92, defense: 75, experience: 72, health: 90 },
+        keyStats: [{ label: "UConn DNA", value: "3rd F4 in 4 years", hot: true },{ label: "ILL Def", value: "Held HOU 34%, Iowa 59", hot: true },{ label: "73-72", value: "UConn survived Duke by 1", hot: true }],
+        injuries: [],
+        whyPick:"UConn has been to 3 F4s in 4 years, won 2 titles. Hurley is elite in March. They just beat the #1 overall seed. Reed and Karaban dominate inside.",
+        whyNot:"Illinois defense is the story of March. Held Houston to 0.90 PPP, Iowa to 59. Four 20-point scorers. UConn barely survived MSU (67-63) and Duke (73-72) — living on the edge." },
+    { id:"FF1", date:"Sat Apr 4", s1:1, t1:"Arizona", t1Short:"ARIZ", region1:"WEST", s2:1, t2:"Michigan", t2Short:"MICH", region2:"MIDWEST", pick:"Arizona", confidence:55, riskLevel:"TOSS-UP",
+        headline:"Arizona outscored Purdue 48-26 in 2H. Michigan won E8 by 33. Best offense vs best defense.",
         edge: { offense: 95, defense: 92, experience: 80, health: 95 },
-        edgeOpp: { offense: 82, defense: 90, experience: 85, health: 78 },
-        keyStats: [{ label: "AZ 2H", value: "Outscored Purdue 48-26", hot: true },{ label: "AZ tourney", value: "Won every game by 13+", hot: true },{ label: "Peat", value: "20 pts in E8, 21 in S16", hot: true }],
-        injuries: [{ player: "C. Foster", team: "Duke", status: "ACTIVE", impact: "HIGH", detail: "Returned S16 with 11 pts. Key for F4." }],
-        whyPick:"Duke has Boozer (best player alive) and Foster back. But this is a lean, not conviction. Arizona has looked like the best team in America since the Sweet 16. They trailed Purdue by 7 at halftime and outscored them 48-26 in the second half. Smith went 1-11 after starting 3-4. Arizona's defense is suffocating.",
-        whyNot:"Arizona hasn't been seriously tested in the second half of any tournament game. Their 2H adjustments have been flawless. Peat (20), Burries, Kharchenkov, Bradley — four guys scoring 14+ every game. They hold opponents to 38% shooting. Arizona may be the best team regardless of opponent." },
-    { id:"FF1", date:"Sat Apr 4", s1:3, t1:"Illinois", t1Short:"ILL", region1:"SOUTH", s2:1, t2:"Michigan", t2Short:"MICH", region2:"MIDWEST", pick:"Michigan", confidence:62, riskLevel:"LEAN",
-        headline:"Michigan won by 33 in the E8. Illinois held Houston AND Iowa to under 60. Offense vs defense.",
-        edge: { offense: 92, defense: 72, experience: 72, health: 90 },
         edgeOpp: { offense: 88, defense: 95, experience: 78, health: 78 },
-        keyStats: [{ label: "MICH E8", value: "95-62, won by 33(!)", hot: true },{ label: "ILL Def", value: "Held HOU + Iowa under 60", hot: true },{ label: "Lendeborg", value: "Dominant every game", hot: true }],
+        keyStats: [{ label: "AZ 2H", value: "48-26 run to kill Purdue", hot: true },{ label: "MICH E8", value: "95-62, won by 33(!)", hot: true },{ label: "Peat vs Mara", value: "Matchup of the tournament", hot: true }],
         injuries: [{ player: "L.J. Cason", team: "Michigan", status: "OUT", impact: "MED", detail: "Torn ACL." }],
-        whyPick:"Michigan just won an E8 game by 33 points. They've won every tournament game by 13+. Lendeborg is the tournament's most complete player. 13-27 from 3 vs Alabama, 95-62 vs Tennessee. Illinois' defense is real but Michigan's offensive ceiling is historically high.",
-        whyNot:"Illinois held Houston (0.90 PPP) and Iowa to 59. Their defense has transformed in March. They have four legitimate 20-point scorers. If they slow the tempo and grind Michigan into a 65-60 game, anything happens. Michigan hasn't faced a defense this good in the tournament." },
+        whyPick:"Arizona has been the most dominant team since the Sweet 16. Scored 109 on Arkansas, outscored Purdue 48-26 in 2H. Four freshmen scoring 14+ every game. Their defense held Purdue to 38%. Arizona's 2H adjustments are the best in the tournament.", whyNot:"Michigan won every tournament game by 13+. Lendeborg is the tournament MVP. 13 threes vs Alabama, 95-62 vs Tennessee. Mara's rim protection could limit Arizona's 46 paint points. If Michigan shoots like they did vs Alabama, nobody stops them." },
     ],
   CHAMPIONSHIP: [
-    { id:"CHAMP", date:"Mon Apr 6", s1:1, t1:"Arizona", t1Short:"ARIZ", region1:"WEST", s2:1, t2:"Michigan", t2Short:"MICH", region2:"MIDWEST", pick:"Arizona", confidence:52, riskLevel:"TOSS-UP",
-        headline:"Arizona may be the best team we've seen in years. Michigan has won every game by 13+. Two juggernauts.",
+    { id:"CHAMP", date:"Mon Apr 6", s1:1, t1:"Arizona", t1Short:"ARIZ", region1:"WEST", s2:2, t2:"UConn", t2Short:"UCONN", region2:"EAST", pick:"Arizona", confidence:58, riskLevel:"TOSS-UP",
+        headline:"Arizona is the best team in America. UConn is chasing a three-peat. Duke is gone. New champion crowned.",
         edge: { offense: 95, defense: 92, experience: 80, health: 95 },
-        edgeOpp: { offense: 88, defense: 95, experience: 78, health: 78 },
-        keyStats: [{ label: "AZ 2Hs", value: "Outscored opps by 30+ combined", hot: true },{ label: "MICH margins", value: "Every game won by 13+", hot: true },{ label: "Peat vs Mara", value: "Matchup of the tournament", hot: true }],
+        edgeOpp: { offense: 78, defense: 88, experience: 98, health: 82 },
+        keyStats: [{ label: "AZ dominance", value: "109 S16, 48-26 2H run E8", hot: true },{ label: "UConn titles", value: "Won 2 of last 3", hot: true },{ label: "AZ defense", value: "Held Purdue to 38%", hot: true }],
         injuries: [],
-        whyPick:"Arizona has been the most dominant team since the Sweet 16. They scored 109 on Arkansas, then outscored Purdue 48-26 in the 2H. Four freshmen scoring 14+ every game. Their defense held Purdue to 38%. Arizona's second-half adjustments are the best in the tournament.",
-        whyNot:"Michigan has won every tournament game by 13+. Lendeborg is the tournament MVP. They hit 13 threes vs Alabama and scored 95 on Tennessee. Mara's rim protection could limit Arizona's paint attack. If Michigan shoots like they did vs Alabama, nobody stops them." },
+        whyPick:"Arizona has been the most dominant team by far. 109 in S16, outscored Purdue 48-26 in 2H. Four freshmen scoring 14+ every game. Defense held Purdue to 38%. Arizona is +200 favorite for a reason.",
+        whyNot:"UConn won 2 of the last 3 titles. Hurley has NEVER lost a F4 or championship game. Reed and Karaban are proven winners. Experience matters in the title game and nobody has more than UConn." },
     ],
 };
 
@@ -1092,7 +1092,7 @@ export default function MadnessIQ() {
           {/* Scorecard banner */}
           <div style={{ background:"linear-gradient(135deg,#101420,#141018)", border:"1px solid #4a4568", borderRadius:8, padding:"10px 12px", marginBottom:10 }}>
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:6 }}>
-              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:2, color:"#ff6b3d" }}>THROUGH ELITE EIGHT (3 of 4)</div>
+              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:2, color:"#ff6b3d" }}>ELITE EIGHT COMPLETE</div>
               <div style={{ fontFamily:"'DM Mono',monospace", fontSize:9, color:"#8a8d9a" }}>Updated Mar 29</div>
             </div>
             <div style={{ display:"flex", gap:6 }}>
@@ -1101,11 +1101,11 @@ export default function MadnessIQ() {
                 <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#3ded7a", letterSpacing:1 }}>CORRECT</div>
               </div>
               <div style={{ flex:1, background:"#1a0e10", borderRadius:6, padding:"6px 8px", textAlign:"center", border:"1px solid #5a3a3e" }}>
-                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:18, fontWeight:700, color:"#ed5a5a" }}>15</div>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:18, fontWeight:700, color:"#ed5a5a" }}>16</div>
                 <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#ed5a5a", letterSpacing:1 }}>MISSED</div>
               </div>
               <div style={{ flex:1, background:"#0e1420", borderRadius:6, padding:"6px 8px", textAlign:"center", border:"1px solid #1a2a40" }}>
-                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:18, fontWeight:700, color:"#4a9aed" }}>75%</div>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:18, fontWeight:700, color:"#4a9aed" }}>73%</div>
                 <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#4a9aed", letterSpacing:1 }}>ACCURACY</div>
               </div>
               <div style={{ flex:1, background:"#1a1410", borderRadius:6, padding:"6px 8px", textAlign:"center", border:"1px solid #3a2a1a" }}>
@@ -1114,7 +1114,7 @@ export default function MadnessIQ() {
               </div>
             </div>
             <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:"#6a6d78", marginTop:6, lineHeight:1.5 }}>
-              E8: 3-0 (Duke/UConn pending). Arizona dominated Purdue 79-64 (trailed at half!). Illinois ended Iowa's run 71-59. Michigan DESTROYED Tennessee 95-62. Three of our four F4 picks alive (Duke TBD). Arizona looks like the best team in the country. Final Four: Arizona, Illinois, Michigan + Duke/UConn.
+              E8: 3-1. Duke fell to UConn 73-72 — our champion pick eliminated by one point. Arizona dominated Purdue 79-64. Illinois ended Iowa 71-59. Michigan destroyed Tennessee 95-62. FINAL FOUR SET: UConn vs Illinois, Arizona vs Michigan. New champion prediction: Arizona.
             </div>
           </div>
 
@@ -1123,11 +1123,10 @@ export default function MadnessIQ() {
             <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:2, color:"#ffe050", marginBottom:8 }}>CHAMPIONSHIP FUTURES (Final Four Set)</div>
             <div style={{ display:"flex", gap:4, flexWrap:"wrap" }}>
               {[
-                { team:"Arizona", odds:"+200", color:"#ff7855" },
-                { team:"Michigan", odds:"+250", color:"#ffe050" },
-                { team:"Duke", odds:"+400", color:"#5090ff" },
+                { team:"Arizona", odds:"+175", color:"#ff7855" },
+                { team:"Michigan", odds:"+275", color:"#ffe050" },
+                { team:"UConn", odds:"+400", color:"#b0b8c8" },
                 { team:"Illinois", odds:"+600", color:"#b0b8c8" },
-                { team:"UConn", odds:"+500", color:"#b0b8c8" },
               ].map((f, i) => (
                 <div key={i} style={{ background:"#0e1018", border:"1px solid #2a2d3a", borderRadius:4, padding:"4px 7px", textAlign:"center" }}>
                   <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:"#8090a0" }}>{f.team}</div>
@@ -1136,10 +1135,10 @@ export default function MadnessIQ() {
               ))}
             </div>
             <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#6a6d78", marginTop:6, lineHeight:1.5 }}>
-              Arizona is the favorite after dominating the tournament — outscored Purdue 48-26 in the 2H. Michigan has won every game by 13+. Duke/UConn E8 still playing. Illinois is the dark horse — held Houston AND Iowa under 60. Four teams left. MadnessIQ's original champion pick (Duke) still alive.
+              Arizona is the clear favorite after the most dominant tournament run in years. Michigan has won every game by 13+. UConn just beat Duke 73-72 — chasing a three-peat. Illinois is the dark horse that held Houston to 34% FG. Duke eliminated. New MadnessIQ champion pick: Arizona.
             </div>
             <div style={{ fontFamily:"'DM Mono',monospace", fontSize:6.5, color:"#4a4d58", marginTop:4 }}>
-              Futures estimated post-E8 · As of Mar 29, 2026 · Duke/UConn odds pending E8 result
+              Futures estimated post-E8 · As of Mar 29, 2026
             </div>
           </div>
 
@@ -1464,10 +1463,11 @@ export default function MadnessIQ() {
               )})}
 
               <div style={{ marginTop:12, background:"linear-gradient(135deg,#141620,#1a1428)", border:"1px solid #4a4568", borderRadius:10, padding:"16px", textAlign:"center" }}>
-                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:4, color:"#6a5aaa", marginBottom:4 }}>MADNESSIQ PREDICTION</div>
-                <div style={{ fontSize:26, fontWeight:700, marginBottom:4 }}>{"\uD83C\uDFC6"} Duke Blue Devils</div>
-                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:10, color:"#b0a8cc" }}>Cameron Boozer {"\u2014"} Most Outstanding Player</div>
-                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:9, color:"#8a7acc", marginTop:6 }}>Jon Scheyer's 1st championship as head coach</div>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:4, color:"#6a5aaa", marginBottom:4 }}>MADNESSIQ PREDICTION (UPDATED)</div>
+                <div style={{ fontSize:26, fontWeight:700, marginBottom:4 }}>{"\uD83C\uDFC6"} Arizona Wildcats</div>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:10, color:"#b0a8cc" }}>Koa Peat {"\u2014"} Most Outstanding Player</div>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:9, color:"#8a7acc", marginTop:6 }}>Tommy Lloyd's 1st Final Four {"\u2014"} Arizona's 1st title since 1997</div>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#5a5570", marginTop:6 }}>Original pick: Duke (eliminated E8, 73-72 vs UConn)</div>
               </div>
             </>
           )}
