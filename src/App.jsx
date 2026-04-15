@@ -696,7 +696,8 @@ const LATER_ROUNDS = {
   },
   FINAL_FOUR: [
     { id:"FF0", date:"Sat Apr 4", s1:2, t1:"UConn", t1Short:"UCONN", region1:"EAST", s2:3, t2:"Illinois", t2Short:"ILL", region2:"SOUTH", pick:"UConn", confidence:56, riskLevel:"TOSS-UP",
-        headline:"UConn beat Duke by 1. Illinois held Houston to 34%. Three-peat chasers vs Big Ten dark horse.",
+        headline:"FINAL: UConn 71-62. Hurley three-peat bid alive. Illinois run ends in the Final Four.",
+        result: { score1:71, score2:62, winner:"UConn", correct:true, postGame:"UConn controlled the second half. Reed and Karaban dominated inside. Hurley has still never lost a Final Four or title game. Advances to face Michigan for the championship." },
         edge: { offense: 78, defense: 88, experience: 98, health: 82 },
         edgeOpp: { offense: 92, defense: 75, experience: 72, health: 90 },
         keyStats: [{ label: "UConn DNA", value: "3rd F4 in 4 years", hot: true },{ label: "ILL Def", value: "Held HOU 34%, Iowa 59", hot: true },{ label: "73-72", value: "UConn survived Duke by 1", hot: true }],
@@ -704,7 +705,8 @@ const LATER_ROUNDS = {
         whyPick:"UConn has been to 3 F4s in 4 years, won 2 titles. Hurley is elite in March. They just beat the #1 overall seed. Reed and Karaban dominate inside.",
         whyNot:"Illinois defense is the story of March. Held Houston to 0.90 PPP, Iowa to 59. Four 20-point scorers. UConn barely survived MSU (67-63) and Duke (73-72) — living on the edge." },
     { id:"FF1", date:"Sat Apr 4", s1:1, t1:"Arizona", t1Short:"ARIZ", region1:"WEST", s2:1, t2:"Michigan", t2Short:"MICH", region2:"MIDWEST", pick:"Arizona", confidence:55, riskLevel:"TOSS-UP",
-        headline:"Arizona outscored Purdue 48-26 in 2H. Michigan won E8 by 33. Best offense vs best defense.",
+        headline:"FINAL: Michigan 91-73. Arizona run ended. Lendeborg and Michigan were the best team all along.",
+        result: { score1:91, score2:73, winner:"Michigan", correct:false, postGame:"Michigan won by 18. The team that won every tournament game by 13+ kept doing it. Arizona second-half magic ran out against the best defense in America. Lendeborg was the most complete player in the tournament. We picked Arizona. We were wrong. Michigan told us from game one." },
         edge: { offense: 95, defense: 92, experience: 80, health: 95 },
         edgeOpp: { offense: 88, defense: 95, experience: 78, health: 78 },
         keyStats: [{ label: "AZ 2H", value: "48-26 run to kill Purdue", hot: true },{ label: "MICH E8", value: "95-62, won by 33(!)", hot: true },{ label: "Peat vs Mara", value: "Matchup of the tournament", hot: true }],
@@ -713,7 +715,8 @@ const LATER_ROUNDS = {
     ],
   CHAMPIONSHIP: [
     { id:"CHAMP", date:"Mon Apr 6", s1:1, t1:"Arizona", t1Short:"ARIZ", region1:"WEST", s2:2, t2:"UConn", t2Short:"UCONN", region2:"EAST", pick:"Arizona", confidence:58, riskLevel:"TOSS-UP",
-        headline:"Arizona is the best team in America. UConn is chasing a three-peat. Duke is gone. New champion crowned.",
+        headline:"FINAL: Michigan 69-63. NATIONAL CHAMPIONS. Lendeborg MOP. The data was there all along.",
+        result: { score1:69, score2:63, winner:"Michigan", correct:false, postGame:"Michigan wins the national championship 69-63. Their tightest game — 6 points — but they never trailed in the final 10 minutes. Lendeborg named MOP. Dusty May wins a title in year one at Michigan. MadnessIQ picked Duke originally, pivoted to Arizona. Michigan was in our Final Four the entire tournament. We never made them champion. They won every game by 13+ until the title game. The data screamed it. We did not listen." },
         edge: { offense: 95, defense: 92, experience: 80, health: 95 },
         edgeOpp: { offense: 78, defense: 88, experience: 98, health: 82 },
         keyStats: [{ label: "AZ dominance", value: "109 S16, 48-26 2H run E8", hot: true },{ label: "UConn titles", value: "Won 2 of last 3", hot: true },{ label: "AZ defense", value: "Held Purdue to 38%", hot: true }],
@@ -1092,20 +1095,20 @@ export default function MadnessIQ() {
           {/* Scorecard banner */}
           <div style={{ background:"linear-gradient(135deg,#101420,#141018)", border:"1px solid #4a4568", borderRadius:8, padding:"10px 12px", marginBottom:10 }}>
             <div style={{ display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:6 }}>
-              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:2, color:"#ff6b3d" }}>ELITE EIGHT COMPLETE</div>
-              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:9, color:"#8a8d9a" }}>Updated Mar 29</div>
+              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:2, color:"#ff6b3d" }}>TOURNAMENT COMPLETE</div>
+              <div style={{ fontFamily:"'DM Mono',monospace", fontSize:9, color:"#8a8d9a" }}>Final | Apr 6, 2026</div>
             </div>
             <div style={{ display:"flex", gap:6 }}>
               <div style={{ flex:1, background:"#0a1a10", borderRadius:6, padding:"6px 8px", textAlign:"center", border:"1px solid #3a5a42" }}>
-                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:18, fontWeight:700, color:"#3ded7a" }}>44</div>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:18, fontWeight:700, color:"#3ded7a" }}>45</div>
                 <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#3ded7a", letterSpacing:1 }}>CORRECT</div>
               </div>
               <div style={{ flex:1, background:"#1a0e10", borderRadius:6, padding:"6px 8px", textAlign:"center", border:"1px solid #5a3a3e" }}>
-                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:18, fontWeight:700, color:"#ed5a5a" }}>16</div>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:18, fontWeight:700, color:"#ed5a5a" }}>18</div>
                 <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#ed5a5a", letterSpacing:1 }}>MISSED</div>
               </div>
               <div style={{ flex:1, background:"#0e1420", borderRadius:6, padding:"6px 8px", textAlign:"center", border:"1px solid #1a2a40" }}>
-                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:18, fontWeight:700, color:"#4a9aed" }}>73%</div>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:18, fontWeight:700, color:"#4a9aed" }}>71%</div>
                 <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#4a9aed", letterSpacing:1 }}>ACCURACY</div>
               </div>
               <div style={{ flex:1, background:"#1a1410", borderRadius:6, padding:"6px 8px", textAlign:"center", border:"1px solid #3a2a1a" }}>
@@ -1114,19 +1117,19 @@ export default function MadnessIQ() {
               </div>
             </div>
             <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:"#6a6d78", marginTop:6, lineHeight:1.5 }}>
-              E8: 3-1. Duke fell to UConn 73-72 — our champion pick eliminated by one point. Arizona dominated Purdue 79-64. Illinois ended Iowa 71-59. Michigan destroyed Tennessee 95-62. FINAL FOUR SET: UConn vs Illinois, Arizona vs Michigan. New champion prediction: Arizona.
+              MICHIGAN WINS IT ALL 69-63 over UConn. Lendeborg MOP. R64: 25-7 | R32: 12-4 | S16: 4-4 | E8: 3-1 | F4: 1-1 | Champ: 0-1. Original pick: Duke (out E8). Pivot: Arizona (out F4). Michigan was in our F4 the whole time. We never made them champion. Won every game by 13+ until the final. The data said Michigan all along.
             </div>
           </div>
 
           {/* Championship Futures */}
           <div style={{ background:"linear-gradient(135deg,#101420,#141018)", border:"1px solid #3a3558", borderRadius:8, padding:"10px 12px", marginBottom:10 }}>
-            <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:2, color:"#ffe050", marginBottom:8 }}>CHAMPIONSHIP FUTURES (Final Four Set)</div>
+            <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:2, color:"#ffe050", marginBottom:8 }}>FINAL FOUR RESULTS</div>
             <div style={{ display:"flex", gap:4, flexWrap:"wrap" }}>
               {[
-                { team:"Arizona", odds:"+175", color:"#ff7855" },
-                { team:"Michigan", odds:"+275", color:"#ffe050" },
-                { team:"UConn", odds:"+400", color:"#b0b8c8" },
-                { team:"Illinois", odds:"+600", color:"#b0b8c8" },
+                { team:"Michigan", odds:"CHAMPION", color:"#ffe050" },
+                { team:"UConn", odds:"Runner-Up", color:"#b0b8c8" },
+                { team:"Arizona", odds:"Final Four", color:"#b0b8c8" },
+                { team:"Illinois", odds:"Final Four", color:"#b0b8c8" },
               ].map((f, i) => (
                 <div key={i} style={{ background:"#0e1018", border:"1px solid #2a2d3a", borderRadius:4, padding:"4px 7px", textAlign:"center" }}>
                   <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, color:"#8090a0" }}>{f.team}</div>
@@ -1135,10 +1138,10 @@ export default function MadnessIQ() {
               ))}
             </div>
             <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#6a6d78", marginTop:6, lineHeight:1.5 }}>
-              Arizona is the clear favorite after the most dominant tournament run in years. Michigan has won every game by 13+. UConn just beat Duke 73-72 — chasing a three-peat. Illinois is the dark horse that held Houston to 34% FG. Duke eliminated. New MadnessIQ champion pick: Arizona.
+              Michigan 69, UConn 63 in the championship. Michigan won every tournament game by 13+ until the title game (6 pts). Lendeborg named MOP. UConn three-peat bid fell short. Arizona fell in F4 to Michigan 91-73. Illinois fell to UConn 71-62. Dusty May wins a title in year one.
             </div>
             <div style={{ fontFamily:"'DM Mono',monospace", fontSize:6.5, color:"#4a4d58", marginTop:4 }}>
-              Futures estimated post-E8 · As of Mar 29, 2026
+              2026 NCAA Tournament complete | 63 games | MadnessIQ final record: 45-18 (71%)
             </div>
           </div>
 
@@ -1463,11 +1466,11 @@ export default function MadnessIQ() {
               )})}
 
               <div style={{ marginTop:12, background:"linear-gradient(135deg,#141620,#1a1428)", border:"1px solid #4a4568", borderRadius:10, padding:"16px", textAlign:"center" }}>
-                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:4, color:"#6a5aaa", marginBottom:4 }}>MADNESSIQ PREDICTION (UPDATED)</div>
-                <div style={{ fontSize:26, fontWeight:700, marginBottom:4 }}>{"\uD83C\uDFC6"} Arizona Wildcats</div>
-                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:10, color:"#b0a8cc" }}>Koa Peat {"\u2014"} Most Outstanding Player</div>
-                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:9, color:"#8a7acc", marginTop:6 }}>Tommy Lloyd's 1st Final Four {"\u2014"} Arizona's 1st title since 1997</div>
-                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#5a5570", marginTop:6 }}>Original pick: Duke (eliminated E8, 73-72 vs UConn)</div>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:8, letterSpacing:4, color:"#6a5aaa", marginBottom:4 }}>2026 NATIONAL CHAMPION</div>
+                <div style={{ fontSize:26, fontWeight:700, marginBottom:4 }}>{"\uD83C\uDFC6"} Michigan Wolverines</div>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:10, color:"#b0a8cc" }}>Yaxel Lendeborg {"\u2014"} Most Outstanding Player</div>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:9, color:"#8a7acc", marginTop:6 }}>Dusty May's 1st championship {"\u2014"} Michigan's 2nd title</div>
+                <div style={{ fontFamily:"'DM Mono',monospace", fontSize:7, color:"#5a5570", marginTop:6 }}>MadnessIQ picks: Duke (original) {"\u2192"} Arizona (pivot) {"\u2192"} Michigan won. Had Michigan in F4 all tournament.</div>
               </div>
             </>
           )}
